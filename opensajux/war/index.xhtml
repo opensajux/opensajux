@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html">
+
+<ui:composition template="/templates/homeLayout.xhtml">
+	<ui:define name="content">
+		<p:graphicImage
+			url="/resources/images/Sajid_shadow.jpg"
+			style="float:right; padding-left: 10px" />
+		<h:outputText value="#{siteInfoManager.siteInfo.aboutMe}" escape="false"/>
+	</ui:define>
+</ui:composition>
+
+</html>

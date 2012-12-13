@@ -1,0 +1,72 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:m="http://java.sun.com/jsf/composite/menu">
+
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<meta name="keywords" content="sajid" />
+	<meta name="description"
+		content="Personal site of Sheikh Mohammad Sajid" />
+	<meta name="author" content="Sheikh Mohammad Sajid" />
+	<meta name="copyright" content="2010-2012" />
+	<meta name="contact" content="smsajid" />
+
+	<link href="/resources/css/default.css" rel="stylesheet"
+		type="text/css" />
+	<link href="/resources/css/masterLayout.css" rel="stylesheet"
+		type="text/css" />
+	<p:resources />
+	<title><ui:insert name="title">#{siteInfoManager.siteInfo.title}</ui:insert></title>
+</h:head>
+
+<h:body>
+	<div>
+		<div id="topBar">
+			<ui:insert name="topBar">
+				<h:outputText value="#{siteInfoManager.siteInfo.title}" />
+				<br />
+				<div id="subTitle">
+					<h:outputText value="#{siteInfoManager.siteInfo.subTitle}" />
+				</div>
+			</ui:insert>
+		</div>
+		<div id="menubar">
+			<ui:insert name="menubar">
+				<m:menu styleClass="menu" source="#{menuManager.mainMenus}" />
+			</ui:insert>
+		</div>
+		<div id="content_container">
+			<h:form>
+				<div id="right">
+					<ui:insert name="right">
+						<p:panel header="Admin Tasks">
+							<h:outputLink value="siteInfoManager.jsf">Site Info</h:outputLink>
+							<br />
+							<h:outputLink value="menuManager.jsf">Menu Manager</h:outputLink>
+							<br />
+							<h:outputLink value="newsManager.jsf">News Manager</h:outputLink>
+						</p:panel>
+					</ui:insert>
+				</div>
+				<div id="content" class="center_content">
+					<ui:insert name="content"></ui:insert>
+				</div>
+			</h:form>
+		</div>
+	</div>
+	<div id="footer">
+		<ui:insert name="footer">
+			<div align="center">
+				&copy; 2010-2012 | <a href="#{request.contextPath}/privacy.jsf">Privacy
+					Policy</a> | <a href="#{request.contextPath}/attribution.jsf">Attributions</a>
+				| <a href="#{request.contextPath}/version.jsf">Version 0.0.1</a>
+			</div>
+		</ui:insert>
+	</div>
+</h:body>
+</html>

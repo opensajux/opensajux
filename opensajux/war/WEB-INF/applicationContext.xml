@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+           http://www.springframework.org/schema/tx
+           http://www.springframework.org/schema/tx/spring-tx-2.5.xsd
+           http://www.springframework.org/schema/aop
+           http://www.springframework.org/schema/aop/spring-aop-2.5.xsd
+           http://www.springframework.org/schema/context
+           http://www.springframework.org/schema/context/spring-context-2.5.xsd">
+	<context:annotation-config />
+	<context:component-scan base-package="com.opensajux" />
+	<bean class="org.springframework.beans.factory.config.CustomScopeConfigurer">
+		<property name="scopes">
+			<map>
+				<entry key="view">
+					<bean class="com.opensajux.common.ViewScope" />
+				</entry>
+			</map>
+		</property>
+	</bean>
+
+	<!--	<bean id="myEmf"-->
+	<!--
+		class="org.springframework.orm.jpa.LocalEntityManagerFactoryBean">
+	-->
+	<!--
+		<property name="persistenceUnitName" value="transactions-optional" />
+	-->
+	<!--	</bean>-->
+<!--	<bean id="myPmf"-->
+<!--		class="org.datanucleus.store.appengine.jdo.DatastoreJDOPersistenceManagerFactory">-->
+<!--		<constructor-arg>-->
+<!--			<map>-->
+<!--				<entry key="javax.jdo.option.PersistenceUnitName" value="transactions-optional" />-->
+<!--				<entry key="javax.jdo.option.ConnectionURL" value="appengine" />-->
+<!--				<entry key="javax.jdo.option.NontransactionalRead" value="true" />-->
+<!--				<entry key="javax.jdo.option.NontransactionalWrite" value="true" />-->
+<!--				<entry key="javax.jdo.option.RetainValues" value="true" />-->
+<!--				<entry key="datanucleus.appengine.autoCreateDatastoreTxns"-->
+<!--					value="true" />-->
+<!--				<entry key="datanucleus.storeManagerType" value="appengine" />-->
+<!--				<entry key="datanucleus.ConnectionURL" value="appengine" />-->
+<!--			</map>-->
+<!--		</constructor-arg>-->
+<!--	</bean>-->
+	<bean id="myPmf" class="com.opensajux.dao.PMF" factory-method="get"/>
+
+	<bean id="menuManager" class="com.opensajux.menu.MenuManager"
+		scope="view">
+		<property name="persistenceManagerFactory" ref="myPmf" />
+	</bean>
+	<bean id="menuItemManager" class="com.opensajux.menu.MenuItemManager"
+		scope="view">
+		<property name="persistenceManagerFactory" ref="myPmf" />
+	</bean>
+	<bean id="newsManager" class="com.opensajux.news.NewsManager"
+		scope="view">
+		<property name="persistenceManagerFactory" ref="myPmf" />
+	</bean>
+	<bean id="twitterCache" class="java.util.ArrayList" />
+	<bean id="twitterClient" class="com.opensajux.integration.twitter.TwitterClient">
+		<property name="cache" ref="twitterCache" />
+	</bean>
+</beans>

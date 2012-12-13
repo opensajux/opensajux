@@ -1,0 +1,29 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.prime.com.tr/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:m="http://java.sun.com/jsf/composite/menu">
+
+<ui:composition template="/templates/admin/masterLayout.xhtml">
+	<ui:define name="title">Sajux - Administration Panel</ui:define>
+
+	<ui:define name="content">
+		<p:commandButton value="Add" action="/admin/addNews.jsf" ajax="false" />
+
+		<p:dataList id="newsTable" var="news" value="#{newsManager.newsModel}"
+			type="definition" paginator="true" rows="10"
+			paginatorPosition="bottom" rowsPerPageTemplate="10,20,30"
+			paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}">
+			<f:facet name="description">
+				<p:editor value="#{news.description}" disabled="true" />
+				<p:commandButton value="Remove" action="/admin/addNews.jsf" />
+			</f:facet>
+		</p:dataList>
+	</ui:define>
+
+</ui:composition>
+
+</html>

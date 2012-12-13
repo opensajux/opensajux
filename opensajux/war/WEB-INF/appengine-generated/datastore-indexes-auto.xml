@@ -1,0 +1,11 @@
+<!-- Indices written at Thu, 13 Dec 2012 17:03:09 IST -->
+
+<datastore-indexes>
+
+    <!-- Used 306 times in query history -->
+    <datastore-index kind="MenuItem" ancestor="false" source="auto">
+        <property name="menuKey" direction="asc"/>
+        <property name="ordering" direction="asc"/>
+    </datastore-index>
+
+</datastore-indexes>

@@ -1,0 +1,43 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:m="http://java.sun.com/jsf/composite/menu">
+
+<ui:composition template="/templates/admin/masterLayout.xhtml">
+	<ui:define name="title">Site Info - Administration Panel</ui:define>
+
+	<ui:define name="content">
+		<p:panelGrid columns="1">
+			<p:panel header="Site Info" styleClass="siteInfoPanel">
+				<p:panelGrid columns="3">
+					<h:outputLabel for="siteTitle" value="Site Title:" />
+					<h:inputText id="siteTitle" required="true"
+						requiredMessage="Site Title is manadatory"
+						value="#{siteInfoManager.siteInfo.title}" size="67" />
+					<p:message for="siteTitle" />
+
+					<h:outputLabel for="siteSubTitle" value="Sub Title:" />
+					<h:inputText id="siteSubTitle" required="true"
+						requiredMessage="Sub Title is manadatory"
+						value="#{siteInfoManager.siteInfo.subTitle}" size="67" />
+					<p:message for="siteSubTitle" />
+
+					<h:outputLabel for="aboutMe" value="About Me:" />
+					<h:inputTextarea id="aboutMe" required="true"
+						requiredMessage="About Me is manadatory"
+						value="#{siteInfoManager.siteInfo.aboutMe}" rows="8" cols="70" />
+					<p:message for="aboutMe" />
+					<p:commandButton id="add" value="Save"
+						action="#{siteInfoManager.saveSiteInfo}" ajax="false" />
+				</p:panelGrid>
+			</p:panel>
+		</p:panelGrid>
+	</ui:define>
+
+</ui:composition>
+
+</html>

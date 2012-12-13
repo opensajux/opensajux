@@ -1,0 +1,247 @@
+body {
+	margin: 0px 70px 70px 0px;
+	height: 100%;
+	color: #C0C0C0;
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	margin-left: 5%;
+	margin-right: 5%;
+	text-align: justify;
+}
+
+#topBar {
+	padding: 20px 0px 0px 0px;
+	position: fixed;
+	text-align: right;
+	font-variant: small-caps;
+	font-size: xx-large;
+	width: 91%;
+	left: 70px;
+	z-index: 9; /*bring to top*/
+	background-color: white;
+	color: #66cc33;
+}
+
+#menubar {
+	position: fixed;
+	float: left;
+	text-align: left;
+	margin-top: 86px;
+	z-index: 10; /*bring to top*/
+	width: 100px;
+	height: 600px;
+	float: left;
+}
+
+#subTitle {
+	color: #C0C0C0;
+	font-size: x-small;
+}
+
+#right {
+	float: right;
+	width: 210px;
+}
+
+#content_container {
+	padding-top: 95px;
+	padding-left: 110px;
+	height: 600px;
+}
+
+.center_content {
+	width: 80%;
+}
+
+#footer {
+	font: 11px Verdana, Arial, Helvetica, sans-serif;
+	clear: both;
+	position: relative;
+	padding: 5px;
+	margin: 10px 0px 0px 0px;
+	color: #66cc33;
+	text-align: center;
+}
+
+#footer a:link,#footer a:visited {
+	font: 11px Verdana, Arial, Helvetica, sans-serif;
+	clear: both;
+	position: relative;
+	padding: 5px;
+	margin: 10px 0px 0px 0px;
+	text-decoration: none;
+	color: #66cc33;
+}
+
+#footer a:hover {
+	color: rgb(255, 0, 0);
+}
+
+#header a:link,#header a:visited {
+	color: white;
+	font-weight: bold;
+	text-decoration: none;
+}
+
+#header a:link:hover,#header a:visited:hover {
+	color: black;
+	font-weight: bold;
+	text-decoration: underline;
+}
+
+#spacer {
+	height: 40px;
+}
+
+#breadcrumb {
+	position: relative;
+	color: white;
+	padding: 0px;
+	margin: 0px 0px 2px 0px;
+}
+
+#breadcrumb a:link,#breadcrumb a:visited {
+	font-weight: bold;
+	text-decoration: none;
+}
+
+#breadcrumb a:link:hover,#breadcrumb a:visited:hover {
+	font-weight: bold;
+	text-decoration: underline;
+}
+
+.menu {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+.menu li {
+	padding: 0;
+	margin: 0 0 1px 0;
+	height: 25px;
+	display: block;
+}
+
+.menu li a {
+	text-align: left;
+	height: 40px;
+	padding: 0px 5px;
+	font: 14px Verdana, Arial, Helvetica, sans-serif;
+	color: #66cc33;
+	display: block;
+	text-decoration: none;
+	outline: none;
+}
+
+.menu li a:hover {
+	color: rgb(255, 0, 0);
+	text-decoration: blink;
+	text-shadow: aqua;
+}
+
+.menu li a.active,.menu li a.active:hover {
+	color: rgb(255, 255, 255);
+}
+
+.menu li a span {
+	line-height: 40px;
+}
+
+.menu-h {
+	margin: 0 auto;
+	padding: 0;
+	height: 30px;
+	width: 100%;
+	display: block;
+	background: url("../images/topMenuImages.png") repeat-x;
+	margin: 0 auto;
+	text-align: right;
+}
+
+.menu-h li {
+	padding: 0;
+	margin: 0;
+	list-style: none;
+	display: inline;
+}
+
+.menu-h li a {
+	float: left;
+	padding-left: 15px;
+	display: block;
+	color: rgb(255, 255, 255);
+	text-decoration: none;
+	font: 12px Verdana, Arial, Helvetica, sans-serif;
+	cursor: pointer;
+	background: url("../images/topMenuImages.png") 0px -30px no-repeat;
+	outline: none;
+}
+
+.menu-h li a span {
+	line-height: 30px;
+	float: left;
+	display: block;
+	padding-right: 15px;
+	background: url("../images/topMenuImages.png") 100% -30px no-repeat;
+}
+
+.menu-h li a:hover {
+	background-position: 0px -60px;
+	color: rgb(255, 255, 255);
+}
+
+.menu-h li a:hover span {
+	background-position: 100% -60px;
+}
+
+.menu-h li a.active-h,.menu li a.active-h:hover {
+	line-height: 30px;
+	font: 12px Verdana, Arial, Helvetica, sans-serif;
+	background: url("../images/topMenuImages.png") 0px -90px no-repeat;
+	color: rgb(255, 255, 255);
+}
+
+.menu-h li a.active-h span,.menu li a.active-h:hover span {
+	background: url("../images/topMenuImages.png") 100% -90px no-repeat;
+}
+
+.ui-panel {
+	border-color: #66cc33;
+	margin: 0px;
+}
+
+.ui-panel-titlebar {
+	border-color: #66cc33;
+	background: #66cc33;
+}
+
+.ui-panel-footer {
+	border-color: #66cc33;
+}
+
+.rounded-rect {
+	border-style: dashed;
+}
+
+.ui-datalist {
+	border-color: #66cc33;
+	margin: 0px;
+	padding: 0px;
+}
+
+.ui-datalist-data {
+	color: white;
+	border-color: #66cc33;
+	margin: 10px;
+	padding: 5px;
+}
+
+.ui-datalist-item {
+	background: white;
+	color: #66cc33;
+	border-color: #66cc33;
+}
+
+.ui-panelgrid tr.ui-widget-content,.ui-panelgrid td {
+	border-style: none;
+}

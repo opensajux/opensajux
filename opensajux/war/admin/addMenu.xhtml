@@ -1,0 +1,51 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:m="http://java.sun.com/jsf/composite/menu">
+
+<ui:composition template="/templates/admin/masterLayout.xhtml">
+	<ui:define name="title">Menu - Administration Panel</ui:define>
+
+	<ui:define name="content">
+		<f:metadata>
+			<f:viewParam name="menu_name" value="#{menuManager.menuName}" />
+		</f:metadata>
+		<h:panelGrid columns="3">
+			<f:facet name="header">
+				<h:outputText value="Add Menu"
+					rendered="#{empty param['menu_name']}" />
+				<h:outputText value="Edit Menu"
+					rendered="#{!empty param['menu_name']}" />
+			</f:facet>
+			<h:outputLabel for="name" value="Menu Name:" />
+			<h:inputText id="name" required="true"
+				requiredMessage="Menu Name is manadatory"
+				value="#{menuManager.menu.name}"
+				validator="#{menuManager.validateMenuName}" />
+			<p:message for="name" />
+			<h:outputLabel for="title" value="Title:" />
+			<h:inputText id="title" required="true"
+				requiredMessage="Title is manadatory"
+				value="#{menuManager.menu.title}" />
+			<p:message for="title" />
+			<h:outputLabel for="url" value="Url:" />
+			<h:inputText id="url" required="true"
+				requiredMessage="Url is manadatory" value="#{menuManager.menu.url}" />
+			<p:message for="url" />
+			<h:outputLabel for="order" value="Order:" />
+			<p:spinner id="order" min="0" value="#{menuManager.menu.ordering}" />
+			<p:message for="order" />
+			<p:commandButton id="add" value="Add"
+				action="#{menuManager.addMenu}" ajax="false"
+				rendered="#{empty param['menu_name']}" />
+			<p:commandButton id="save" value="Save"
+				action="#{menuManager.saveMenu}" ajax="false"
+				rendered="#{!empty param['menu_name']}" />
+		</h:panelGrid>
+	</ui:define>
+</ui:composition>
+</html>
