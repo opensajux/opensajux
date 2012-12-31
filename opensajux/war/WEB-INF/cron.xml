@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cronentries>
+	<cron>
+		<url>/tasks/keepalive</url>
+		<description>Keep the app alive</description>
+		<schedule>every 10 mins</schedule>
+	</cron>
+	<cron>
+		<url>/tasks/blogs</url>
+		<description>Repopulate the blog cache once every day</description>
+		<schedule>every day 02:00</schedule>
+	</cron>
+</cronentries>

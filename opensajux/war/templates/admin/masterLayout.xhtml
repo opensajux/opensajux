@@ -20,7 +20,6 @@
 		type="text/css" />
 	<link href="/resources/css/masterLayout.css" rel="stylesheet"
 		type="text/css" />
-	<p:resources />
 	<title><ui:insert name="title">#{siteInfoManager.siteInfo.title}</ui:insert></title>
 </h:head>
 
@@ -50,10 +49,13 @@
 							<h:outputLink value="menuManager.jsf">Menu Manager</h:outputLink>
 							<br />
 							<h:outputLink value="newsManager.jsf">News Manager</h:outputLink>
+							<br />
+							<h:outputLink value="blogManager.jsf">Blog Manager</h:outputLink>
 						</p:panel>
 					</ui:insert>
 				</div>
 				<div id="content" class="center_content">
+					<ui:insert name="contentTitle"></ui:insert>
 					<ui:insert name="content"></ui:insert>
 				</div>
 			</h:form>

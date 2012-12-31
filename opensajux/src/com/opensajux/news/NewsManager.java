@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.faces.event.ValueChangeEvent;
+import javax.inject.Inject;
 import javax.inject.Named;
 import javax.jdo.PersistenceManager;
 import javax.jdo.PersistenceManagerFactory;
@@ -15,22 +16,18 @@ import javax.jdo.Query;
 import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortOrder;
 
-import com.opensajux.dao.PMF;
 import com.opensajux.entity.News;
 
 @Named
 public class NewsManager implements Serializable {
 	private static final long serialVersionUID = -6923886655285428390L;
 
-	private PersistenceManagerFactory pmf;
+	@Inject
+	private transient PersistenceManagerFactory pmf;
 
 	private LazyDataModel<News> newsModel;
 	private String menuName;
 	private News menu;
-
-	public void setPersistenceManagerFactory(PersistenceManagerFactory pmf) {
-		// this.pmf = pmf;
-	}
 
 	/**
 	 * @return the newsModel
@@ -42,7 +39,7 @@ public class NewsManager implements Serializable {
 
 				@Override
 				public int getRowCount() {
-					PersistenceManager pm = PMF.get().getPersistenceManager();
+					PersistenceManager pm = pmf.getPersistenceManager();
 					int count = (Integer) pm.newQuery("select count(key) from " + News.class.getName()).execute();
 					pm.close();
 					return count;
@@ -51,7 +48,7 @@ public class NewsManager implements Serializable {
 				@Override
 				public List<News> load(int first, int pageSize, String sortField, SortOrder sortOrder,
 						Map<String, String> filters) {
-					PersistenceManager pm = PMF.get().getPersistenceManager();
+					PersistenceManager pm = pmf.getPersistenceManager();
 					Query q = pm.newQuery("select from " + News.class.getName());
 					q.setRange(first, pageSize);
 					List<News> list = new ArrayList<News>((List<News>) q.execute());
@@ -64,8 +61,8 @@ public class NewsManager implements Serializable {
 	}
 
 	public void removeNews() {
-		PersistenceManager pm = PMF.get().getPersistenceManager();
-		pm.close();
+//		PersistenceManager pm = pmf.getPersistenceManager();
+//		pm.close();
 	}
 
 	public News getNews() {
@@ -75,9 +72,9 @@ public class NewsManager implements Serializable {
 	}
 
 	public String addNews() {
-		PersistenceManager pm = PMF.get().getPersistenceManager();
 		menu.setPublished(true);
 		menu.setPublishDate(new Date());
+		PersistenceManager pm = pmf.getPersistenceManager();
 		pm.makePersistent(menu);
 		pm.close();
 		menu = null;
@@ -85,7 +82,7 @@ public class NewsManager implements Serializable {
 	}
 
 	public String saveNews() {
-		PersistenceManager pm = PMF.get().getPersistenceManager();
+		PersistenceManager pm = pmf.getPersistenceManager();
 		pm.makePersistent(menu);
 		pm.close();
 		menu = null;
@@ -99,7 +96,7 @@ public class NewsManager implements Serializable {
 	@SuppressWarnings("unchecked")
 	public void setMenuName(String menuName) {
 		this.menuName = menuName;
-		PersistenceManager pm = PMF.get().getPersistenceManager();
+		PersistenceManager pm = pmf.getPersistenceManager();
 		List<News> m = (List<News>) pm.newQuery(
 				"select from " + News.class.getName() + " where name == n parameters String n").execute(menuName);
 		if (m.size() > 0)

@@ -9,7 +9,7 @@ body {
 }
 
 #topBar {
-	padding: 20px 0px 0px 0px;
+	padding: 20px 0px 15px 0px;
 	position: fixed;
 	text-align: right;
 	font-variant: small-caps;
@@ -30,7 +30,7 @@ body {
 	position: fixed;
 	float: left;
 	text-align: left;
-	margin-top: 86px;
+	margin-top: 98px;
 	z-index: 10; /*bring to top*/
 	width: 100px;
 	height: 600px;

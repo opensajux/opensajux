@@ -11,8 +11,10 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ValueChangeEvent;
 import javax.faces.validator.ValidatorException;
+import javax.inject.Inject;
 import javax.inject.Named;
 import javax.jdo.PersistenceManager;
+import javax.jdo.PersistenceManagerFactory;
 import javax.jdo.Query;
 
 import org.primefaces.model.LazyDataModel;
@@ -27,6 +29,8 @@ import com.opensajux.entity.MenuItem;
 public class MenuManager implements Serializable {
 	private static final long serialVersionUID = -6923886655285428390L;
 
+	@Inject
+	private transient PersistenceManagerFactory pmf;
 	private LazyDataModel<Menu> menuModel;
 	private Menu[] selectedMenus;
 	private List<Menu> filteredMenus;
@@ -35,7 +39,7 @@ public class MenuManager implements Serializable {
 
 	@SuppressWarnings("unchecked")
 	public List<MenuItem> getMainMenus() {
-		PersistenceManager pm = PMF.get().getPersistenceManager();
+		PersistenceManager pm = PMF.getPMF().getPersistenceManager();
 		Query query = pm.newQuery("select from " + Menu.class.getName() + " where name == n && published == true");
 
 		query.declareParameters("String n");
@@ -64,7 +68,7 @@ public class MenuManager implements Serializable {
 
 				@Override
 				public int getRowCount() {
-					PersistenceManager pm = PMF.get().getPersistenceManager();
+					PersistenceManager pm = pmf.getPersistenceManager();
 					Long count = (Long) pm.newQuery("select count(key) from " + Menu.class.getName()).execute();
 					pm.close();
 					return count.intValue();
@@ -73,10 +77,10 @@ public class MenuManager implements Serializable {
 				@Override
 				public List<Menu> load(int first, int pageSize, String sortField, SortOrder sortOrder,
 						Map<String, String> filters) {
-					PersistenceManager pm = PMF.get().getPersistenceManager();
+					PersistenceManager pm = pmf.getPersistenceManager();
 					Query q = pm.newQuery("select from " + Menu.class.getName());
 					q.setRange(first, pageSize);
-					List<Menu> list = new ArrayList<>((List<Menu>) q.execute());
+					List<Menu> list = new ArrayList<Menu>((List<Menu>) q.execute());
 					for (Menu m : list) {
 						Long count = (Long) pm
 								.newQuery(
@@ -119,7 +123,7 @@ public class MenuManager implements Serializable {
 
 	@SuppressWarnings("unchecked")
 	public void removeMenu() {
-		PersistenceManager pm = PMF.get().getPersistenceManager();
+		PersistenceManager pm = pmf.getPersistenceManager();
 		for (Menu m : selectedMenus) {
 			List<Menu> t = (List<Menu>) pm.newQuery(
 					"select from " + Menu.class.getName() + " where name == id parameters String id").execute(
@@ -143,7 +147,7 @@ public class MenuManager implements Serializable {
 		}
 		if (menu != null && menu.getKey() != null)
 			return;
-		PersistenceManager pm = PMF.get().getPersistenceManager();
+		PersistenceManager pm = pmf.getPersistenceManager();
 		List<Menu> t = (List<Menu>) pm.newQuery(
 				"select from " + Menu.class.getName() + " where name == id parameters String id").execute(
 				object.toString());
@@ -158,8 +162,8 @@ public class MenuManager implements Serializable {
 	}
 
 	public String addMenu() {
-		PersistenceManager pm = PMF.get().getPersistenceManager();
 		menu.setPublished(true);
+		PersistenceManager pm = pmf.getPersistenceManager();
 		pm.makePersistent(menu);
 		pm.close();
 		menu = null;
@@ -167,7 +171,7 @@ public class MenuManager implements Serializable {
 	}
 
 	public String saveMenu() {
-		PersistenceManager pm = PMF.get().getPersistenceManager();
+		PersistenceManager pm = pmf.getPersistenceManager();
 		pm.makePersistent(menu);
 		pm.close();
 		menu = null;
@@ -181,7 +185,7 @@ public class MenuManager implements Serializable {
 	@SuppressWarnings("unchecked")
 	public void setMenuName(String menuName) {
 		this.menuName = menuName;
-		PersistenceManager pm = PMF.get().getPersistenceManager();
+		PersistenceManager pm = pmf.getPersistenceManager();
 		List<Menu> m = (List<Menu>) pm.newQuery(
 				"select from " + Menu.class.getName() + " where name == n parameters String n").execute(menuName);
 		if (m.size() > 0)

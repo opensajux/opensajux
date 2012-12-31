@@ -1,21 +1,52 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:p="http://primefaces.prime.com.tr/ui"
+	xmlns:p="http://primefaces.org/ui"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:h="http://java.sun.com/jsf/html">
 
 <ui:composition template="/templates/masterLayout.xhtml">
 	<ui:define name="content">
-		<p:dataTable var="blogs" value="#{bloggerClient.lazyModel}"
-			paginator="true" rows="5"
+		<p></p>
+		<p:dataList var="post" value="#{blogPostBean.posts}"
+			paginator="true" rows="4" lazy="true"
 			paginatorTemplate="{PreviousPageLink} {NextPageLink}"
-			paginatorPosition="bottom">
-			<p:column>
-				<h:outputText value="#{blogs.title}" />
-			</p:column>
-		</p:dataTable>
+			paginatorPosition="bottom" type="none" styleClass="postList">
+			<div style="width: 100%;">
+				<table width="100%" style="border-spacing: 0px">
+					<tr>
+						<td
+							style="border-top: 1px solid #66cc33; border-right: 1px solid #66cc33;"><h:outputText
+								value="#{post.publishDate}">
+								<f:convertDateTime type="date" pattern="dd MMMM yyyy" />
+							</h:outputText></td>
+						<td style="border-bottom: 1px solid #66cc33; width: 85%"></td>
+					</tr>
+				</table>
+			</div>
+
+			<div style="width: 100%; text-align: justify; margin: 6px;">
+				<h2>
+					<h:outputLink value="">
+						<h:outputText value="#{post.title.value}" />
+					</h:outputLink>
+				</h2>
+				<h:outputText value="#{post.content.value}" escape="false" />
+				<div style="width: 100%; text-align: right;">
+					<h:outputLink value="#{post.sourceUrl.value}">view &raquo;</h:outputLink>
+				</div>
+			</div>
+		</p:dataList>
+	</ui:define>
+	<ui:define name="right">
+		<p:dataList var="stream" value="#{talkStream.stream}" paginator="true"
+			rows="4" paginatorTemplate="{PreviousPageLink}   {NextPageLink}"
+			paginatorPosition="bottom" type="none" styleClass="talkStream">
+			<h:outputText value="#{stream.text}" />
+			<hr width="80%"></hr>
+		</p:dataList>
 	</ui:define>
 </ui:composition>
 

@@ -22,7 +22,7 @@ public class SiteInfo implements Serializable {
 
 	@Persistent
 	private String title;
-	
+
 	@Persistent
 	private String subTitle;
 
@@ -54,7 +54,8 @@ public class SiteInfo implements Serializable {
 	}
 
 	/**
-	 * @param subTitle the subTitle to set
+	 * @param subTitle
+	 *            the subTitle to set
 	 */
 	public void setSubTitle(String subTitle) {
 		this.subTitle = subTitle;

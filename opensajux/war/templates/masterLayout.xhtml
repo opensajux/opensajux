@@ -4,7 +4,7 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:p="http://primefaces.org/ui"
-	xmlns:c="http://java.sun.com/jsf/core"
+	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:m="http://java.sun.com/jsf/composite/menu">
 
 <h:head>
@@ -20,7 +20,6 @@
 		type="text/css" />
 	<link href="/resources/css/masterLayout.css" rel="stylesheet"
 		type="text/css" />
-	<p:resources />
 	<title><ui:insert name="title">#{siteInfoManager.siteInfo.title}</ui:insert></title>
 </h:head>
 
@@ -44,16 +43,13 @@
 			<h:form>
 				<div id="right">
 					<ui:insert name="right">
-						<!-- p:panel toggleable="true" toggleSpeed="100" header="Small Talks">
-				<p:dataList var="tweets" value="#{twitterClient.tweets}"
-					paginator="true" rows="5"
-					paginatorTemplate="{PreviousPageLink} {NextPageLink}"
-					paginatorPosition="bottom">
-					<p:column>
-						<h:outputText value="#{tweets.text}" />
-					</p:column>
-				</p:dataList>
-			</p:panel -->
+						<p:dataList var="stream" value="#{talkStream.stream}"
+							paginator="true" rows="4"
+							paginatorTemplate="{PreviousPageLink}   {NextPageLink}"
+							paginatorPosition="bottom" type="none" styleClass="talkStream">
+							<h:outputText value="#{stream.text}" />
+							<hr width="80%" ></hr>
+						</p:dataList>
 					</ui:insert>
 				</div>
 				<div id="content" class="center_content">
@@ -71,5 +67,6 @@
 			</div>
 		</ui:insert>
 	</div>
+	<script type="text/javascript" src="/_ah/channel/jsapi" />
 </h:body>
 </html>

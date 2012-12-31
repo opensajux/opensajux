@@ -10,14 +10,15 @@ import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.validator.ValidatorException;
+import javax.inject.Inject;
 import javax.inject.Named;
 import javax.jdo.PersistenceManager;
+import javax.jdo.PersistenceManagerFactory;
 import javax.jdo.Query;
 
 import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortOrder;
 
-import com.opensajux.dao.PMF;
 import com.opensajux.entity.Menu;
 import com.opensajux.entity.MenuItem;
 
@@ -27,6 +28,8 @@ public class MenuItemManager implements Serializable {
 
 	private static final long serialVersionUID = -4565726770439961584L;
 
+	@Inject
+	private transient PersistenceManagerFactory pmf;
 	private Menu menu;
 	private String menuName;
 	private MenuItem menuItem;
@@ -44,23 +47,20 @@ public class MenuItemManager implements Serializable {
 	}
 
 	@SuppressWarnings("unchecked")
-	public void validateMenuName(FacesContext context, UIComponent component,
-			Object object) throws ValidatorException {
+	public void validateMenuName(FacesContext context, UIComponent component, Object object) throws ValidatorException {
 		if ((context == null) || (component == null)) {
 			throw new NullPointerException();
 		}
 		if (menu != null && menu.getKey().getId() != 0)
 			return;
-		PersistenceManager pm = PMF.get().getPersistenceManager();
+		PersistenceManager pm = pmf.getPersistenceManager();
 		List<Menu> t = (List<Menu>) pm.newQuery(
-				"select from " + Menu.class.getName()
-						+ " where name == id parameters String id").execute(
+				"select from " + Menu.class.getName() + " where name == id parameters String id").execute(
 				object.toString());
 		try {
 			if (!t.isEmpty()) {
-				throw new ValidatorException(new FacesMessage(
-						FacesMessage.SEVERITY_ERROR,
-						"Menu Name already exists", "Menu Name already exists"));
+				throw new ValidatorException(new FacesMessage(FacesMessage.SEVERITY_ERROR, "Menu Name already exists",
+						"Menu Name already exists"));
 			}
 		} finally {
 			pm.close();
@@ -80,11 +80,9 @@ public class MenuItemManager implements Serializable {
 	@SuppressWarnings("unchecked")
 	public void setMenuName(String name) {
 		this.menuName = name;
-		PersistenceManager pm = PMF.get().getPersistenceManager();
+		PersistenceManager pm = pmf.getPersistenceManager();
 		List<Menu> m = (List<Menu>) pm.newQuery(
-				"select from " + Menu.class.getName()
-						+ " where name == n parameters String n").execute(
-				menuName);
+				"select from " + Menu.class.getName() + " where name == n parameters String n").execute(menuName);
 		if (m.size() > 0)
 			menu = m.get(0);
 		pm.close();
@@ -98,11 +96,10 @@ public class MenuItemManager implements Serializable {
 				@SuppressWarnings("unchecked")
 				@Override
 				public int getRowCount() {
-					PersistenceManager pm = PMF.get().getPersistenceManager();
+					PersistenceManager pm = pmf.getPersistenceManager();
 					List<Menu> m = (List<Menu>) pm.newQuery(
-							"select from " + Menu.class.getName()
-									+ " where name == n parameters String n")
-							.execute(menuName);
+							"select from " + Menu.class.getName() + " where name == n parameters String n").execute(
+							menuName);
 					Long count = (Long) pm
 							.newQuery(
 									"select count(key) from "
@@ -114,21 +111,17 @@ public class MenuItemManager implements Serializable {
 				}
 
 				@Override
-				public List<MenuItem> load(int first, int pageSize, String arg2,
-						SortOrder arg3, Map<String, String> arg4) {
-					PersistenceManager pm = PMF.get().getPersistenceManager();
+				public List<MenuItem> load(int first, int pageSize, String arg2, SortOrder arg3,
+						Map<String, String> arg4) {
+					PersistenceManager pm = pmf.getPersistenceManager();
 					List<Menu> m = (List<Menu>) pm.newQuery(
-							"select from " + Menu.class.getName()
-									+ " where name == n parameters String n")
-							.execute(menuName);
-					Query q = pm.newQuery("select from "
-							+ MenuItem.class.getName()
-							+ " where menuKey == menu_key");
+							"select from " + Menu.class.getName() + " where name == n parameters String n").execute(
+							menuName);
+					Query q = pm.newQuery("select from " + MenuItem.class.getName() + " where menuKey == menu_key");
 					q.setOrdering("ordering");
 					q.declareParameters("com.google.appengine.api.datastore.Key menu_key");
 					q.setRange(first, pageSize);
-					List<MenuItem> list = new ArrayList<MenuItem>(
-							(List<MenuItem>) q.execute(m.get(0).getKey()));
+					List<MenuItem> list = new ArrayList<MenuItem>((List<MenuItem>) q.execute(m.get(0).getKey()));
 					pm.close();
 					return list;
 				}
@@ -147,11 +140,9 @@ public class MenuItemManager implements Serializable {
 
 	@SuppressWarnings("unchecked")
 	public String saveMenuItem() {
-		PersistenceManager pm = PMF.get().getPersistenceManager();
+		PersistenceManager pm = pmf.getPersistenceManager();
 		List<Menu> m = (List<Menu>) pm.newQuery(
-				"select from " + Menu.class.getName()
-						+ " where name == n parameters String n").execute(
-				menuName);
+				"select from " + Menu.class.getName() + " where name == n parameters String n").execute(menuName);
 		menuItem.setMenuKey(m.get(0).getKey());
 		menuItem.setPublished(true);
 		pm.makePersistent(menuItem);
@@ -162,14 +153,12 @@ public class MenuItemManager implements Serializable {
 
 	@SuppressWarnings("unchecked")
 	public void removeMenuItem() {
-		PersistenceManager pm = PMF.get().getPersistenceManager();
+		PersistenceManager pm = pmf.getPersistenceManager();
 		for (MenuItem m : selectedMenuItems) {
-			List<MenuItem> t = (List<MenuItem>) pm
-					.newQuery(
-							"select from "
-									+ MenuItem.class.getName()
-									+ " where key == id parameters com.google.appengine.api.datastore.Key id")
-					.execute(m.getKey());
+			List<MenuItem> t = (List<MenuItem>) pm.newQuery(
+					"select from " + MenuItem.class.getName()
+							+ " where key == id parameters com.google.appengine.api.datastore.Key id").execute(
+					m.getKey());
 			if (!t.isEmpty())
 				pm.deletePersistent(t.get(0));
 		}

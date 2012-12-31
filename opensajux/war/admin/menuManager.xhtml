@@ -9,7 +9,9 @@
 
 <ui:composition template="/templates/admin/masterLayout.xhtml">
 	<ui:define name="title">Sajux - Administration Panel</ui:define>
-
+	<ui:define name="contentTitle">
+		<h2>Menu Manager</h2>
+	</ui:define>
 	<ui:define name="content">
 		<p:commandButton value="Add" action="/admin/addMenu.jsf" ajax="false" />
 		<p:commandButton value="Remove" type="button" onclick="confirm.show()" />
@@ -23,8 +25,9 @@
 
 		<p:dataTable id="menuTable" var="item"
 			value="#{menuManager.menuModel}" dynamic="true" lazy="true"
-			selectionMode="multiple" selection="#{menuManager.selectedMenus}" rowKey="#{item.key.id}"
-			paginator="true" rows="10" rowsPerPageTemplate="10,20,50,100"
+			selectionMode="multiple" selection="#{menuManager.selectedMenus}"
+			rowKey="#{item.key.id}" paginator="true" rows="10"
+			rowsPerPageTemplate="10,20,50,100"
 			paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
 			filteredValue="#{menuManager.filteredMenus}">
 			<p:column resizable="true" sortBy="#{item.name}"
