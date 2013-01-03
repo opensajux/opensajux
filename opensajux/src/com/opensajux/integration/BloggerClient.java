@@ -17,6 +17,7 @@ import com.google.api.services.blogger.Blogger;
 import com.google.api.services.blogger.BloggerRequestInitializer;
 import com.google.api.services.blogger.model.Blog;
 import com.google.api.services.blogger.model.PostList;
+import com.opensajux.common.Constants;
 
 @Singleton
 public class BloggerClient implements Serializable {
@@ -51,8 +52,8 @@ public class BloggerClient implements Serializable {
 
 	public BloggerClient() throws Exception {
 		Credential credential = authorize();
-		blogger = new Blogger.Builder(HTTP_TRANSPORT, JSON_FACTORY, null).setApplicationName("Open-Sajux/0.0.1")
-				.setBloggerRequestInitializer(new BloggerRequestInitializer("AIzaSyC3Qyc_t2flZmLJzEG6LFhoinNUyrzaRuY"))
+		blogger = new Blogger.Builder(HTTP_TRANSPORT, JSON_FACTORY, null).setApplicationName(Constants.APP_NAME)
+				.setBloggerRequestInitializer(new BloggerRequestInitializer(Constants.APP_KEY))
 				.build();
 	}
 
