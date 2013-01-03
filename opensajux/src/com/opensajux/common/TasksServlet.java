@@ -9,9 +9,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.logging.Logger;
 
-import javax.inject.Inject;
 import javax.jdo.PersistenceManager;
-import javax.jdo.PersistenceManagerFactory;
 import javax.jdo.Query;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -38,11 +36,7 @@ public class TasksServlet extends HttpServlet {
 	private static final long serialVersionUID = 2175074959875861703L;
 
 	private static Logger LOGGER = Logger.getLogger(TasksServlet.class.getName());
-	@Inject
-	private transient PersistenceManagerFactory pmf;
-	@Inject
 	BloggerClient bloggerClient;
-	@Inject
 	PlusClient plusClient;
 
 	@Override
@@ -113,7 +107,6 @@ public class TasksServlet extends HttpServlet {
 						}
 					}
 					if (!found && act.getVerb().equalsIgnoreCase("post")) {
-						LOGGER.warning(">>>>>>>>>" + act.getTitle());
 						TalkStream talk = new TalkStream();
 						talk.setId(act.getId());
 						if ("".equals(act.getObject().getContent())) {
@@ -130,7 +123,7 @@ public class TasksServlet extends HttpServlet {
 					}
 				}
 			} catch (Exception e) {
-				e.printStackTrace();
+				throw new RuntimeException(e);
 			}
 		} else if (req.getRequestURI().endsWith("keepalive")) {
 			LOGGER.info("Breathing ...");

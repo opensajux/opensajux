@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 
-import javax.enterprise.context.SessionScoped;
+import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.jdo.PersistenceManager;
@@ -16,7 +16,7 @@ import org.primefaces.model.SortOrder;
 
 import com.opensajux.entity.TalkStream;
 
-@SessionScoped
+@RequestScoped
 @Named
 public class TalkStreamBean implements Serializable {
 	private static final long serialVersionUID = 8879513787369863264L;
