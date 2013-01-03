@@ -10,8 +10,8 @@
 <ui:composition template="/templates/masterLayout.xhtml">
 	<ui:define name="content">
 		<p></p>
-		<p:dataList var="post" value="#{blogPostBean.posts}"
-			paginator="true" rows="4" lazy="true"
+		<p:dataList var="post" value="#{blogPostBean.posts}" paginator="true"
+			rows="4" lazy="true"
 			paginatorTemplate="{PreviousPageLink} {NextPageLink}"
 			paginatorPosition="bottom" type="none" styleClass="postList">
 			<div style="width: 100%;">
@@ -38,14 +38,6 @@
 					<h:outputLink value="#{post.sourceUrl.value}">view &raquo;</h:outputLink>
 				</div>
 			</div>
-		</p:dataList>
-	</ui:define>
-	<ui:define name="right">
-		<p:dataList var="stream" value="#{talkStream.stream}" paginator="true"
-			rows="4" paginatorTemplate="{PreviousPageLink}   {NextPageLink}"
-			paginatorPosition="bottom" type="none" styleClass="talkStream">
-			<h:outputText value="#{stream.text}" />
-			<hr width="80%"></hr>
 		</p:dataList>
 	</ui:define>
 </ui:composition>

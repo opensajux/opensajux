@@ -282,6 +282,15 @@ body {
 	background: transparent;
 }
 
+.talkStream a {
+	color: #C0C0C0;
+	text-decoration: none;
+}
+
+.talkStream a:hover {
+	color: rgb(255, 0, 0);
+}
+
 .postList hr {
 	border-color: #66cc33;
 	border-style: solid;

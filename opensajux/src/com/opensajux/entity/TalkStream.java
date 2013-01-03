@@ -9,6 +9,7 @@ import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.PrimaryKey;
 
 import com.google.appengine.api.datastore.Key;
+import com.google.appengine.api.datastore.Text;
 import com.opensajux.common.SocialSource;
 
 @PersistenceCapable
@@ -20,13 +21,25 @@ public class TalkStream implements Serializable {
 	private Key key;
 
 	@Persistent
-	private String text;
+	private String id;
+
+	@Persistent
+	private Text title;
+
+	@Persistent
+	private Text content;
 
 	@Persistent
 	private SocialSource source;
 
 	@Persistent
 	private Date publishDate;
+
+	@Persistent
+	private Date updatedDate;
+
+	@Persistent
+	private Text sourceUrl;
 
 	/**
 	 * @param key
@@ -44,18 +57,48 @@ public class TalkStream implements Serializable {
 	}
 
 	/**
-	 * @return the text
+	 * @return the id
 	 */
-	public String getText() {
-		return text;
+	public String getId() {
+		return id;
 	}
 
 	/**
-	 * @param text
-	 *            the text to set
+	 * @param id
+	 *            the id to set
 	 */
-	public void setText(String text) {
-		this.text = text;
+	public void setId(String id) {
+		this.id = id;
+	}
+
+	/**
+	 * @return the title
+	 */
+	public Text getTitle() {
+		return title;
+	}
+
+	/**
+	 * @param title
+	 *            the title to set
+	 */
+	public void setTitle(Text title) {
+		this.title = title;
+	}
+
+	/**
+	 * @return the content
+	 */
+	public Text getContent() {
+		return content;
+	}
+
+	/**
+	 * @param content
+	 *            the content to set
+	 */
+	public void setContent(Text content) {
+		this.content = content;
 	}
 
 	/**
@@ -86,6 +129,36 @@ public class TalkStream implements Serializable {
 	 */
 	public void setPublishDate(Date publishDate) {
 		this.publishDate = publishDate;
+	}
+
+	/**
+	 * @return the updatedDate
+	 */
+	public Date getUpdatedDate() {
+		return updatedDate;
+	}
+
+	/**
+	 * @param updatedDate
+	 *            the updatedDate to set
+	 */
+	public void setUpdatedDate(Date updatedDate) {
+		this.updatedDate = updatedDate;
+	}
+
+	/**
+	 * @return the sourceUrl
+	 */
+	public Text getSourceUrl() {
+		return sourceUrl;
+	}
+
+	/**
+	 * @param sourceUrl
+	 *            the sourceUrl to set
+	 */
+	public void setSourceUrl(Text sourceUrl) {
+		this.sourceUrl = sourceUrl;
 	}
 
 }

@@ -43,12 +43,14 @@
 			<h:form>
 				<div id="right">
 					<ui:insert name="right">
-						<p:dataList var="stream" value="#{talkStream.stream}"
-							paginator="true" rows="4"
+						<p:dataList var="stream" value="#{talkStreamBean.stream}"
+							paginator="true" rows="5" lazy="true"
 							paginatorTemplate="{PreviousPageLink}   {NextPageLink}"
 							paginatorPosition="bottom" type="none" styleClass="talkStream">
-							<h:outputText value="#{stream.text}" />
-							<hr width="80%" ></hr>
+							<h:outputLink value="#{stream.sourceUrl.value}" >
+								<h:outputText value="#{stream.title.value}" />
+							</h:outputLink>
+							<hr width="80%"></hr>
 						</p:dataList>
 					</ui:insert>
 				</div>
