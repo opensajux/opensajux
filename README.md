@@ -5,7 +5,7 @@ Personal Website Management software hosted on Google AppEngine. Developed using
 + Google AppEngine 1.7.4
 + Java Server Faces 2.0
 + PrimeFaces 3.4.2
-+ Weld
++ Context and Dependency Injection 1.0 using Weld
 + Java Data Object
 + HTML / JavaScript
 
