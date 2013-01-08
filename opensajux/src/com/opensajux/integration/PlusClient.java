@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.util.List;
 
+import javax.inject.Inject;
 import javax.inject.Singleton;
 
 import com.google.api.client.auth.oauth2.BearerToken;
@@ -17,7 +18,9 @@ import com.google.api.client.json.jackson2.JacksonFactory;
 import com.google.api.services.plus.Plus;
 import com.google.api.services.plus.PlusRequestInitializer;
 import com.google.api.services.plus.model.Activity;
+import com.opensajux.common.Chosen;
 import com.opensajux.common.Constants;
+import com.opensajux.dto.SiteDetails;
 
 @Singleton
 public class PlusClient implements Serializable {
@@ -50,10 +53,11 @@ public class PlusClient implements Serializable {
 		return credential;
 	}
 
-	public PlusClient() throws Exception {
+	@Inject
+	public PlusClient(@Chosen SiteDetails siteDetails) throws Exception {
 		// Credential credential = authorize();
 		plus = new Plus.Builder(HTTP_TRANSPORT, JSON_FACTORY, null).setApplicationName(Constants.APP_NAME)
-				.setPlusRequestInitializer(new PlusRequestInitializer(Constants.APP_KEY)).build();
+				.setPlusRequestInitializer(new PlusRequestInitializer(siteDetails.getGoogleApiKey())).build();
 	}
 
 	public List<Activity> getActivities() throws IOException {

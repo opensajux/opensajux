@@ -20,17 +20,17 @@
 		type="text/css" />
 	<link href="/resources/css/masterLayout.css" rel="stylesheet"
 		type="text/css" />
-	<title><ui:insert name="title">#{siteInfoManager.siteInfo.title}</ui:insert></title>
+	<title><ui:insert name="title">#{siteInfoManager.siteDetails.title}</ui:insert></title>
 </h:head>
 
 <h:body>
 	<div>
 		<div id="topBar">
 			<ui:insert name="topBar">
-				<h:outputText value="#{siteInfoManager.siteInfo.title}" />
+				<h:outputText value="#{siteInfoManager.siteDetails.title}" />
 				<br />
 				<div id="subTitle">
-					<h:outputText value="#{siteInfoManager.siteInfo.subTitle}" />
+					<h:outputText value="#{siteInfoManager.siteDetails.subTitle}" />
 				</div>
 			</ui:insert>
 		</div>
@@ -47,7 +47,7 @@
 							paginator="true" rows="5" lazy="true"
 							paginatorTemplate="{PreviousPageLink}   {NextPageLink}"
 							paginatorPosition="bottom" type="none" styleClass="talkStream">
-							<h:outputLink value="#{stream.sourceUrl.value}" >
+							<h:outputLink value="#{stream.sourceUrl.value}">
 								<h:outputText value="#{stream.title.value}" />
 							</h:outputLink>
 							<hr width="80%"></hr>

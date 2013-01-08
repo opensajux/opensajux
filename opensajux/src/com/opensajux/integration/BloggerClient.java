@@ -3,6 +3,7 @@ package com.opensajux.integration;
 import java.io.IOException;
 import java.io.Serializable;
 
+import javax.inject.Inject;
 import javax.inject.Singleton;
 
 import com.google.api.client.auth.oauth2.BearerToken;
@@ -17,7 +18,9 @@ import com.google.api.services.blogger.Blogger;
 import com.google.api.services.blogger.BloggerRequestInitializer;
 import com.google.api.services.blogger.model.Blog;
 import com.google.api.services.blogger.model.PostList;
+import com.opensajux.common.Chosen;
 import com.opensajux.common.Constants;
+import com.opensajux.dto.SiteDetails;
 
 @Singleton
 public class BloggerClient implements Serializable {
@@ -50,11 +53,11 @@ public class BloggerClient implements Serializable {
 		return credential;
 	}
 
-	public BloggerClient() throws Exception {
-		Credential credential = authorize();
+	@Inject
+	public BloggerClient(@Chosen SiteDetails siteDetails) throws Exception {
+		// Credential credential = authorize();
 		blogger = new Blogger.Builder(HTTP_TRANSPORT, JSON_FACTORY, null).setApplicationName(Constants.APP_NAME)
-				.setBloggerRequestInitializer(new BloggerRequestInitializer(Constants.APP_KEY))
-				.build();
+				.setBloggerRequestInitializer(new BloggerRequestInitializer(siteDetails.getGoogleApiKey())).build();
 	}
 
 	public Blog getBlog(String url) throws IOException {

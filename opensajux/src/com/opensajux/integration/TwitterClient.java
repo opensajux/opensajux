@@ -1,50 +1,40 @@
 package com.opensajux.integration;
 
+import java.io.Serializable;
+import java.util.List;
+import java.util.logging.Logger;
+
+import javax.inject.Inject;
 import javax.inject.Singleton;
 
-import com.google.api.client.auth.oauth2.BearerToken;
-import com.google.api.client.auth.oauth2.Credential;
-import com.google.api.client.http.BasicAuthentication;
-import com.google.api.client.http.HttpTransport;
-import com.google.api.client.http.javanet.NetHttpTransport;
-import com.google.api.client.json.JsonFactory;
-import com.google.api.client.json.jackson2.JacksonFactory;
-import com.google.api.services.plus.Plus;
-import com.google.api.services.plus.model.Activity;
-import com.google.api.services.plus.model.ActivityFeed;
+import twitter4j.Status;
+import twitter4j.Twitter;
+import twitter4j.TwitterException;
+import twitter4j.TwitterFactory;
+import twitter4j.conf.ConfigurationBuilder;
+
+import com.opensajux.common.Chosen;
+import com.opensajux.dto.SiteDetails;
 
 @Singleton
-public class TwitterClient {
-	/** Global instance of the HTTP transport. */
-	private static final HttpTransport HTTP_TRANSPORT = new NetHttpTransport();
+public class TwitterClient implements Serializable {
+	private static final long serialVersionUID = 7845735358098351478L;
 
-	/** Global instance of the JSON factory. */
-	private static final JsonFactory JSON_FACTORY = new JacksonFactory();
+	private static Logger LOGGER = Logger.getLogger(TwitterClient.class.getName());
+	private Twitter twitter;
 
-	/** Authorizes the installed application to access user's protected data. */
-	private static Credential authorize() throws Exception {
-		// Set up OAuth 2.0 access of protected resources
-		// using the refresh and access tokens, automatically
-		// refreshing the access token when it expires
-		Credential credential = new Credential.Builder(BearerToken.authorizationHeaderAccessMethod())
-				.setJsonFactory(JSON_FACTORY)
-				.setTransport(HTTP_TRANSPORT)
-				.build();
-		// authorize
-		return credential;
+	@Inject
+	public TwitterClient(@Chosen SiteDetails siteDetails) throws Exception {
+		ConfigurationBuilder cb = new ConfigurationBuilder();
+		cb.setDebugEnabled(true).setOAuthConsumerKey(siteDetails.getTwitterConsumerKey())
+				.setOAuthConsumerSecret(siteDetails.getTwitterConsumerSecret())
+				.setOAuthAccessToken(siteDetails.getTwitterAccessToken())
+				.setOAuthAccessTokenSecret(siteDetails.getTwitterConsumerSecret());
+		TwitterFactory tf = new TwitterFactory(cb.build());
+		twitter = tf.getInstance();
 	}
 
-	public TwitterClient() throws Exception {
-		Credential credential = authorize();
-		// set up global Plus instance
-		Plus plus = new Plus.Builder(HTTP_TRANSPORT, JSON_FACTORY, credential).setApplicationName("Open-Sajux/0.0.1")
-				.build();
-		Plus.Activities.List listActivities = plus.activities().list("me", "public");
-		listActivities.setMaxResults(5L);
-		listActivities.setFields("nextPageToken,items(id,url,object/content)");
-		ActivityFeed feed = listActivities.execute();
-		for (Activity activity : feed.getItems()) {
-			System.out.println(activity.getTitle());
-		}
+	public List<Status> getUserStatuses(String user) throws TwitterException {
+		return twitter.getUserTimeline(user);
 	}
 }
