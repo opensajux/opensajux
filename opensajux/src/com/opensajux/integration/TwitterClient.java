@@ -29,7 +29,7 @@ public class TwitterClient implements Serializable {
 		cb.setDebugEnabled(true).setOAuthConsumerKey(siteDetails.getTwitterConsumerKey())
 				.setOAuthConsumerSecret(siteDetails.getTwitterConsumerSecret())
 				.setOAuthAccessToken(siteDetails.getTwitterAccessToken())
-				.setOAuthAccessTokenSecret(siteDetails.getTwitterConsumerSecret());
+				.setOAuthAccessTokenSecret(siteDetails.getTwitterAccessTokenSecret());
 		TwitterFactory tf = new TwitterFactory(cb.build());
 		twitter = tf.getInstance();
 	}

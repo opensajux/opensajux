@@ -45,6 +45,7 @@ public class TasksServlet extends HttpServlet {
 
 	private static Logger LOGGER = Logger.getLogger(TasksServlet.class.getName());
 
+	@SuppressWarnings("unchecked")
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		PrintWriter out = resp.getWriter();
@@ -168,6 +169,8 @@ public class TasksServlet extends HttpServlet {
 						if (talk.getId().equals("" + s.getId())) {
 							found = true;
 							talk.setTitle(new Text(s.getText()));
+							talk.setPublishDate(s.getCreatedAt());
+							talk.setUpdatedDate(s.getCreatedAt());
 							talk.setSource(SocialSource.TWITTER);
 							talk.setSourceUrl(new Text("https://twitter.com/" + twitterUser + "/status/" + s.getId()));
 							pm.makePersistent(talk);
@@ -177,6 +180,8 @@ public class TasksServlet extends HttpServlet {
 						TalkStream talk = new TalkStream();
 						talk.setId(s.getId() + "");
 						talk.setTitle(new Text(s.getText()));
+						talk.setPublishDate(s.getCreatedAt());
+						talk.setUpdatedDate(s.getCreatedAt());
 						talk.setSource(SocialSource.TWITTER);
 						talk.setSourceUrl(new Text("https://twitter.com/" + twitterUser + "/status/" + s.getId()));
 						pm.makePersistent(talk);

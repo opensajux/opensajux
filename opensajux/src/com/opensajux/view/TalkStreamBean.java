@@ -47,6 +47,7 @@ public class TalkStreamBean implements Serializable {
 					PersistenceManager pm = pmf.getPersistenceManager();
 					Query query = pm.newQuery(TalkStream.class);
 					query.setRange(first, first + pageSize);
+					query.setOrdering("updatedDate desc");
 					List<TalkStream> stream = (List<TalkStream>) query.execute();
 					pm.close();
 					return stream;
