@@ -17,6 +17,6 @@ Personal Website Management software hosted on Google AppEngine. Developed using
 ## Reference Implementation
 The site 
 
-http://opensajux.appspot
+http://opensajux.appspot.com
 
 deploys the latest version of the opensajux project. It is both a personal website of the author as well as the showcase app for the project.
