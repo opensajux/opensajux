@@ -30,7 +30,7 @@ body {
 	position: fixed;
 	float: left;
 	text-align: left;
-	margin-top: 98px;
+	margin-top: 72px;
 	z-index: 10; /*bring to top*/
 	width: 100px;
 	height: 600px;
@@ -38,7 +38,7 @@ body {
 }
 
 #content_container {
-	padding-top: 95px;
+	padding-top: 84px;
 	padding-left: 110px;
 	height: 600px;
 }
