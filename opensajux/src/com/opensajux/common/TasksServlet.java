@@ -150,7 +150,12 @@ public class TasksServlet extends HttpServlet {
 						talk.setUpdatedDate(new Date(act.getUpdated().getValue()));
 						talk.setSource(SocialSource.GOOGLE_PLUS);
 						talk.setSourceUrl(new Text(act.getUrl()));
-						pm.makePersistent(talk);
+						try {
+							pm.makePersistent(talk);
+						} catch (Exception e) {
+							// TODO Debug why this is being generated? Some content is null which is incorrect.
+							LOGGER.log(Level.SEVERE, e.getMessage(), e);
+						}
 					}
 				}
 				out.println("Plus: Success");

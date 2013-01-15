@@ -51,6 +51,7 @@ public class SiteInfoManager {
 		return siteDetails;
 	}
 
+	@SuppressWarnings("unchecked")
 	public String saveSiteInfo() {
 		PersistenceManager pm = pmf.getPersistenceManager();
 		Query query = pm.newQuery("select from " + SiteInfo.class.getName());

@@ -16,17 +16,18 @@ import com.restfb.Parameter;
 @Singleton
 public class FacebookClient implements Serializable {
 	private static final long serialVersionUID = 7845735358098351478L;
-	private com.restfb.FacebookClient facebook;
+	private transient com.restfb.FacebookClient facebook;
 
 	@Inject
 	public FacebookClient(@Chosen SiteDetails siteDetails) {
-		AccessToken accessToken = new DefaultFacebookClient().obtainAppAccessToken(siteDetails.getFacebookAppId(),
-				siteDetails.getFacebookAppSecret());
+//		AccessToken accessToken = new DefaultFacebookClient().obtainAppAccessToken(siteDetails.getFacebookAppId(),
+//				siteDetails.getFacebookAppSecret());
 		facebook = new DefaultFacebookClient(siteDetails.getFacebookAccessToken());
 	}
 
 	public List<FacebookStatusMessage> getUserPosts(String user) {
 		return facebook.executeQuery("select status_id, message, time from status where uid=100002229454916",
 				FacebookStatusMessage.class, Parameter.with("type", "status"));
+//		return facebook.fetchConnection("me/feed", FacebookStatusMessage.class, Parameter.with("type", "status")).getData();
 	}
 }
