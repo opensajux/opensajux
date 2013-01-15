@@ -3,7 +3,6 @@ package com.opensajux.view;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.enterprise.context.RequestScoped;
@@ -44,16 +43,13 @@ public class BlogPostBean implements Serializable {
 			public List<BlogPost> load(int first, int pageSize, String sortField, SortOrder sortOrder,
 					Map<String, String> filters) {
 				setPageSize(pageSize);
-				LOGGER.log(Level.WARNING, "paging: " + first + "," + pageSize + "," + sortField + "," + sortOrder + ","
-						+ filters);
 				PersistenceManager pm = pmf.getPersistenceManager();
 				Query query = pm.newQuery(BlogPost.class);
 				query.setRange(first, first + pageSize);
 				query.setOrdering("publishDate desc");
 
 				List<BlogPost> blogs = (List<BlogPost>) query.execute();
-				
-				
+
 				pm.close();
 				return blogs;
 			}

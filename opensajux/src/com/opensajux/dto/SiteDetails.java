@@ -1,53 +1,34 @@
-package com.opensajux.entity;
+package com.opensajux.dto;
 
 import java.io.Serializable;
 
-import javax.jdo.annotations.IdGeneratorStrategy;
-import javax.jdo.annotations.PersistenceCapable;
-import javax.jdo.annotations.Persistent;
-import javax.jdo.annotations.PrimaryKey;
-
 import com.google.appengine.api.datastore.Key;
 
-@PersistenceCapable
-public class SiteInfo implements Serializable {
+public class SiteDetails implements Serializable {
 	private static final long serialVersionUID = -8213497624092274696L;
 
-	@PrimaryKey
-	@Persistent(valueStrategy = IdGeneratorStrategy.IDENTITY)
 	protected Key key;
 
-	@Persistent
 	private String aboutMe;
 
-	@Persistent
 	private String title;
 
-	@Persistent
 	private String subTitle;
 
-	@Persistent
 	private String googleApiKey;
 
-	@Persistent
 	private String twitterConsumerKey;
 
-	@Persistent
 	private String twitterConsumerSecret;
 
-	@Persistent
 	private String twitterAccessToken;
 
-	@Persistent
 	private String twitterAccessTokenSecret;
 
-	@Persistent
 	private String facebookAppId;
 
-	@Persistent
 	private String facebookAppSecret;
 
-	@Persistent
 	private String facebookAccessToken;
 
 	public String getAboutMe() {

@@ -2,6 +2,7 @@ package com.opensajux.integration;
 
 import java.io.IOException;
 import java.io.Serializable;
+import java.util.List;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -14,16 +15,15 @@ import com.google.api.client.http.HttpTransport;
 import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.json.JsonFactory;
 import com.google.api.client.json.jackson2.JacksonFactory;
-import com.google.api.services.blogger.Blogger;
-import com.google.api.services.blogger.BloggerRequestInitializer;
-import com.google.api.services.blogger.model.Blog;
-import com.google.api.services.blogger.model.PostList;
+import com.google.api.services.plus.Plus;
+import com.google.api.services.plus.PlusRequestInitializer;
+import com.google.api.services.plus.model.Activity;
 import com.opensajux.common.Chosen;
 import com.opensajux.common.Constants;
 import com.opensajux.dto.SiteDetails;
 
 @Singleton
-public class BloggerClient implements Serializable {
+public class PlusClient implements Serializable {
 	private static final long serialVersionUID = -5359690231487914747L;
 
 	/** Global instance of the HTTP transport. */
@@ -32,7 +32,7 @@ public class BloggerClient implements Serializable {
 	/** Global instance of the JSON factory. */
 	private static final JsonFactory JSON_FACTORY = new JacksonFactory();
 
-	private transient Blogger blogger;
+	private transient Plus plus;
 
 	/** Authorizes the installed application to access user's protected data. */
 	private static Credential authorize() throws Exception {
@@ -54,19 +54,14 @@ public class BloggerClient implements Serializable {
 	}
 
 	@Inject
-	public BloggerClient(@Chosen SiteDetails siteDetails) throws Exception {
+	public PlusClient(@Chosen SiteDetails siteDetails) throws Exception {
 		// Credential credential = authorize();
-		blogger = new Blogger.Builder(HTTP_TRANSPORT, JSON_FACTORY, null).setApplicationName(Constants.APP_NAME)
-				.setBloggerRequestInitializer(new BloggerRequestInitializer(siteDetails.getGoogleApiKey())).build();
+		plus = new Plus.Builder(HTTP_TRANSPORT, JSON_FACTORY, null).setApplicationName(Constants.APP_NAME)
+				.setPlusRequestInitializer(new PlusRequestInitializer(siteDetails.getGoogleApiKey())).build();
 	}
 
-	public Blog getBlog(String url) throws IOException {
-		Blog blog = blogger.blogs().getByUrl().setUrl(url).execute();
-		return blog;
-	}
-
-	public PostList getPostList(Blog blog) throws IOException {
-		PostList post = blogger.posts().list(blog.getId().toString()).execute();
-		return post;
+	public List<Activity> getActivities() throws IOException {
+		Plus.Activities.List listActivities = plus.activities().list("117794071971673673713", "public");
+		return listActivities.execute().getItems();
 	}
 }

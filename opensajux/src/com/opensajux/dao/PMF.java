@@ -14,7 +14,7 @@ public final class PMF implements Serializable {
 
 	private static final PersistenceManagerFactory pmfInstance = JDOHelper
 			.getPersistenceManagerFactory("transactions-optional");
-	Logger log = Logger.getLogger(PMF.class.getName());
+	transient Logger log = Logger.getLogger(PMF.class.getName());
 
 	public static @Produces
 	PersistenceManagerFactory getPMF() {
