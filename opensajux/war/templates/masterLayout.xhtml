@@ -27,7 +27,9 @@
 	<div>
 		<div id="topBar">
 			<ui:insert name="topBar">
-				<h:outputText value="#{siteInfoManager.siteDetails.title}" />
+				<h:outputLink value="/">
+					<h:outputText value="#{siteInfoManager.siteDetails.title}" />
+				</h:outputLink>
 				<br />
 				<div id="subTitle">
 					<h:outputText value="#{siteInfoManager.siteDetails.subTitle}" />

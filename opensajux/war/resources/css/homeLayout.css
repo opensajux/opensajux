@@ -21,6 +21,15 @@ body {
 	color: #66cc33;
 }
 
+#topBar a:link,#topBar a:visited {
+	color: #66cc33;
+	text-decoration: none;
+}
+
+#topBar a:link:hover,#topBar a:visited:hover {
+	color: rgb(255, 0, 0);
+}
+
 #subTitle {
 	color: #C0C0C0;
 	font-size: x-small;
@@ -44,6 +53,7 @@ body {
 }
 
 .center_content {
+	
 }
 
 #footer {
@@ -68,18 +78,6 @@ body {
 
 #footer a:hover {
 	color: rgb(255, 0, 0);
-}
-
-#header a:link,#header a:visited {
-	color: white;
-	font-weight: bold;
-	text-decoration: none;
-}
-
-#header a:link:hover,#header a:visited:hover {
-	color: black;
-	font-weight: bold;
-	text-decoration: underline;
 }
 
 #spacer {
