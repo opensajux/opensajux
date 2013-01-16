@@ -9,7 +9,6 @@
 
 <ui:composition template="/templates/masterLayout.xhtml">
 	<ui:define name="content">
-		<p></p>
 		<p:dataList var="post" value="#{blogPostBean.posts}" paginator="true"
 			rows="4" lazy="true"
 			paginatorTemplate="{PreviousPageLink} {NextPageLink}"
