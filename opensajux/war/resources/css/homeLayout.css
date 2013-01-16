@@ -8,6 +8,15 @@ body {
 	text-align: justify;
 }
 
+a:link,a:visited {
+	color: #66cc33;
+	text-decoration: none;
+}
+
+a:link:hover,a:visited:hover {
+	color: rgb(255, 0, 0);
+}
+
 #topBar {
 	padding: 20px 0px 15px 0px;
 	position: fixed;
@@ -19,15 +28,6 @@ body {
 	z-index: 9; /*bring to top*/
 	background-color: white;
 	color: #66cc33;
-}
-
-#topBar a:link,#topBar a:visited {
-	color: #66cc33;
-	text-decoration: none;
-}
-
-#topBar a:link:hover,#topBar a:visited:hover {
-	color: rgb(255, 0, 0);
 }
 
 #subTitle {
@@ -62,22 +62,7 @@ body {
 	position: relative;
 	padding: 5px;
 	margin: 10px 0px 0px 0px;
-	color: #66cc33;
 	text-align: center;
-}
-
-#footer a:link,#footer a:visited {
-	font: 11px Verdana, Arial, Helvetica, sans-serif;
-	clear: both;
-	position: relative;
-	padding: 5px;
-	margin: 10px 0px 0px 0px;
-	text-decoration: none;
-	color: #66cc33;
-}
-
-#footer a:hover {
-	color: rgb(255, 0, 0);
 }
 
 #spacer {
@@ -89,16 +74,6 @@ body {
 	color: white;
 	padding: 0px;
 	margin: 0px 0px 2px 0px;
-}
-
-#breadcrumb a:link,#breadcrumb a:visited {
-	font-weight: bold;
-	text-decoration: none;
-}
-
-#breadcrumb a:link:hover,#breadcrumb a:visited:hover {
-	font-weight: bold;
-	text-decoration: underline;
 }
 
 .menu {
@@ -123,16 +98,6 @@ body {
 	display: block;
 	text-decoration: none;
 	outline: none;
-}
-
-.menu li a:hover {
-	color: rgb(255, 0, 0);
-	text-decoration: blink;
-	text-shadow: aqua;
-}
-
-.menu li a.active,.menu li a.active:hover {
-	color: rgb(255, 255, 255);
 }
 
 .menu li a span {
@@ -161,7 +126,6 @@ body {
 	float: left;
 	padding-left: 15px;
 	display: block;
-	color: rgb(255, 255, 255);
 	text-decoration: none;
 	font: 12px Verdana, Arial, Helvetica, sans-serif;
 	cursor: pointer;
@@ -179,7 +143,6 @@ body {
 
 .menu-h li a:hover {
 	background-position: 0px -60px;
-	color: rgb(255, 255, 255);
 }
 
 .menu-h li a:hover span {
