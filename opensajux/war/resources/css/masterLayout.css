@@ -25,6 +25,7 @@ a:link:hover,a:visited:hover {
 	font-variant: small-caps;
 	font-size: xx-large;
 	width: 91%;
+	height: 60px;
 	left: 70px;
 	z-index: 9; /*bring to top*/
 	background-color: white;
@@ -35,7 +36,7 @@ a:link:hover,a:visited:hover {
 	position: fixed;
 	float: left;
 	text-align: left;
-	margin-top: 72px;
+	margin-top: 82px;
 	z-index: 10; /*bring to top*/
 	width: 100px;
 	float: left;
@@ -52,7 +53,7 @@ a:link:hover,a:visited:hover {
 }
 
 #content_container {
-	padding-top: 88px;
+	padding-top: 98px;
 	padding-left: 110px;
 }
 
