@@ -27,7 +27,13 @@ public class SiteInfo implements Serializable {
 	private String subTitle;
 
 	@Persistent
+	private String googleUserId;
+
+	@Persistent
 	private String googleApiKey;
+
+	@Persistent
+	private String twitterUsername;
 
 	@Persistent
 	private String twitterConsumerKey;
@@ -40,6 +46,9 @@ public class SiteInfo implements Serializable {
 
 	@Persistent
 	private String twitterAccessTokenSecret;
+
+	@Persistent
+	private String facebookUsername;
 
 	@Persistent
 	private String facebookAppId;
@@ -94,6 +103,21 @@ public class SiteInfo implements Serializable {
 	}
 
 	/**
+	 * @return the googleUserId
+	 */
+	public String getGoogleUserId() {
+		return googleUserId;
+	}
+
+	/**
+	 * @param googleUserId
+	 *            the googleUserId to set
+	 */
+	public void setGoogleUserId(String googleUserId) {
+		this.googleUserId = googleUserId;
+	}
+
+	/**
 	 * @return the googleApiKey
 	 */
 	public String getGoogleApiKey() {
@@ -106,6 +130,21 @@ public class SiteInfo implements Serializable {
 	 */
 	public void setGoogleApiKey(String googleApiKey) {
 		this.googleApiKey = googleApiKey;
+	}
+
+	/**
+	 * @return the twitterUsername
+	 */
+	public String getTwitterUsername() {
+		return twitterUsername;
+	}
+
+	/**
+	 * @param twitterUsername
+	 *            the twitterUsername to set
+	 */
+	public void setTwitterUsername(String twitterUsername) {
+		this.twitterUsername = twitterUsername;
 	}
 
 	/**
@@ -166,6 +205,21 @@ public class SiteInfo implements Serializable {
 	 */
 	public void setTwitterAccessTokenSecret(String twitterAccessTokenSecret) {
 		this.twitterAccessTokenSecret = twitterAccessTokenSecret;
+	}
+
+	/**
+	 * @return the facebookUsername
+	 */
+	public String getFacebookUsername() {
+		return facebookUsername;
+	}
+
+	/**
+	 * @param facebookUsername
+	 *            the facebookUsername to set
+	 */
+	public void setFacebookUsername(String facebookUsername) {
+		this.facebookUsername = facebookUsername;
 	}
 
 	/**

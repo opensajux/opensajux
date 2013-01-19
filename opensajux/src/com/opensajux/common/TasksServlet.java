@@ -57,11 +57,14 @@ public class TasksServlet extends HttpServlet {
 		siteDetails.setAboutMe(siteInfo.getAboutMe());
 		siteDetails.setTitle(siteInfo.getTitle());
 		siteDetails.setSubTitle(siteInfo.getSubTitle());
+		siteDetails.setGoogleUserId(siteInfo.getGoogleUserId());
 		siteDetails.setGoogleApiKey(siteInfo.getGoogleApiKey());
+		siteDetails.setTwitterUsername(siteInfo.getTwitterUsername());
 		siteDetails.setTwitterAccessToken(siteInfo.getTwitterAccessToken());
 		siteDetails.setTwitterAccessTokenSecret(siteInfo.getTwitterAccessTokenSecret());
 		siteDetails.setTwitterConsumerKey(siteInfo.getTwitterConsumerKey());
 		siteDetails.setTwitterConsumerSecret(siteInfo.getTwitterConsumerSecret());
+		siteDetails.setFacebookUsername(siteInfo.getFacebookUsername());
 		siteDetails.setFacebookAppId(siteInfo.getFacebookAppId());
 		siteDetails.setFacebookAppSecret(siteInfo.getFacebookAppSecret());
 		siteDetails.setFacebookAccessToken(siteInfo.getFacebookAccessToken());
@@ -118,7 +121,7 @@ public class TasksServlet extends HttpServlet {
 			try {
 				// check Google Plus
 				plusClient = new PlusClient(siteDetails);
-				for (Activity act : plusClient.getActivities()) {
+				for (Activity act : plusClient.getActivities(siteDetails.getGoogleUserId())) {
 					boolean found = false;
 					for (TalkStream talk : talkCache) {
 						if (act.getId().equals(talk.getId())) {
@@ -153,7 +156,8 @@ public class TasksServlet extends HttpServlet {
 						try {
 							pm.makePersistent(talk);
 						} catch (Exception e) {
-							// TODO Debug why this is being generated? Some content is null which is incorrect.
+							// TODO Debug why this is being generated? Some
+							// content is null which is incorrect.
 							LOGGER.log(Level.SEVERE, e.getMessage(), e);
 						}
 					}
@@ -165,9 +169,8 @@ public class TasksServlet extends HttpServlet {
 			}
 			try {
 				// check Twitter
-				String twitterUser = "sajux";
 				TwitterClient twitterClient = new TwitterClient(siteDetails);
-				List<Status> list = twitterClient.getUserStatuses(twitterUser);
+				List<Status> list = twitterClient.getUserStatuses(siteDetails.getTwitterUsername());
 				for (Status s : list) {
 					boolean found = false;
 					for (TalkStream talk : talkCache) {
@@ -177,7 +180,8 @@ public class TasksServlet extends HttpServlet {
 							talk.setPublishDate(s.getCreatedAt());
 							talk.setUpdatedDate(s.getCreatedAt());
 							talk.setSource(SocialSource.TWITTER);
-							talk.setSourceUrl(new Text("https://twitter.com/" + twitterUser + "/status/" + s.getId()));
+							talk.setSourceUrl(new Text("https://twitter.com/" + siteDetails.getTwitterUsername()
+									+ "/status/" + s.getId()));
 							pm.makePersistent(talk);
 						}
 					}
@@ -188,7 +192,8 @@ public class TasksServlet extends HttpServlet {
 						talk.setPublishDate(s.getCreatedAt());
 						talk.setUpdatedDate(s.getCreatedAt());
 						talk.setSource(SocialSource.TWITTER);
-						talk.setSourceUrl(new Text("https://twitter.com/" + twitterUser + "/status/" + s.getId()));
+						talk.setSourceUrl(new Text("https://twitter.com/" + siteDetails.getTwitterUsername()
+								+ "/status/" + s.getId()));
 						pm.makePersistent(talk);
 					}
 				}
@@ -199,9 +204,8 @@ public class TasksServlet extends HttpServlet {
 			}
 			try {
 				// check facebook
-				String facebookUser = "abuabdullah.sajid";
 				FacebookClient facebookClient = new FacebookClient(siteDetails);
-				List<FacebookStatusMessage> statuses = facebookClient.getUserPosts(facebookUser);
+				List<FacebookStatusMessage> statuses = facebookClient.getUserPosts(siteDetails.getFacebookUsername());
 				if (statuses != null) {
 					for (FacebookStatusMessage sm : statuses) {
 						boolean found = false;
@@ -211,8 +215,8 @@ public class TasksServlet extends HttpServlet {
 								talk.setTitle(new Text(sm.getMessage()));
 								talk.setPublishDate(sm.getUpdatedTime());
 								talk.setSource(SocialSource.FACEBOOK);
-								talk.setSourceUrl(new Text("https://www.facebook.com/" + facebookUser + "/posts/"
-										+ sm.getUpdatedTime().getTime()));
+								talk.setSourceUrl(new Text("https://www.facebook.com/"
+										+ siteDetails.getFacebookUsername() + "/posts/" + sm.getUpdatedTime().getTime()));
 								pm.makePersistent(talk);
 							}
 						}
@@ -222,8 +226,8 @@ public class TasksServlet extends HttpServlet {
 							talk.setTitle(new Text(sm.getMessage()));
 							talk.setPublishDate(sm.getUpdatedTime());
 							talk.setSource(SocialSource.FACEBOOK);
-							talk.setSourceUrl(new Text("https://www.facebook.com/" + facebookUser + "/posts/"
-									+ sm.getUpdatedTime().getTime()));
+							talk.setSourceUrl(new Text("https://www.facebook.com/" + siteDetails.getFacebookUsername()
+									+ "/posts/" + sm.getUpdatedTime().getTime()));
 							pm.makePersistent(talk);
 						}
 					}
