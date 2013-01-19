@@ -42,14 +42,18 @@
 				<f:facet name="header">
 					<h:outputText value="Published on" />
 				</f:facet>
-				<h:outputText value="#{item.publishDate}" />
+				<h:outputText value="#{item.publishDate}">
+					<f:convertDateTime type="date" pattern="dd MMMM yyyy" />
+				</h:outputText>
 			</p:column>
 			<p:column resizable="true" sortBy="#{item.updatedDate}"
 				filterBy="#{item.updatedDate}">
 				<f:facet name="header">
 					<h:outputText value="Updated on" />
 				</f:facet>
-				<h:outputText value="#{item.updatedDate}" />
+				<h:outputText value="#{item.updatedDate}">
+					<f:convertDateTime type="date" pattern="dd MMMM yyyy" />
+				</h:outputText>
 			</p:column>
 			<p:column resizable="true" sortBy="#{item.source}"
 				filterBy="#{item.source}">
