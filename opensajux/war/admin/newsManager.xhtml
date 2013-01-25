@@ -3,25 +3,88 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:p="http://primefaces.prime.com.tr/ui"
+	xmlns:p="http://primefaces.org/ui"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:m="http://java.sun.com/jsf/composite/menu">
 
 <ui:composition template="/templates/admin/masterLayout.xhtml">
 	<ui:define name="title">Sajux - Administration Panel</ui:define>
-
+	<ui:define name="contentTitle">
+		<h2>News Manager</h2>
+	</ui:define>
 	<ui:define name="content">
-		<p:commandButton value="Add" action="/admin/addNews.jsf" ajax="false" />
+		<p:commandButton value="Add" type="button" onclick="dlg.show()" />
+		<p:commandButton value="Remove" type="button"
+			onclick="confirmRemove.show()" />
 
-		<p:dataList id="newsTable" var="news" value="#{newsManager.newsModel}"
-			type="definition" paginator="true" rows="10"
-			paginatorPosition="bottom" rowsPerPageTemplate="10,20,30"
-			paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}">
-			<f:facet name="description">
-				<p:editor value="#{news.description}" disabled="true" />
-				<p:commandButton value="Remove" action="/admin/addNews.jsf" />
-			</f:facet>
-		</p:dataList>
+		<p:dataTable id="newsTable" var="item" value="#{newsBean.news}"
+			lazy="true" selection="#{newsBean.selectedNews}" paginator="true"
+			rows="10" paginatorPosition="bottom" rowsPerPageTemplate="10,20,30"
+			paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+			filteredValue="#{newsBean.filteredNews}"
+			emptyMessage="There are no news available. Please add some news.">
+			<p:column selectionMode="multiple" />
+			<p:column resizable="true" filterBy="#{item.title}">
+				<f:facet name="header">
+					<h:outputText value="Title" />
+				</f:facet>
+				<p:commandLink oncomplete="dlg.show();" update=":form:editDialog"
+					action="#{newsBean.selected}" value="#{item.title}">
+					<f:setPropertyActionListener value="#{item}"
+						target="#{newsBean.selected}" />
+				</p:commandLink>
+			</p:column>
+			<p:column resizable="true" sortBy="#{item.publishDate}"
+				filterBy="#{item.publishDate}">
+				<f:facet name="header">
+					<h:outputText value="Published on" />
+				</f:facet>
+				<h:outputText value="#{item.publishDate}">
+					<f:convertDateTime type="date" pattern="dd MMMM yyyy" />
+				</h:outputText>
+			</p:column>
+			<p:column resizable="true" sortBy="#{item.updatedDate}"
+				filterBy="#{item.updatedDate}">
+				<f:facet name="header">
+					<h:outputText value="Updated on" />
+				</f:facet>
+				<h:outputText value="#{item.updatedDate}">
+					<f:convertDateTime type="date" pattern="dd MMMM yyyy" />
+				</h:outputText>
+			</p:column>
+		</p:dataTable>
+
+		<p:dialog id="editDialog"
+			header="#{empty newsBean.newsTitle? 'Add News' : 'Edit News'}"
+			widgetVar="dlg" modal="true" position="right,bottom"
+			style="overflow:hidden">
+			<p:panelGrid columns="3">
+				<h:outputLabel for="newsTitle" value="News Title:" />
+				<h:inputText id="newsTitle" required="true"
+					requiredMessage="News Title is mandatory"
+					value="#{newsBean.selected.title}" size="67" />
+				<p:message for="newsTitle" />
+
+				<h:outputLabel for="newsContent" value="Content:" />
+				<p:editor id="newsContent" value="#{newsBean.selected.content}" />
+				<p:message for="newsContent" />
+			</p:panelGrid>
+			<hr />
+			<div style="float: right">
+				<p:commandButton id="add" value="Add" action="#{newsBean.saveNews}"
+					onsuccess="dlg.hide()" update="newsTable" />
+				<p:commandButton id="cancel" value="Cancel" type="button"
+					onclick="dlg.hide()" />
+			</div>
+		</p:dialog>
+		<p:confirmDialog
+			message="Are you sure you want to delete the selected news?"
+			header="Confirm Delete" severity="alert" widgetVar="confirmRemove">
+			<p:commandButton value="Yes" action="#{newsBean.removeNews}"
+				onsuccess="confirmRemove.hide()" />
+			<p:commandButton value="No" type="button"
+				onclick="confirmRemove.hide()" />
+		</p:confirmDialog>
 	</ui:define>
 
 </ui:composition>

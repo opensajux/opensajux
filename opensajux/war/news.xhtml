@@ -8,7 +8,30 @@
 
 <ui:composition template="/templates/masterLayout.xhtml">
 	<ui:define name="content">
+		<p:dataList var="news" value="#{newsBean.news}" paginator="true"
+			rows="5" lazy="true"
+			paginatorTemplate="{PreviousPageLink} {NextPageLink}"
+			paginatorPosition="bottom" type="none" styleClass="postList">
+			<div style="width: 100%;">
+				<table width="100%" style="border-spacing: 0px">
+					<tr>
+						<td
+							style="border-top: 1px solid #66cc33; border-right: 1px solid #66cc33;"><h:outputText
+								value="#{news.publishDate}">
+								<f:convertDateTime type="date" pattern="dd MMMM yyyy" />
+							</h:outputText></td>
+						<td style="border-bottom: 1px solid #66cc33; width: 85%"></td>
+					</tr>
+				</table>
+			</div>
 
+			<div style="width: 100%; text-align: justify; margin: 6px;">
+				<h2>
+					<h:outputText value="#{news.title}" />
+				</h2>
+				<h:outputText value="#{news.content.value}" escape="false" />
+			</div>
+		</p:dataList>
 	</ui:define>
 </ui:composition>
 
