@@ -99,63 +99,6 @@
 							size="67" />
 					</p:panelGrid>
 				</p:tab>
-				<p:tab title="Site Links">
-					<p:commandButton value="Add" type="button" onclick="dlg.show()" />
-					<p:commandButton value="Remove" type="button"
-						onclick="confirmRemove.show()" />
-					<p:dataTable id="siteLinkTable" var="item"
-						value="#{siteLinkBean.siteLinks}" lazy="true"
-						selection="#{siteLinkBean.selectedSiteLinks}" paginator="true"
-						rows="10" rowsPerPageTemplate="10,20,50,100"
-						paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-						filteredValue="#{siteLinkBean.filteredSiteLinks}"
-						emptyMessage="There are no links available. Please add new links.">
-						<p:column selectionMode="multiple" />
-						<p:column resizable="true" sortBy="#{item.title.value}"
-							filterBy="#{item.title.value}">
-							<f:facet name="header">
-								<h:outputText value="Title" />
-							</f:facet>
-							<h:outputText value="#{item.title.value}" />
-						</p:column>
-						<p:column resizable="true" sortBy="#{item.url.value}"
-							filterBy="#{item.url.value}">
-							<f:facet name="header">
-								<h:outputText value="Url" />
-							</f:facet>
-							<h:outputText value="#{item.url.value}" />
-						</p:column>
-					</p:dataTable>
-
-					<p:dialog header="Add Link" widgetVar="dlg" modal="true">
-						<p:panelGrid columns="3">
-							<h:outputLabel for="linkTitle" value="Link Title:" />
-							<h:inputText id="linkTitle" required="true"
-								requiredMessage="Link Title is mandatory"
-								value="#{siteLinkBean.siteTitle}" size="67" />
-							<p:message for="linkTitle" />
-
-							<h:outputLabel for="siteUrl" value="Link Url:" />
-							<h:inputText id="siteUrl" required="true"
-								requiredMessage="Link Url is mandatory"
-								value="#{siteLinkBean.siteUrl}" size="67" />
-							<p:message for="siteUrl" />
-
-							<p:commandButton id="add" value="Add"
-								action="#{siteLinkBean.saveSiteLink}" onsuccess="dlg.hide()"
-								update="siteLinkTable" />
-						</p:panelGrid>
-					</p:dialog>
-					<p:confirmDialog
-						message="Are you sure you want to delete the selected links?"
-						header="Confirm Delete" severity="alert" widgetVar="confirmRemove">
-						<p:commandButton value="Yes" update="siteLinkTable"
-							action="#{siteLinkBean.removeSiteLinks}"
-							onsuccess="confirmRemove.hide()" />
-						<p:commandButton value="No" type="button"
-							onclick="confirmRemove.hide()" />
-					</p:confirmDialog>
-				</p:tab>
 			</p:tabView>
 			<p:commandButton id="add" value="Save"
 				action="#{siteInfoManager.saveSiteInfo}" ajax="false" />
