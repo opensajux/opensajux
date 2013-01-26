@@ -33,6 +33,9 @@ public class SiteInfo implements Serializable {
 	private String googleApiKey;
 
 	@Persistent
+	private String googleAnalyticsId;
+
+	@Persistent
 	private String twitterUsername;
 
 	@Persistent
@@ -130,6 +133,21 @@ public class SiteInfo implements Serializable {
 	 */
 	public void setGoogleApiKey(String googleApiKey) {
 		this.googleApiKey = googleApiKey;
+	}
+
+	/**
+	 * @return the googleAnalyticsId
+	 */
+	public String getGoogleAnalyticsId() {
+		return googleAnalyticsId;
+	}
+
+	/**
+	 * @param googleAnalyticsId
+	 *            the googleAnalyticsId to set
+	 */
+	public void setGoogleAnalyticsId(String googleAnalyticsId) {
+		this.googleAnalyticsId = googleAnalyticsId;
 	}
 
 	/**

@@ -19,6 +19,8 @@ public class SiteDetails implements Serializable {
 
 	private String googleApiKey;
 
+	private String googleAnalyticsId;
+
 	private String twitterUsername;
 
 	private String twitterConsumerKey;
@@ -108,6 +110,21 @@ public class SiteDetails implements Serializable {
 	 */
 	public void setGoogleApiKey(String googleApiKey) {
 		this.googleApiKey = googleApiKey;
+	}
+
+	/**
+	 * @return the googleAnalyticsId
+	 */
+	public String getGoogleAnalyticsId() {
+		return googleAnalyticsId;
+	}
+
+	/**
+	 * @param googleAnalyticsId
+	 *            the googleAnalyticsId to set
+	 */
+	public void setGoogleAnalyticsId(String googleAnalyticsId) {
+		this.googleAnalyticsId = googleAnalyticsId;
 	}
 
 	/**
