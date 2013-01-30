@@ -36,11 +36,15 @@ public class SiteInfoManager {
 				siteDetails.setAboutMe(siteInfo.getAboutMe());
 				siteDetails.setTitle(siteInfo.getTitle());
 				siteDetails.setSubTitle(siteInfo.getSubTitle());
+				siteDetails.setGoogleUserId(siteInfo.getGoogleUserId());
 				siteDetails.setGoogleApiKey(siteInfo.getGoogleApiKey());
+				siteDetails.setGoogleAnalyticsId(siteInfo.getGoogleAnalyticsId());
+				siteDetails.setTwitterUsername(siteInfo.getTwitterUsername());
 				siteDetails.setTwitterAccessToken(siteInfo.getTwitterAccessToken());
 				siteDetails.setTwitterAccessTokenSecret(siteInfo.getTwitterAccessTokenSecret());
 				siteDetails.setTwitterConsumerKey(siteInfo.getTwitterConsumerKey());
 				siteDetails.setTwitterConsumerSecret(siteInfo.getTwitterConsumerSecret());
+				siteDetails.setFacebookUsername(siteInfo.getFacebookUsername());
 				siteDetails.setFacebookAppId(siteInfo.getFacebookAppId());
 				siteDetails.setFacebookAppSecret(siteInfo.getFacebookAppSecret());
 				siteDetails.setFacebookAccessToken(siteInfo.getFacebookAccessToken());
@@ -54,17 +58,21 @@ public class SiteInfoManager {
 	@SuppressWarnings("unchecked")
 	public String saveSiteInfo() {
 		PersistenceManager pm = pmf.getPersistenceManager();
-		Query query = pm.newQuery("select from " + SiteInfo.class.getName());
+		Query query = pm.newQuery(SiteInfo.class);
 		List<SiteInfo> list = (List<SiteInfo>) query.execute();
 		SiteInfo siteInfo = list.get(0);
 		siteInfo.setAboutMe(siteDetails.getAboutMe());
 		siteInfo.setTitle(siteDetails.getTitle());
 		siteInfo.setSubTitle(siteDetails.getSubTitle());
+		siteInfo.setGoogleUserId(siteDetails.getGoogleUserId());
 		siteInfo.setGoogleApiKey(siteDetails.getGoogleApiKey());
+		siteInfo.setGoogleAnalyticsId(siteDetails.getGoogleAnalyticsId());
+		siteInfo.setTwitterUsername(siteDetails.getTwitterUsername());
 		siteInfo.setTwitterAccessToken(siteDetails.getTwitterAccessToken());
 		siteInfo.setTwitterAccessTokenSecret(siteDetails.getTwitterAccessTokenSecret());
 		siteInfo.setTwitterConsumerKey(siteDetails.getTwitterConsumerKey());
 		siteInfo.setTwitterConsumerSecret(siteDetails.getTwitterConsumerSecret());
+		siteInfo.setFacebookUsername(siteDetails.getFacebookUsername());
 		siteInfo.setFacebookAppId(siteDetails.getFacebookAppId());
 		siteInfo.setFacebookAppSecret(siteDetails.getFacebookAppSecret());
 		siteInfo.setFacebookAccessToken(siteDetails.getFacebookAccessToken());

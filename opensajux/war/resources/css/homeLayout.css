@@ -8,6 +8,15 @@ body {
 	text-align: justify;
 }
 
+a:link,a:visited {
+	color: #66cc33;
+	text-decoration: none;
+}
+
+a:link:hover,a:visited:hover {
+	color: rgb(255, 0, 0);
+}
+
 #topBar {
 	padding: 20px 0px 15px 0px;
 	position: fixed;
@@ -15,6 +24,7 @@ body {
 	font-variant: small-caps;
 	font-size: xx-large;
 	width: 91%;
+	height: 60px;
 	left: 70px;
 	z-index: 9; /*bring to top*/
 	background-color: white;
@@ -30,7 +40,7 @@ body {
 	position: fixed;
 	float: left;
 	text-align: left;
-	margin-top: 98px;
+	margin-top: 82px;
 	z-index: 10; /*bring to top*/
 	width: 100px;
 	height: 600px;
@@ -38,12 +48,13 @@ body {
 }
 
 #content_container {
-	padding-top: 95px;
+	padding-top: 94px;
 	padding-left: 110px;
 	height: 600px;
 }
 
 .center_content {
+	
 }
 
 #footer {
@@ -52,34 +63,7 @@ body {
 	position: relative;
 	padding: 5px;
 	margin: 10px 0px 0px 0px;
-	color: #66cc33;
 	text-align: center;
-}
-
-#footer a:link,#footer a:visited {
-	font: 11px Verdana, Arial, Helvetica, sans-serif;
-	clear: both;
-	position: relative;
-	padding: 5px;
-	margin: 10px 0px 0px 0px;
-	text-decoration: none;
-	color: #66cc33;
-}
-
-#footer a:hover {
-	color: rgb(255, 0, 0);
-}
-
-#header a:link,#header a:visited {
-	color: white;
-	font-weight: bold;
-	text-decoration: none;
-}
-
-#header a:link:hover,#header a:visited:hover {
-	color: black;
-	font-weight: bold;
-	text-decoration: underline;
 }
 
 #spacer {
@@ -91,16 +75,6 @@ body {
 	color: white;
 	padding: 0px;
 	margin: 0px 0px 2px 0px;
-}
-
-#breadcrumb a:link,#breadcrumb a:visited {
-	font-weight: bold;
-	text-decoration: none;
-}
-
-#breadcrumb a:link:hover,#breadcrumb a:visited:hover {
-	font-weight: bold;
-	text-decoration: underline;
 }
 
 .menu {
@@ -125,16 +99,6 @@ body {
 	display: block;
 	text-decoration: none;
 	outline: none;
-}
-
-.menu li a:hover {
-	color: rgb(255, 0, 0);
-	text-decoration: blink;
-	text-shadow: aqua;
-}
-
-.menu li a.active,.menu li a.active:hover {
-	color: rgb(255, 255, 255);
 }
 
 .menu li a span {
@@ -163,7 +127,6 @@ body {
 	float: left;
 	padding-left: 15px;
 	display: block;
-	color: rgb(255, 255, 255);
 	text-decoration: none;
 	font: 12px Verdana, Arial, Helvetica, sans-serif;
 	cursor: pointer;
@@ -181,7 +144,6 @@ body {
 
 .menu-h li a:hover {
 	background-position: 0px -60px;
-	color: rgb(255, 255, 255);
 }
 
 .menu-h li a:hover span {

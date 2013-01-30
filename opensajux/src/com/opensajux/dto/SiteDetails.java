@@ -15,7 +15,13 @@ public class SiteDetails implements Serializable {
 
 	private String subTitle;
 
+	private String googleUserId;
+
 	private String googleApiKey;
+
+	private String googleAnalyticsId;
+
+	private String twitterUsername;
 
 	private String twitterConsumerKey;
 
@@ -24,6 +30,8 @@ public class SiteDetails implements Serializable {
 	private String twitterAccessToken;
 
 	private String twitterAccessTokenSecret;
+
+	private String facebookUsername;
 
 	private String facebookAppId;
 
@@ -75,6 +83,21 @@ public class SiteDetails implements Serializable {
 	}
 
 	/**
+	 * @return the googleUserId
+	 */
+	public String getGoogleUserId() {
+		return googleUserId;
+	}
+
+	/**
+	 * @param googleUserId
+	 *            the googleUserId to set
+	 */
+	public void setGoogleUserId(String googleUserId) {
+		this.googleUserId = googleUserId;
+	}
+
+	/**
 	 * @return the googleApiKey
 	 */
 	public String getGoogleApiKey() {
@@ -87,6 +110,36 @@ public class SiteDetails implements Serializable {
 	 */
 	public void setGoogleApiKey(String googleApiKey) {
 		this.googleApiKey = googleApiKey;
+	}
+
+	/**
+	 * @return the googleAnalyticsId
+	 */
+	public String getGoogleAnalyticsId() {
+		return googleAnalyticsId;
+	}
+
+	/**
+	 * @param googleAnalyticsId
+	 *            the googleAnalyticsId to set
+	 */
+	public void setGoogleAnalyticsId(String googleAnalyticsId) {
+		this.googleAnalyticsId = googleAnalyticsId;
+	}
+
+	/**
+	 * @return the twitterUsername
+	 */
+	public String getTwitterUsername() {
+		return twitterUsername;
+	}
+
+	/**
+	 * @param twitterUsername
+	 *            the twitterUsername to set
+	 */
+	public void setTwitterUsername(String twitterUsername) {
+		this.twitterUsername = twitterUsername;
 	}
 
 	/**
@@ -147,6 +200,21 @@ public class SiteDetails implements Serializable {
 	 */
 	public void setTwitterAccessTokenSecret(String twitterAccessTokenSecret) {
 		this.twitterAccessTokenSecret = twitterAccessTokenSecret;
+	}
+
+	/**
+	 * @return the facebookUsername
+	 */
+	public String getFacebookUsername() {
+		return facebookUsername;
+	}
+
+	/**
+	 * @param facebookUsername
+	 *            the facebookUsername to set
+	 */
+	public void setFacebookUsername(String facebookUsername) {
+		this.facebookUsername = facebookUsername;
 	}
 
 	/**

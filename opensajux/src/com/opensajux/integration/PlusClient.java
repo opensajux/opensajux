@@ -60,8 +60,8 @@ public class PlusClient implements Serializable {
 				.setPlusRequestInitializer(new PlusRequestInitializer(siteDetails.getGoogleApiKey())).build();
 	}
 
-	public List<Activity> getActivities() throws IOException {
-		Plus.Activities.List listActivities = plus.activities().list("117794071971673673713", "public");
+	public List<Activity> getActivities(String userId) throws IOException {
+		Plus.Activities.List listActivities = plus.activities().list(userId, "public");
 		return listActivities.execute().getItems();
 	}
 }

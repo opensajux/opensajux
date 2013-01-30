@@ -9,6 +9,7 @@ import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.PrimaryKey;
 
 import com.google.appengine.api.datastore.Key;
+import com.google.appengine.api.datastore.Text;
 
 @PersistenceCapable
 public class News implements Serializable {
@@ -22,13 +23,13 @@ public class News implements Serializable {
 	private String title;
 
 	@Persistent
-	private String description;
-
-	@Persistent
-	private boolean published;
+	private Text content;
 
 	@Persistent
 	private Date publishDate;
+
+	@Persistent
+	private Date updatedDate;
 
 	/**
 	 * @param key
@@ -61,33 +62,18 @@ public class News implements Serializable {
 	}
 
 	/**
-	 * @return the description
+	 * @return the content
 	 */
-	public String getDescription() {
-		return description;
+	public Text getContent() {
+		return content;
 	}
 
 	/**
-	 * @param description
-	 *            the description to set
+	 * @param content
+	 *            the content to set
 	 */
-	public void setDescription(String description) {
-		this.description = description;
-	}
-
-	/**
-	 * @return the published
-	 */
-	public boolean isPublished() {
-		return published;
-	}
-
-	/**
-	 * @param published
-	 *            the published to set
-	 */
-	public void setPublished(boolean published) {
-		this.published = published;
+	public void setContent(Text content) {
+		this.content = content;
 	}
 
 	/**
@@ -103,6 +89,21 @@ public class News implements Serializable {
 	 */
 	public void setPublishDate(Date publishDate) {
 		this.publishDate = publishDate;
+	}
+
+	/**
+	 * @return the updatedDate
+	 */
+	public Date getUpdatedDate() {
+		return updatedDate;
+	}
+
+	/**
+	 * @param updatedDate
+	 *            the updatedDate to set
+	 */
+	public void setUpdatedDate(Date updatedDate) {
+		this.updatedDate = updatedDate;
 	}
 
 }

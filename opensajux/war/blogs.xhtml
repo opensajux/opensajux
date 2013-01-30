@@ -9,7 +9,6 @@
 
 <ui:composition template="/templates/masterLayout.xhtml">
 	<ui:define name="content">
-		<p></p>
 		<p:dataList var="post" value="#{blogPostBean.posts}" paginator="true"
 			rows="4" lazy="true"
 			paginatorTemplate="{PreviousPageLink} {NextPageLink}"
@@ -29,7 +28,7 @@
 
 			<div style="width: 100%; text-align: justify; margin: 6px;">
 				<h2>
-					<h:outputLink value="">
+					<h:outputLink value="#{post.sourceUrl.value}">
 						<h:outputText value="#{post.title.value}" />
 					</h:outputLink>
 				</h2>

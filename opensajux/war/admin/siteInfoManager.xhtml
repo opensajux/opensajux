@@ -36,13 +36,27 @@
 				</p:tab>
 				<p:tab title="Google">
 					<p:panelGrid columns="2">
+						<h:outputLabel for="googleUserId" value="Google UserId:" />
+						<h:inputText id="googleUserId"
+							value="#{siteInfoManager.siteDetails.googleUserId}" size="67" />
+
 						<h:outputLabel for="googleApiKey" value="Google API Key:" />
 						<h:inputText id="googleApiKey"
 							value="#{siteInfoManager.siteDetails.googleApiKey}" size="67" />
+
+						<h:outputLabel for="googleAnalyticsId"
+							value="Google Analytics Id:" />
+						<h:inputText id="googleAnalyticsId"
+							value="#{siteInfoManager.siteDetails.googleAnalyticsId}"
+							size="67" />
 					</p:panelGrid>
 				</p:tab>
 				<p:tab title="Twitter">
 					<p:panelGrid columns="2">
+						<h:outputLabel for="twitterUsername" value="Twitter Username:" />
+						<h:inputText id="twitterUsername"
+							value="#{siteInfoManager.siteDetails.twitterUsername}" size="67" />
+
 						<h:outputLabel for="twitterConsumerKey"
 							value="Twitter Consumer Key:" />
 						<h:inputText id="twitterConsumerKey"
@@ -70,6 +84,10 @@
 				</p:tab>
 				<p:tab title="Facebook">
 					<p:panelGrid columns="2">
+						<h:outputLabel for="facebookUsername" value="Facebook Username:" />
+						<h:inputText id="facebookUsername"
+							value="#{siteInfoManager.siteDetails.facebookUsername}" size="67" />
+
 						<h:outputLabel for="facebookAppId" value="Facebook App Id:" />
 						<h:inputText id="facebookAppId"
 							value="#{siteInfoManager.siteDetails.facebookAppId}" size="67" />

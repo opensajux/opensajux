@@ -8,8 +8,8 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
+import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
-import javax.inject.Singleton;
 import javax.jdo.PersistenceManager;
 import javax.jdo.PersistenceManagerFactory;
 import javax.jdo.Query;
@@ -24,7 +24,7 @@ import com.opensajux.integration.BloggerClient;
  * @author Sheikh Mohammad Sajid
  * 
  */
-@Singleton
+@ApplicationScoped
 public class PlusService implements Serializable {
 	private static final long serialVersionUID = 6004592779983773367L;
 

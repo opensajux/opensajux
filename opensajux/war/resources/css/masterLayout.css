@@ -9,6 +9,19 @@ body {
 	margin-left: 5%;
 }
 
+a:link,a:visited {
+	color: #66cc33;
+	text-decoration: none;
+}
+
+a:link:hover,a:visited:hover {
+	color: rgb(255, 0, 0);
+}
+
+h2 {
+	margin-top: 0px;
+}
+
 #topBar {
 	padding: 20px 0px 15px 0px;
 	position: fixed;
@@ -16,6 +29,7 @@ body {
 	font-variant: small-caps;
 	font-size: xx-large;
 	width: 91%;
+	height: 60px;
 	left: 70px;
 	z-index: 9; /*bring to top*/
 	background-color: white;
@@ -26,7 +40,7 @@ body {
 	position: fixed;
 	float: left;
 	text-align: left;
-	margin-top: 98px;
+	margin-top: 82px;
 	z-index: 10; /*bring to top*/
 	width: 100px;
 	float: left;
@@ -43,7 +57,7 @@ body {
 }
 
 #content_container {
-	padding-top: 95px;
+	padding-top: 98px;
 	padding-left: 110px;
 }
 
@@ -57,38 +71,15 @@ body {
 	position: relative;
 	padding: 5px;
 	margin: 10px 0px 0px 0px;
-	color: #66cc33;
 	text-align: center;
-}
-
-#footer a:link,#footer a:visited {
-	font: 11px Verdana, Arial, Helvetica, sans-serif;
-	clear: both;
-	position: relative;
-	padding: 5px;
-	margin: 10px 0px 0px 0px;
-	text-decoration: none;
-	color: #66cc33;
-}
-
-#footer a:hover,a:hover {
-	color: rgb(255, 0, 0);
-}
-
-#header a:link,#header a:visited {
-	color: white;
-	font-weight: bold;
-	text-decoration: none;
-}
-
-#header a:link:hover,#header a:visited:hover {
-	color: black;
-	font-weight: bold;
-	text-decoration: underline;
 }
 
 #spacer {
 	height: 40px;
+}
+
+.gap-h {
+	height: 20px;
 }
 
 #breadcrumb {
@@ -96,16 +87,6 @@ body {
 	color: white;
 	padding: 0px;
 	margin: 0px 0px 2px 0px;
-}
-
-#breadcrumb a:link,#breadcrumb a:visited {
-	font-weight: bold;
-	text-decoration: none;
-}
-
-#breadcrumb a:link:hover,#breadcrumb a:visited:hover {
-	font-weight: bold;
-	text-decoration: underline;
 }
 
 .menu {
@@ -126,14 +107,12 @@ body {
 	height: 40px;
 	padding: 0px 5px;
 	font: 14px Verdana, Arial, Helvetica, sans-serif;
-	color: #66cc33;
 	display: block;
 	text-decoration: none;
 	outline: none;
 }
 
 .menu li a:hover {
-	color: rgb(255, 0, 0);
 	text-decoration: blink;
 	text-shadow: aqua;
 }
@@ -301,16 +280,6 @@ body {
 
 .postList h2 {
 	margin-top: 0px;
-}
-
-.postList a {
-	text-decoration: none;
-	color: #66cc33;
-	font-weight: normal;
-}
-
-.postList a:hover {
-	color: rgb(255, 0, 0);
 }
 
 .postList .ui-widget-content {

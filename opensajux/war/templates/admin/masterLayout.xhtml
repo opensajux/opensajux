@@ -40,7 +40,7 @@
 			</ui:insert>
 		</div>
 		<div id="content_container">
-			<h:form>
+			<h:form id="form">
 				<div id="right">
 					<ui:insert name="right">
 						<p:panel header="Admin Tasks">
@@ -51,10 +51,13 @@
 							<h:outputLink value="newsManager.jsf">News Manager</h:outputLink>
 							<br />
 							<h:outputLink value="blogManager.jsf">Blog Manager</h:outputLink>
+							<br />
+							<h:outputLink value="sitelinks.jsf">Site Links</h:outputLink>
 						</p:panel>
 					</ui:insert>
 				</div>
 				<div id="content" class="center_content">
+					<h:messages />
 					<ui:insert name="contentTitle"></ui:insert>
 					<ui:insert name="content"></ui:insert>
 				</div>
@@ -64,9 +67,9 @@
 	<div id="footer">
 		<ui:insert name="footer">
 			<div align="center">
-				&copy; 2010-2012 | <a href="#{request.contextPath}/privacy.jsf">Privacy
+				&copy; 2010-2013 | <a href="#{request.contextPath}/privacy.jsf">Privacy
 					Policy</a> | <a href="#{request.contextPath}/attribution.jsf">Attributions</a>
-				| <a href="#{request.contextPath}/version.jsf">Version 0.2.0</a>
+				| <a href="#{request.contextPath}/version.jsf">Version 0.3.0</a>
 			</div>
 		</ui:insert>
 	</div>
