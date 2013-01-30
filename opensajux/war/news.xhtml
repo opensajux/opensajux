@@ -17,10 +17,10 @@
 					<tr>
 						<td
 							style="border-top: 1px solid #66cc33; border-right: 1px solid #66cc33;"><h:outputText
-								value="#{news.publishDate}">
+								value="#{news.publishDate}" style="font-size: small">
 								<f:convertDateTime type="date" pattern="dd MMMM yyyy" />
 							</h:outputText></td>
-						<td style="border-bottom: 1px solid #66cc33; width: 85%"></td>
+						<td style="border-bottom: 1px solid #66cc33; width: 90%"></td>
 					</tr>
 				</table>
 			</div>
@@ -30,6 +30,7 @@
 					<h:outputText value="#{news.title}" />
 				</h2>
 				<h:outputText value="#{news.content.value}" escape="false" />
+				<div class="gap-h" />
 			</div>
 		</p:dataList>
 	</ui:define>

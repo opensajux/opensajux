@@ -21,6 +21,7 @@ a:link:hover,a:visited:hover {
 h2 {
 	margin-top: 0px;
 }
+
 #topBar {
 	padding: 20px 0px 15px 0px;
 	position: fixed;
@@ -75,6 +76,10 @@ h2 {
 
 #spacer {
 	height: 40px;
+}
+
+.gap-h {
+	height: 20px;
 }
 
 #breadcrumb {

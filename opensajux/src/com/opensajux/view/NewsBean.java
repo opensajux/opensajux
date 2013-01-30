@@ -1,21 +1,20 @@
 package com.opensajux.view;
 
 import java.io.Serializable;
-import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
-import javax.enterprise.context.RequestScoped;
-import javax.faces.bean.ViewScoped;
-import javax.faces.event.ActionEvent;
 import javax.inject.Inject;
 import javax.inject.Named;
 
 import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortOrder;
 
+import com.google.appengine.api.datastore.Text;
 import com.opensajux.common.PaginationParameters;
 import com.opensajux.entity.News;
+import com.opensajux.jsf.context.ViewScoped;
 import com.opensajux.service.NewsService;
 
 @ViewScoped
@@ -129,19 +128,39 @@ public class NewsBean implements Serializable {
 		this.newsContent = newsContent;
 	}
 
-	public void selectOne() {
-		// System.out.println(news.getTitle());
-		newsService.getById("1");
-	}
-
 	public void saveNews() {
-		newsService.saveNews(newsTitle, newsContent);
+		News news;
+
+		if (selected != null) {
+			news = selected;
+			news.setUpdatedDate(new Date());
+		} else {
+			news = new News();
+			news.setPublishDate(new Date());
+			news.setUpdatedDate(news.getPublishDate());
+		}
+		news.setTitle(newsTitle);
+		news.setContent(new Text(newsContent));
+		newsService.saveNews(news);
 	}
 
 	public void removeNews() {
-		for (News news : selectedNews) {
-			newsService.removeNews(news.getKey().getId() + "");
-		}
+		newsService.removeNews(selectedNews);
+		clearFields();
+	}
+
+	public void add() {
+		clearFields();
+	}
+
+	/**
+	 * 
+	 */
+	private void clearFields() {
+		newsTitle = "";
+		newsContent = "";
+		selected = null;
+		selectedNews = null;
 	}
 
 	/**
@@ -157,5 +176,7 @@ public class NewsBean implements Serializable {
 	 */
 	public void setSelected(News selected) {
 		this.selected = selected;
+		newsTitle = selected.getTitle();
+		newsContent = selected.getContent().getValue();
 	}
 }

@@ -13,7 +13,9 @@
 		<h2>News Manager</h2>
 	</ui:define>
 	<ui:define name="content">
-		<p:commandButton value="Add" type="button" onclick="dlg.show()" />
+		<p:commandButton value="Add" oncomplete="dlg.show()"
+			action="#{newsBean.add}" update=":form:editDialog">
+		</p:commandButton>
 		<p:commandButton value="Remove" type="button"
 			onclick="confirmRemove.show()" />
 
@@ -24,12 +26,13 @@
 			filteredValue="#{newsBean.filteredNews}"
 			emptyMessage="There are no news available. Please add some news.">
 			<p:column selectionMode="multiple" />
-			<p:column resizable="true" filterBy="#{item.title}">
+			<p:column resizable="true" sortBy="#{item.title}"
+				filterBy="#{item.title}">
 				<f:facet name="header">
 					<h:outputText value="Title" />
 				</f:facet>
 				<p:commandLink oncomplete="dlg.show();" update=":form:editDialog"
-					action="#{newsBean.selected}" value="#{item.title}">
+					value="#{item.title}">
 					<f:setPropertyActionListener value="#{item}"
 						target="#{newsBean.selected}" />
 				</p:commandLink>
@@ -60,19 +63,19 @@
 			style="overflow:hidden">
 			<p:panelGrid columns="3">
 				<h:outputLabel for="newsTitle" value="News Title:" />
-				<h:inputText id="newsTitle" required="true"
+				<h:inputText id="newsTitle" required="false"
 					requiredMessage="News Title is mandatory"
-					value="#{newsBean.selected.title}" size="67" />
+					value="#{newsBean.newsTitle}" size="67" />
 				<p:message for="newsTitle" />
 
 				<h:outputLabel for="newsContent" value="Content:" />
-				<p:editor id="newsContent" value="#{newsBean.selected.content}" />
+				<p:editor id="newsContent" value="#{newsBean.newsContent}" />
 				<p:message for="newsContent" />
 			</p:panelGrid>
 			<hr />
 			<div style="float: right">
-				<p:commandButton id="add" value="Add" action="#{newsBean.saveNews}"
-					onsuccess="dlg.hide()" update="newsTable" />
+				<p:commandButton id="add" value="Save" action="#{newsBean.saveNews}"
+					oncomplete="dlg.hide()" update=":form:newsTable" />
 				<p:commandButton id="cancel" value="Cancel" type="button"
 					onclick="dlg.hide()" />
 			</div>
@@ -81,7 +84,7 @@
 			message="Are you sure you want to delete the selected news?"
 			header="Confirm Delete" severity="alert" widgetVar="confirmRemove">
 			<p:commandButton value="Yes" action="#{newsBean.removeNews}"
-				onsuccess="confirmRemove.hide()" />
+				oncomplete="confirmRemove.hide()" update=":form:newsTable" />
 			<p:commandButton value="No" type="button"
 				onclick="confirmRemove.hide()" />
 		</p:confirmDialog>
