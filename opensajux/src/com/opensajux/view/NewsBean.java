@@ -47,8 +47,8 @@ public class NewsBean implements Serializable {
 					PaginationParameters param = new PaginationParameters();
 					param.setFirst(first);
 					param.setPageSize(pageSize);
-					param.setSortField(sortField);
-					param.setSortOrder(sortOrder == null ? "" : sortOrder == SortOrder.ASCENDING ? "asc" : "desc");
+					param.setSortField(sortField == null ? "publishDate" : sortField);
+					param.setSortOrder(sortOrder == null ? "desc" : sortOrder == SortOrder.ASCENDING ? "asc" : "desc");
 
 					return newsService.getNews(param);
 				}
