@@ -6,8 +6,8 @@ package com.opensajux.service;
 import java.io.Serializable;
 import java.util.List;
 
+import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
-import javax.inject.Singleton;
 import javax.jdo.PersistenceManager;
 import javax.jdo.PersistenceManagerFactory;
 import javax.jdo.Query;
@@ -22,7 +22,7 @@ import com.opensajux.entity.SiteLink;
  * @author Sheikh Mohammad Sajid
  * 
  */
-@Singleton
+@ApplicationScoped
 public class SiteLinkService implements Serializable {
 	private static final long serialVersionUID = 6004592779983773367L;
 
