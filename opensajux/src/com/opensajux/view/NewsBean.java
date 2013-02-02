@@ -8,6 +8,7 @@ import java.util.Map;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import org.primefaces.event.RowEditEvent;
 import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortOrder;
 
@@ -178,5 +179,13 @@ public class NewsBean implements Serializable {
 		this.selected = selected;
 		newsTitle = selected.getTitle();
 		newsContent = selected.getContent().getValue();
+	}
+
+	public void onRowEdit(RowEditEvent event) {
+		News news = (News) event.getObject();
+		newsService.saveNews(news);
+	}
+
+	public void onCancel(RowEditEvent event) {
 	}
 }

@@ -23,8 +23,12 @@
 			lazy="true" selection="#{newsBean.selectedNews}" paginator="true"
 			rows="10" paginatorPosition="bottom" rowsPerPageTemplate="10,20,30"
 			paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-			filteredValue="#{newsBean.filteredNews}"
+			filteredValue="#{newsBean.filteredNews}" editable="true"
 			emptyMessage="There are no news available. Please add some news.">
+
+			<p:ajax event="rowEdit" listener="#{newsBean.onRowEdit}" />
+			<p:ajax event="rowEditCancel" listener="#{newsBean.onCancel}" />
+
 			<p:column selectionMode="multiple" />
 			<p:column resizable="true" sortBy="#{item.title}"
 				filterBy="#{item.title}">
@@ -42,9 +46,17 @@
 				<f:facet name="header">
 					<h:outputText value="Published on" />
 				</f:facet>
-				<h:outputText value="#{item.publishDate}">
-					<f:convertDateTime type="date" pattern="dd MMMM yyyy" />
-				</h:outputText>
+				<p:cellEditor>
+					<f:facet name="output">
+						<h:outputText value="#{item.publishDate}">
+							<f:convertDateTime type="date" pattern="dd MMMM yyyy" />
+						</h:outputText>
+					</f:facet>
+					<f:facet name="input">
+						<p:calendar value="#{item.publishDate}" mode="popup"
+							showOn="button" readonlyInput="true" />
+					</f:facet>
+				</p:cellEditor>
 			</p:column>
 			<p:column resizable="true" sortBy="#{item.updatedDate}"
 				filterBy="#{item.updatedDate}">
@@ -54,6 +66,9 @@
 				<h:outputText value="#{item.updatedDate}">
 					<f:convertDateTime type="date" pattern="dd MMMM yyyy" />
 				</h:outputText>
+			</p:column>
+			<p:column>
+				<p:rowEditor />
 			</p:column>
 		</p:dataTable>
 

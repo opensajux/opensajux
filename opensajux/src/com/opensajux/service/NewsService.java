@@ -5,6 +5,7 @@ package com.opensajux.service;
 
 import java.io.Serializable;
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -35,6 +36,7 @@ public class NewsService implements Serializable {
 	public void saveNews(News news) {
 		PersistenceManager pm = pmf.getPersistenceManager();
 		try {
+			news.setUpdatedDate(new Date());
 			pm.makePersistent(news);
 			if (LOGGER.isLoggable(Level.INFO))
 				LOGGER.info("Saving news item: " + news.getTitle());
