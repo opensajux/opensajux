@@ -10,6 +10,7 @@ import javax.jdo.PersistenceManager;
 import javax.jdo.PersistenceManagerFactory;
 import javax.jdo.Query;
 
+import com.google.appengine.api.datastore.Text;
 import com.opensajux.common.Chosen;
 import com.opensajux.dto.SiteDetails;
 import com.opensajux.entity.SiteInfo;
@@ -33,7 +34,7 @@ public class SiteInfoManager {
 			siteDetails = new SiteDetails();
 			if (list != null && list.size() > 0) {
 				SiteInfo siteInfo = list.get(0);
-				siteDetails.setAboutMe(siteInfo.getAboutMe());
+				siteDetails.setAboutMe(siteInfo.getAboutMe().getValue());
 				siteDetails.setTitle(siteInfo.getTitle());
 				siteDetails.setSubTitle(siteInfo.getSubTitle());
 				siteDetails.setGoogleUserId(siteInfo.getGoogleUserId());
@@ -61,7 +62,7 @@ public class SiteInfoManager {
 		Query query = pm.newQuery(SiteInfo.class);
 		List<SiteInfo> list = (List<SiteInfo>) query.execute();
 		SiteInfo siteInfo = list.get(0);
-		siteInfo.setAboutMe(siteDetails.getAboutMe());
+		siteInfo.setAboutMe(new Text(siteDetails.getAboutMe()));
 		siteInfo.setTitle(siteDetails.getTitle());
 		siteInfo.setSubTitle(siteDetails.getSubTitle());
 		siteInfo.setGoogleUserId(siteDetails.getGoogleUserId());

@@ -8,6 +8,7 @@ import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.PrimaryKey;
 
 import com.google.appengine.api.datastore.Key;
+import com.google.appengine.api.datastore.Text;
 
 @PersistenceCapable
 public class SiteInfo implements Serializable {
@@ -18,7 +19,7 @@ public class SiteInfo implements Serializable {
 	protected Key key;
 
 	@Persistent
-	private String aboutMe;
+	private Text aboutMe;
 
 	@Persistent
 	private String title;
@@ -62,11 +63,11 @@ public class SiteInfo implements Serializable {
 	@Persistent
 	private String facebookAccessToken;
 
-	public String getAboutMe() {
+	public Text getAboutMe() {
 		return aboutMe;
 	}
 
-	public void setAboutMe(String aboutMe) {
+	public void setAboutMe(Text aboutMe) {
 		this.aboutMe = aboutMe;
 	}
 

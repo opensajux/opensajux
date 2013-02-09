@@ -54,7 +54,7 @@ public class TasksServlet extends HttpServlet {
 		PersistenceManager pm = PMF.getPMF().getPersistenceManager();
 		SiteInfo siteInfo = ((List<SiteInfo>) pm.newQuery(SiteInfo.class).execute()).get(0);
 		SiteDetails siteDetails = new SiteDetails();
-		siteDetails.setAboutMe(siteInfo.getAboutMe());
+		siteDetails.setAboutMe(siteInfo.getAboutMe().getValue());
 		siteDetails.setTitle(siteInfo.getTitle());
 		siteDetails.setSubTitle(siteInfo.getSubTitle());
 		siteDetails.setGoogleUserId(siteInfo.getGoogleUserId());
