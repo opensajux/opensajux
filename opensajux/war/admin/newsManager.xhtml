@@ -13,96 +13,105 @@
 		<h2>News Manager</h2>
 	</ui:define>
 	<ui:define name="content">
-		<p:commandButton value="Add" oncomplete="dlg.show()"
-			action="#{newsBean.add}" update=":form:editDialog">
-		</p:commandButton>
-		<p:commandButton value="Remove" type="button"
-			onclick="confirmRemove.show()" />
+		<h:form id="form">
+			<p:commandButton value="Add" oncomplete="dlg.show()"
+				action="#{newsBean.add}" update=":editForm:editDialog">
+			</p:commandButton>
+			<p:commandButton value="Remove" type="button"
+				onclick="confirmRemove.show()" />
 
-		<p:dataTable id="newsTable" var="item" value="#{newsBean.news}"
-			lazy="true" selection="#{newsBean.selectedNews}" paginator="true"
-			rows="10" paginatorPosition="bottom" rowsPerPageTemplate="10,20,30"
-			paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-			filteredValue="#{newsBean.filteredNews}" editable="true"
-			emptyMessage="There are no news available. Please add some news.">
+			<p:dataTable id="newsTable" var="item" value="#{newsBean.news}"
+				lazy="true" selection="#{newsBean.selectedNews}" paginator="true"
+				rows="10" paginatorPosition="bottom" rowsPerPageTemplate="10,20,30"
+				paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+				filteredValue="#{newsBean.filteredNews}" editable="true"
+				emptyMessage="There are no news available. Please add some news.">
 
-			<p:ajax event="rowEdit" listener="#{newsBean.onRowEdit}" />
-			<p:ajax event="rowEditCancel" listener="#{newsBean.onCancel}" />
+				<p:ajax event="rowEdit" listener="#{newsBean.onRowEdit}" />
+				<p:ajax event="rowEditCancel" listener="#{newsBean.onCancel}" />
 
-			<p:column selectionMode="multiple" />
-			<p:column resizable="true" sortBy="#{item.title}"
-				filterBy="#{item.title}">
-				<f:facet name="header">
-					<h:outputText value="Title" />
-				</f:facet>
-				<p:commandLink oncomplete="dlg.show();" update=":form:editDialog"
-					value="#{item.title}">
-					<f:setPropertyActionListener value="#{item}"
-						target="#{newsBean.selected}" />
-				</p:commandLink>
-			</p:column>
-			<p:column resizable="true" sortBy="#{item.publishDate}"
-				filterBy="#{item.publishDate}">
-				<f:facet name="header">
-					<h:outputText value="Published on" />
-				</f:facet>
-				<p:cellEditor>
-					<f:facet name="output">
-						<h:outputText value="#{item.publishDate}">
-							<f:convertDateTime type="date" pattern="dd MMMM yyyy" />
-						</h:outputText>
+				<p:column selectionMode="multiple" />
+				<p:column resizable="true" sortBy="#{item.title}"
+					filterBy="#{item.title}">
+					<f:facet name="header">
+						<h:outputText value="Title" />
 					</f:facet>
-					<f:facet name="input">
-						<p:calendar value="#{item.publishDate}" mode="popup"
-							showOn="button" readonlyInput="true" />
+					<p:commandLink oncomplete="dlg.show();"
+						update=":editForm:editDialog" value="#{item.title}">
+						<f:setPropertyActionListener value="#{item}"
+							target="#{newsBean.selected}" />
+					</p:commandLink>
+				</p:column>
+				<p:column resizable="true" sortBy="#{item.publishDate}"
+					filterBy="#{item.publishDate}">
+					<f:facet name="header">
+						<h:outputText value="Published on" />
 					</f:facet>
-				</p:cellEditor>
-			</p:column>
-			<p:column resizable="true" sortBy="#{item.updatedDate}"
-				filterBy="#{item.updatedDate}">
-				<f:facet name="header">
-					<h:outputText value="Updated on" />
-				</f:facet>
-				<h:outputText value="#{item.updatedDate}">
-					<f:convertDateTime type="date" pattern="dd MMMM yyyy" />
-				</h:outputText>
-			</p:column>
-			<p:column>
-				<p:rowEditor />
-			</p:column>
-		</p:dataTable>
+					<p:cellEditor>
+						<f:facet name="output">
+							<h:outputText value="#{item.publishDate}">
+								<f:convertDateTime type="date" pattern="dd MMMM yyyy" />
+							</h:outputText>
+						</f:facet>
+						<f:facet name="input">
+							<p:calendar value="#{item.publishDate}" mode="popup"
+								showOn="button" readonlyInput="true" />
+						</f:facet>
+					</p:cellEditor>
+				</p:column>
+				<p:column resizable="true" sortBy="#{item.updatedDate}"
+					filterBy="#{item.updatedDate}">
+					<f:facet name="header">
+						<h:outputText value="Updated on" />
+					</f:facet>
+					<h:outputText value="#{item.updatedDate}">
+						<f:convertDateTime type="date" pattern="dd MMMM yyyy" />
+					</h:outputText>
+				</p:column>
+				<p:column>
+					<p:rowEditor />
+				</p:column>
+			</p:dataTable>
 
-		<p:dialog id="editDialog"
-			header="#{empty newsBean.newsTitle? 'Add News' : 'Edit News'}"
-			widgetVar="dlg" modal="true" position="right,bottom"
-			style="overflow:hidden">
-			<p:panelGrid columns="3">
-				<h:outputLabel for="newsTitle" value="News Title:" />
-				<h:inputText id="newsTitle" required="false"
-					requiredMessage="News Title is mandatory"
-					value="#{newsBean.newsTitle}" size="67" />
-				<p:message for="newsTitle" />
+			<p:confirmDialog
+				message="Are you sure you want to delete the selected news?"
+				header="Confirm Delete" severity="alert" widgetVar="confirmRemove">
+				<p:commandButton value="Yes" action="#{newsBean.removeNews}"
+					oncomplete="confirmRemove.hide()" update="newsTable" />
+				<p:commandButton value="No" type="button"
+					onclick="confirmRemove.hide()" />
+			</p:confirmDialog>
+		</h:form>
+		<h:form id="editForm">
+			<p:dialog id="editDialog"
+				header="#{empty newsBean.newsTitle? 'Add News' : 'Edit News'}"
+				widgetVar="dlg" modal="true" position="right,bottom"
+				style="overflow:hidden">
 
-				<h:outputLabel for="newsContent" value="Content:" />
-				<p:editor id="newsContent" value="#{newsBean.newsContent}" />
-				<p:message for="newsContent" />
-			</p:panelGrid>
-			<hr />
-			<div style="float: right">
-				<p:commandButton id="add" value="Save" action="#{newsBean.saveNews}"
-					oncomplete="dlg.hide()" update=":form:newsTable" />
-				<p:commandButton id="cancel" value="Cancel" type="button"
-					onclick="dlg.hide()" />
-			</div>
-		</p:dialog>
-		<p:confirmDialog
-			message="Are you sure you want to delete the selected news?"
-			header="Confirm Delete" severity="alert" widgetVar="confirmRemove">
-			<p:commandButton value="Yes" action="#{newsBean.removeNews}"
-				oncomplete="confirmRemove.hide()" update=":form:newsTable" />
-			<p:commandButton value="No" type="button"
-				onclick="confirmRemove.hide()" />
-		</p:confirmDialog>
+				<p:panelGrid columns="3">
+					<h:outputLabel for="newsTitle" value="News Title:" />
+					<h:inputText id="newsTitle" required="true"
+						requiredMessage="News Title is mandatory"
+						value="#{newsBean.newsTitle}" size="67" />
+					<p:message for="newsTitle" />
+
+					<h:outputLabel for="newsContent" value="Content:" />
+					<p:editor id="newsContent" value="#{newsBean.newsContent}"
+						required="true" requiredMessage="Content is mandatory"/>
+					<p:message for="newsContent" />
+				</p:panelGrid>
+				<hr />
+				<div style="float: right">
+					<p:commandButton id="add" value="Save"
+						action="#{newsBean.saveNews}"
+						oncomplete="if(!args.validationFailed) dlg.hide()"
+						update=":form:newsTable, :growl" />
+					<p:commandButton id="cancel" value="Cancel" type="button"
+						onclick="dlg.hide()" />
+				</div>
+
+			</p:dialog>
+		</h:form>
 	</ui:define>
 
 </ui:composition>

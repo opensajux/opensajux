@@ -11,104 +11,108 @@
 	<ui:define name="title">Site Info - Administration Panel</ui:define>
 
 	<ui:define name="content">
-		<p:panelGrid columns="1">
-			<p:tabView>
-				<p:tab title="General">
-					<p:panelGrid columns="3">
-						<h:outputLabel for="siteTitle" value="Site Title:" />
-						<h:inputText id="siteTitle" required="true"
-							requiredMessage="Site Title is manadatory"
-							value="#{siteInfoManager.siteDetails.title}" size="67" />
-						<p:message for="siteTitle" />
+		<h:form>
+			<p:panelGrid columns="1">
+				<p:tabView>
+					<p:tab title="General">
+						<p:panelGrid columns="3">
+							<h:outputLabel for="siteTitle" value="Site Title:" />
+							<h:inputText id="siteTitle" required="true"
+								requiredMessage="Site Title is manadatory"
+								value="#{siteInfoManager.siteDetails.title}" size="67" />
+							<p:message for="siteTitle" />
 
-						<h:outputLabel for="siteSubTitle" value="Sub Title:" />
-						<h:inputText id="siteSubTitle" required="true"
-							requiredMessage="Sub Title is manadatory"
-							value="#{siteInfoManager.siteDetails.subTitle}" size="67" />
-						<p:message for="siteSubTitle" />
+							<h:outputLabel for="siteSubTitle" value="Sub Title:" />
+							<h:inputText id="siteSubTitle" required="true"
+								requiredMessage="Sub Title is manadatory"
+								value="#{siteInfoManager.siteDetails.subTitle}" size="67" />
+							<p:message for="siteSubTitle" />
 
-						<h:outputLabel for="aboutMe" value="About Me:" />
-						<h:inputTextarea id="aboutMe" required="true"
-							requiredMessage="About Me is manadatory"
-							value="#{siteInfoManager.siteDetails.aboutMe}" rows="8" cols="70" />
-						<p:message for="aboutMe" />
-					</p:panelGrid>
-				</p:tab>
-				<p:tab title="Google">
-					<p:panelGrid columns="2">
-						<h:outputLabel for="googleUserId" value="Google UserId:" />
-						<h:inputText id="googleUserId"
-							value="#{siteInfoManager.siteDetails.googleUserId}" size="67" />
+							<h:outputLabel for="aboutMe" value="About Me:" />
+							<h:inputTextarea id="aboutMe" required="true"
+								requiredMessage="About Me is manadatory"
+								value="#{siteInfoManager.siteDetails.aboutMe}" rows="8"
+								cols="70" />
+							<p:message for="aboutMe" />
+						</p:panelGrid>
+					</p:tab>
+					<p:tab title="Google">
+						<p:panelGrid columns="2">
+							<h:outputLabel for="googleUserId" value="Google UserId:" />
+							<h:inputText id="googleUserId"
+								value="#{siteInfoManager.siteDetails.googleUserId}" size="67" />
 
-						<h:outputLabel for="googleApiKey" value="Google API Key:" />
-						<h:inputText id="googleApiKey"
-							value="#{siteInfoManager.siteDetails.googleApiKey}" size="67" />
+							<h:outputLabel for="googleApiKey" value="Google API Key:" />
+							<h:inputText id="googleApiKey"
+								value="#{siteInfoManager.siteDetails.googleApiKey}" size="67" />
 
-						<h:outputLabel for="googleAnalyticsId"
-							value="Google Analytics Id:" />
-						<h:inputText id="googleAnalyticsId"
-							value="#{siteInfoManager.siteDetails.googleAnalyticsId}"
-							size="67" />
-					</p:panelGrid>
-				</p:tab>
-				<p:tab title="Twitter">
-					<p:panelGrid columns="2">
-						<h:outputLabel for="twitterUsername" value="Twitter Username:" />
-						<h:inputText id="twitterUsername"
-							value="#{siteInfoManager.siteDetails.twitterUsername}" size="67" />
+							<h:outputLabel for="googleAnalyticsId"
+								value="Google Analytics Id:" />
+							<h:inputText id="googleAnalyticsId"
+								value="#{siteInfoManager.siteDetails.googleAnalyticsId}"
+								size="67" />
+						</p:panelGrid>
+					</p:tab>
+					<p:tab title="Twitter">
+						<p:panelGrid columns="2">
+							<h:outputLabel for="twitterUsername" value="Twitter Username:" />
+							<h:inputText id="twitterUsername"
+								value="#{siteInfoManager.siteDetails.twitterUsername}" size="67" />
 
-						<h:outputLabel for="twitterConsumerKey"
-							value="Twitter Consumer Key:" />
-						<h:inputText id="twitterConsumerKey"
-							value="#{siteInfoManager.siteDetails.twitterConsumerKey}"
-							size="67" />
+							<h:outputLabel for="twitterConsumerKey"
+								value="Twitter Consumer Key:" />
+							<h:inputText id="twitterConsumerKey"
+								value="#{siteInfoManager.siteDetails.twitterConsumerKey}"
+								size="67" />
 
-						<h:outputLabel for="twitterConsumerSecret"
-							value="Twitter Consumer Secret Key:" />
-						<h:inputText id="twitterConsumerSecret"
-							value="#{siteInfoManager.siteDetails.twitterConsumerSecret}"
-							size="67" />
+							<h:outputLabel for="twitterConsumerSecret"
+								value="Twitter Consumer Secret Key:" />
+							<h:inputText id="twitterConsumerSecret"
+								value="#{siteInfoManager.siteDetails.twitterConsumerSecret}"
+								size="67" />
 
-						<h:outputLabel for="twitterAccessToken"
-							value="Twitter Access Token:" />
-						<h:inputText id="twitterAccessToken"
-							value="#{siteInfoManager.siteDetails.twitterAccessToken}"
-							size="67" />
+							<h:outputLabel for="twitterAccessToken"
+								value="Twitter Access Token:" />
+							<h:inputText id="twitterAccessToken"
+								value="#{siteInfoManager.siteDetails.twitterAccessToken}"
+								size="67" />
 
-						<h:outputLabel for="twitterAccessTokenSecret"
-							value="Twitter Access Token Secret:" />
-						<h:inputText id="twitterAccessTokenSecret"
-							value="#{siteInfoManager.siteDetails.twitterAccessTokenSecret}"
-							size="67" />
-					</p:panelGrid>
-				</p:tab>
-				<p:tab title="Facebook">
-					<p:panelGrid columns="2">
-						<h:outputLabel for="facebookUsername" value="Facebook Username:" />
-						<h:inputText id="facebookUsername"
-							value="#{siteInfoManager.siteDetails.facebookUsername}" size="67" />
+							<h:outputLabel for="twitterAccessTokenSecret"
+								value="Twitter Access Token Secret:" />
+							<h:inputText id="twitterAccessTokenSecret"
+								value="#{siteInfoManager.siteDetails.twitterAccessTokenSecret}"
+								size="67" />
+						</p:panelGrid>
+					</p:tab>
+					<p:tab title="Facebook">
+						<p:panelGrid columns="2">
+							<h:outputLabel for="facebookUsername" value="Facebook Username:" />
+							<h:inputText id="facebookUsername"
+								value="#{siteInfoManager.siteDetails.facebookUsername}"
+								size="67" />
 
-						<h:outputLabel for="facebookAppId" value="Facebook App Id:" />
-						<h:inputText id="facebookAppId"
-							value="#{siteInfoManager.siteDetails.facebookAppId}" size="67" />
+							<h:outputLabel for="facebookAppId" value="Facebook App Id:" />
+							<h:inputText id="facebookAppId"
+								value="#{siteInfoManager.siteDetails.facebookAppId}" size="67" />
 
-						<h:outputLabel for="facebookAppSecret"
-							value="Facebook App Secret:" />
-						<h:inputText id="facebookAppSecret"
-							value="#{siteInfoManager.siteDetails.facebookAppSecret}"
-							size="67" />
+							<h:outputLabel for="facebookAppSecret"
+								value="Facebook App Secret:" />
+							<h:inputText id="facebookAppSecret"
+								value="#{siteInfoManager.siteDetails.facebookAppSecret}"
+								size="67" />
 
-						<h:outputLabel for="facebookAccessToken"
-							value="Facebook Access Token:" />
-						<h:inputText id="facebookAccessToken"
-							value="#{siteInfoManager.siteDetails.facebookAccessToken}"
-							size="67" />
-					</p:panelGrid>
-				</p:tab>
-			</p:tabView>
-			<p:commandButton id="add" value="Save"
-				action="#{siteInfoManager.saveSiteInfo}" ajax="false" />
-		</p:panelGrid>
+							<h:outputLabel for="facebookAccessToken"
+								value="Facebook Access Token:" />
+							<h:inputText id="facebookAccessToken"
+								value="#{siteInfoManager.siteDetails.facebookAccessToken}"
+								size="67" />
+						</p:panelGrid>
+					</p:tab>
+				</p:tabView>
+				<p:commandButton id="add" value="Save"
+					action="#{siteInfoManager.saveSiteInfo}" ajax="false" />
+			</p:panelGrid>
+		</h:form>
 	</ui:define>
 
 </ui:composition>
