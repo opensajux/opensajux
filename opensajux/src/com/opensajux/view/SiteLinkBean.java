@@ -138,7 +138,7 @@ public class SiteLinkBean implements Serializable {
 
 	public void removeSiteLinks() {
 		for (SiteLink b : selectedSiteLinks) {
-			siteLinkService.removeSiteLink	(b.getUrl().getValue());
+			siteLinkService.removeSiteLink(b.getKey());
 		}
 	}
 }
