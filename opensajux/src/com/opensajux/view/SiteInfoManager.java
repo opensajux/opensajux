@@ -49,6 +49,11 @@ public class SiteInfoManager {
 				siteDetails.setFacebookAppId(siteInfo.getFacebookAppId());
 				siteDetails.setFacebookAppSecret(siteInfo.getFacebookAppSecret());
 				siteDetails.setFacebookAccessToken(siteInfo.getFacebookAccessToken());
+				siteDetails.setLinkedinUsername(siteInfo.getLinkedinUsername());
+				siteDetails.setLinkedinApiKey(siteInfo.getLinkedinApiKey());
+				siteDetails.setLinkedinSecretKey(siteInfo.getLinkedinSecretKey());
+				siteDetails.setLinkedinUserSecret(siteInfo.getLinkedinUserSecret());
+				siteDetails.setLinkedinUserToken(siteInfo.getLinkedinUserToken());
 			}
 			pm.close();
 
@@ -77,6 +82,11 @@ public class SiteInfoManager {
 		siteInfo.setFacebookAppId(siteDetails.getFacebookAppId());
 		siteInfo.setFacebookAppSecret(siteDetails.getFacebookAppSecret());
 		siteInfo.setFacebookAccessToken(siteDetails.getFacebookAccessToken());
+		siteInfo.setLinkedinUsername(siteDetails.getLinkedinUsername());
+		siteInfo.setLinkedinApiKey(siteDetails.getLinkedinApiKey());
+		siteInfo.setLinkedinSecretKey(siteDetails.getLinkedinSecretKey());
+		siteInfo.setLinkedinUserSecret(siteDetails.getLinkedinUserSecret());
+		siteInfo.setLinkedinUserToken(siteDetails.getLinkedinUserToken());
 		pm.makePersistent(siteInfo);
 		pm.close();
 		return "/admin/index.jsf";

@@ -108,6 +108,36 @@
 								size="67" />
 						</p:panelGrid>
 					</p:tab>
+					<p:tab title="LinkedIn">
+						<p:panelGrid columns="2">
+							<h:outputLabel for="linkedinUsername" value="LinkedIn Username:" />
+							<h:inputText id="linkedinUsername"
+								value="#{siteInfoManager.siteDetails.linkedinUsername}"
+								size="67" />
+
+							<h:outputLabel for="linkedinApiKey" value="LinkedIn API Key:" />
+							<h:inputText id="linkedinApiKey"
+								value="#{siteInfoManager.siteDetails.linkedinApiKey}" size="67" />
+
+							<h:outputLabel for="linkedinSecretKey"
+								value="LinkedIn Secret Key:" />
+							<h:inputText id="linkedinSecretKey"
+								value="#{siteInfoManager.siteDetails.linkedinSecretKey}"
+								size="67" />
+
+							<h:outputLabel for="linkedinUserToken"
+								value="LinkedIn User Token:" />
+							<h:inputText id="linkedinUserToken"
+								value="#{siteInfoManager.siteDetails.linkedinUserToken}"
+								size="67" />
+
+							<h:outputLabel for="linkedinUserSecret"
+								value="LinkedIn User Secret:" />
+							<h:inputText id="linkedinUserSecret"
+								value="#{siteInfoManager.siteDetails.linkedinUserSecret}"
+								size="67" />
+						</p:panelGrid>
+					</p:tab>
 				</p:tabView>
 				<p:commandButton id="add" value="Save"
 					action="#{siteInfoManager.saveSiteInfo}" ajax="false" />

@@ -63,6 +63,21 @@ public class SiteInfo implements Serializable {
 	@Persistent
 	private String facebookAccessToken;
 
+	@Persistent
+	private String linkedinUsername;
+
+	@Persistent
+	private String linkedinApiKey;
+
+	@Persistent
+	private String linkedinSecretKey;
+
+	@Persistent
+	private String linkedinUserToken;
+
+	@Persistent
+	private String linkedinUserSecret;
+
 	public Text getAboutMe() {
 		return aboutMe;
 	}
@@ -284,6 +299,81 @@ public class SiteInfo implements Serializable {
 	 */
 	public void setFacebookAccessToken(String facebookAccessToken) {
 		this.facebookAccessToken = facebookAccessToken;
+	}
+
+	/**
+	 * @return the linkedinUsername
+	 */
+	public String getLinkedinUsername() {
+		return linkedinUsername;
+	}
+
+	/**
+	 * @param linkedinUsername
+	 *            the linkedinUsername to set
+	 */
+	public void setLinkedinUsername(String linkedinUsername) {
+		this.linkedinUsername = linkedinUsername;
+	}
+
+	/**
+	 * @return the linkedinApiKey
+	 */
+	public String getLinkedinApiKey() {
+		return linkedinApiKey;
+	}
+
+	/**
+	 * @param linkedinApiKey
+	 *            the linkedinApiKey to set
+	 */
+	public void setLinkedinApiKey(String linkedinApiKey) {
+		this.linkedinApiKey = linkedinApiKey;
+	}
+
+	/**
+	 * @return the linkedinSecretKey
+	 */
+	public String getLinkedinSecretKey() {
+		return linkedinSecretKey;
+	}
+
+	/**
+	 * @param linkedinSecretKey
+	 *            the linkedinSecretKey to set
+	 */
+	public void setLinkedinSecretKey(String linkedinSecretKey) {
+		this.linkedinSecretKey = linkedinSecretKey;
+	}
+
+	/**
+	 * @return the linkedinUserToken
+	 */
+	public String getLinkedinUserToken() {
+		return linkedinUserToken;
+	}
+
+	/**
+	 * @param linkedinUserToken
+	 *            the linkedinUserToken to set
+	 */
+	public void setLinkedinUserToken(String linkedinUserToken) {
+		this.linkedinUserToken = linkedinUserToken;
+	}
+
+	/**
+	 * @return the linkedinUserSecret
+	 */
+	public String getLinkedinUserSecret() {
+		return linkedinUserSecret;
+	}
+
+	/**
+	 * @param linkedinUserSecret
+	 *            the linkedinUserSecret to set
+	 */
+	public void setLinkedinUserSecret(String linkedinUserSecret) {
+		this.linkedinUserSecret = linkedinUserSecret;
 	}
 
 }
