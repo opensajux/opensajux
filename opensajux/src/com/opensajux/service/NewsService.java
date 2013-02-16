@@ -69,10 +69,12 @@ public class NewsService implements Serializable {
 	public List<News> getNews(PaginationParameters params) {
 		PersistenceManager pm = pmf.getPersistenceManager();
 		Query query = pm.newQuery(News.class);
-		if (params.getSortField() != null)
-			query.setOrdering(params.getSortField() + " " + params.getSortOrder());
-		if (params != null)
+		
+		if (params != null) {
 			query.setRange(params.getFirst(), params.getFirst() + params.getPageSize());
+			if (params.getSortField() != null)
+				query.setOrdering(params.getSortField() + " " + params.getSortOrder());
+		}
 
 		Object object = query.execute();
 		List<News> news = (List<News>) object;
