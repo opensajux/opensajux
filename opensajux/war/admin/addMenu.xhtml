@@ -14,38 +14,40 @@
 		<f:metadata>
 			<f:viewParam name="menu_name" value="#{menuManager.menuName}" />
 		</f:metadata>
-		<h:panelGrid columns="3">
-			<f:facet name="header">
-				<h:outputText value="Add Menu"
+		<h:form>
+			<h:panelGrid columns="3">
+				<f:facet name="header">
+					<h:outputText value="Add Menu"
+						rendered="#{empty param['menu_name']}" />
+					<h:outputText value="Edit Menu"
+						rendered="#{!empty param['menu_name']}" />
+				</f:facet>
+				<h:outputLabel for="name" value="Menu Name:" />
+				<h:inputText id="name" required="true"
+					requiredMessage="Menu Name is manadatory"
+					value="#{menuManager.menu.name}"
+					validator="#{menuManager.validateMenuName}" />
+				<p:message for="name" />
+				<h:outputLabel for="title" value="Title:" />
+				<h:inputText id="title" required="true"
+					requiredMessage="Title is manadatory"
+					value="#{menuManager.menu.title}" />
+				<p:message for="title" />
+				<h:outputLabel for="url" value="Url:" />
+				<h:inputText id="url" required="true"
+					requiredMessage="Url is manadatory" value="#{menuManager.menu.url}" />
+				<p:message for="url" />
+				<h:outputLabel for="order" value="Order:" />
+				<p:spinner id="order" min="0" value="#{menuManager.menu.ordering}" />
+				<p:message for="order" />
+				<p:commandButton id="add" value="Add"
+					action="#{menuManager.addMenu}" ajax="false"
 					rendered="#{empty param['menu_name']}" />
-				<h:outputText value="Edit Menu"
+				<p:commandButton id="save" value="Save"
+					action="#{menuManager.saveMenu}" ajax="false"
 					rendered="#{!empty param['menu_name']}" />
-			</f:facet>
-			<h:outputLabel for="name" value="Menu Name:" />
-			<h:inputText id="name" required="true"
-				requiredMessage="Menu Name is manadatory"
-				value="#{menuManager.menu.name}"
-				validator="#{menuManager.validateMenuName}" />
-			<p:message for="name" />
-			<h:outputLabel for="title" value="Title:" />
-			<h:inputText id="title" required="true"
-				requiredMessage="Title is manadatory"
-				value="#{menuManager.menu.title}" />
-			<p:message for="title" />
-			<h:outputLabel for="url" value="Url:" />
-			<h:inputText id="url" required="true"
-				requiredMessage="Url is manadatory" value="#{menuManager.menu.url}" />
-			<p:message for="url" />
-			<h:outputLabel for="order" value="Order:" />
-			<p:spinner id="order" min="0" value="#{menuManager.menu.ordering}" />
-			<p:message for="order" />
-			<p:commandButton id="add" value="Add"
-				action="#{menuManager.addMenu}" ajax="false"
-				rendered="#{empty param['menu_name']}" />
-			<p:commandButton id="save" value="Save"
-				action="#{menuManager.saveMenu}" ajax="false"
-				rendered="#{!empty param['menu_name']}" />
-		</h:panelGrid>
+			</h:panelGrid>
+		</h:form>
 	</ui:define>
 </ui:composition>
 </html>

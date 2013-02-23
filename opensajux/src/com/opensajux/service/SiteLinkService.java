@@ -51,12 +51,12 @@ public class SiteLinkService implements Serializable {
 	}
 
 	@SuppressWarnings("unchecked")
-	public void removeSiteLink(String url) {
+	public void removeSiteLink(Key key) {
 		PersistenceManager pm = pmf.getPersistenceManager();
 		Query query = pm.newQuery(SiteLink.class);
-		query.setFilter("url == url1");
-		query.declareParameters("String url1");
-		List<SiteLink> list = (List<SiteLink>) query.execute(url);
+		query.setFilter("key == k");
+		query.declareParameters(Key.class.getName() + " k");
+		List<SiteLink> list = (List<SiteLink>) query.execute(key);
 		pm.deletePersistent(list.get(0));
 		pm.close();
 	}

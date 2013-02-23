@@ -8,7 +8,130 @@
 
 <ui:composition template="/templates/masterLayout.xhtml">
 	<ui:define name="content">
+		<div style="width: 100%; margin-bottom: 15px">
+			<table width="100%" style="border-spacing: 0px">
+				<tr>
+					<td
+						style="border-top: 1px solid #66cc33; border-right: 1px solid #66cc33;"><h:outputLink
+							value="#headline">Headline</h:outputLink></td>
+					<td style="border-bottom: 1px solid #66cc33; width: 90%"></td>
+				</tr>
+			</table>
+		</div>
+		<div style="width: 100%; text-align: justify; margin: 6px;">
+			<h:outputText value="#{portfolioBean.portfolio.headline.value}"
+				escape="false" />
+		</div>
+		<br />
+		<br />
+		<div style="width: 100%; margin-bottom: 15px">
+			<table width="100%" style="border-spacing: 0px">
+				<tr>
+					<td
+						style="border-top: 1px solid #66cc33; border-right: 1px solid #66cc33;"><h:outputLink
+							value="#indistry">Industry</h:outputLink></td>
+					<td style="border-bottom: 1px solid #66cc33; width: 90%"></td>
+				</tr>
+			</table>
+		</div>
+		<div style="width: 100%; text-align: justify; margin: 6px;">
+			<h:outputText value="#{portfolioBean.portfolio.industry}"
+				escape="false" />
+		</div>
+		<br />
+		<br />
+		<div style="width: 100%; margin-bottom: 15px">
+			<table width="100%" style="border-spacing: 0px">
+				<tr>
+					<td
+						style="border-top: 1px solid #66cc33; border-right: 1px solid #66cc33;"><h:outputLink
+							value="#summary">Summary</h:outputLink></td>
+					<td style="border-bottom: 1px solid #66cc33; width: 90%"></td>
+				</tr>
+			</table>
+		</div>
+		<div style="width: 100%; text-align: justify; margin: 6px;">
+			<h:outputText value="#{portfolioBean.portfolio.summary.value}"
+				escape="false" />
+		</div>
+		<br />
+		<br />
+		<div style="width: 100%; margin-bottom: 15px">
+			<table width="100%" style="border-spacing: 0px">
+				<tr>
+					<td
+						style="border-top: 1px solid #66cc33; border-right: 1px solid #66cc33;"><h:outputLink
+							value="#experience">Experience</h:outputLink></td>
+					<td style="border-bottom: 1px solid #66cc33; width: 90%"></td>
+				</tr>
+			</table>
+		</div>
+		<div style="width: 100%; text-align: justify; margin: 6px;">
+			<ui:repeat var="pos" value="#{portfolioBean.portfolio.positions}">
+				<h:outputText value="#{pos.title}" style="font-weight:bold" />
+				<br />
+				<h:outputText value="#{pos.companyName}" />
+				<br />
+				<h:outputText value="#{pos.startDate}">
+					<f:convertDateTime type="date" pattern="MMMM yyyy" />
+				</h:outputText> - <h:outputText value="#{pos.endDate}">
+					<f:convertDateTime type="date" pattern="MMMM yyyy" />
+				</h:outputText>
+				<h:panelGroup rendered="#{!empty pos.summary.value}">
+					<br />
+					<br />
+					<h:outputText value="#{pos.summary.value}" escape="false" />
+				</h:panelGroup>
 
+				<br />
+				<br />
+			</ui:repeat>
+		</div>
+		<br />
+		<div style="width: 100%; margin-bottom: 15px">
+			<table width="100%" style="border-spacing: 0px">
+				<tr>
+					<td
+						style="border-top: 1px solid #66cc33; border-right: 1px solid #66cc33;"><h:outputLink
+							value="#education">Education</h:outputLink></td>
+					<td style="border-bottom: 1px solid #66cc33; width: 90%"></td>
+				</tr>
+			</table>
+		</div>
+		<div style="width: 100%; text-align: justify; margin: 6px;">
+			<ui:repeat var="edu" value="#{portfolioBean.portfolio.educations}">
+				<h:outputText value="#{edu.degree}" style="font-weight:bold" />
+				<h:panelGroup rendered="#{!empty edu.fieldOfStudy}">
+					<br />
+					<h:outputText value="#{edu.fieldOfStudy}"
+						rendered="#{!empty edu.fieldOfStudy}" />
+				</h:panelGroup>
+				<br />
+				<h:outputText value="#{edu.schoolName}" />
+				<br />
+				<h:outputText value="#{edu.startDate}">
+					<f:convertDateTime type="date" pattern="MMMM yyyy" />
+				</h:outputText> - <h:outputText value="#{edu.endDate}">
+					<f:convertDateTime type="date" pattern="MMMM yyyy" />
+				</h:outputText>
+				<br />
+				<br />
+
+			</ui:repeat>
+		</div>
+	</ui:define>
+	<ui:define name="right">
+		<p:dataList var="stream" value="#{talkStreamBean.stream}"
+			paginator="true" rows="5" lazy="true"
+			paginatorTemplate="{PreviousPageLink}   {NextPageLink}"
+			paginatorPosition="bottom" type="none" styleClass="talkStream">
+			<h:outputLink value="#{stream.sourceUrl.value}">
+				<h:outputText value="#{stream.title.value}" />
+			</h:outputLink>
+			<hr width="80%"></hr>
+		</p:dataList>
+		<br />
+		<br />
 	</ui:define>
 </ui:composition>
 

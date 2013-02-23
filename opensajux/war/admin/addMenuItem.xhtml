@@ -14,25 +14,27 @@
 		<f:metadata>
 			<f:viewParam name="menu_name" value="#{menuItemManager.menuName}" />
 		</f:metadata>
-		<h:panelGrid columns="3" title="Add MenuItem">
-			<f:facet name="header">Add MenuItem</f:facet>
-			<h:outputLabel for="title" value="Title:" />
-			<h:inputText id="title" required="true"
-				requiredMessage="Title is manadatory"
-				value="#{menuItemManager.menuItem.title}" />
-			<p:message for="title" />
-			<h:outputLabel for="url" value="Url:" />
-			<h:inputText id="url" required="true"
-				requiredMessage="Url is manadatory"
-				value="#{menuItemManager.menuItem.url}" />
-			<p:message for="url" />
-			<h:outputLabel for="order" value="Order:" />
-			<p:spinner id="order" min="0"
-				value="#{menuItemManager.menuItem.ordering}" />
-			<p:message for="order" />
-			<p:commandButton id="add" value="Add"
-				action="#{menuItemManager.saveMenuItem}" ajax="false" />
-		</h:panelGrid>
+		<h:form>
+			<h:panelGrid columns="3" title="Add MenuItem">
+				<f:facet name="header">Add MenuItem</f:facet>
+				<h:outputLabel for="title" value="Title:" />
+				<h:inputText id="title" required="true"
+					requiredMessage="Title is manadatory"
+					value="#{menuItemManager.menuItem.title}" />
+				<p:message for="title" />
+				<h:outputLabel for="url" value="Url:" />
+				<h:inputText id="url" required="true"
+					requiredMessage="Url is manadatory"
+					value="#{menuItemManager.menuItem.url}" />
+				<p:message for="url" />
+				<h:outputLabel for="order" value="Order:" />
+				<p:spinner id="order" min="0"
+					value="#{menuItemManager.menuItem.ordering}" />
+				<p:message for="order" />
+				<p:commandButton id="add" value="Add"
+					action="#{menuItemManager.saveMenuItem}" ajax="false" />
+			</h:panelGrid>
+		</h:form>
 	</ui:define>
 </ui:composition>
 </html>

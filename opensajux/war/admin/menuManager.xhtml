@@ -13,67 +13,70 @@
 		<h2>Menu Manager</h2>
 	</ui:define>
 	<ui:define name="content">
-		<p:commandButton value="Add" action="/admin/addMenu.jsf" ajax="false" />
-		<p:commandButton value="Remove" type="button" onclick="confirm.show()" />
-		<p:confirmDialog
-			message="Are you sure you want to delete the selected menus?"
-			header="Confirm Delete" severity="alert" widgetVar="confirm">
-			<p:commandButton value="No" type="button" onclick="confirm.hide()" />
-			<p:commandButton value="Yes" update="menuTable"
-				oncomplete="confirm.hide()" />
-		</p:confirmDialog>
+		<h:form>
+			<p:commandButton value="Add" action="/admin/addMenu.jsf" ajax="false" />
+			<p:commandButton value="Remove" type="button"
+				onclick="confirm.show()" />
+			<p:confirmDialog
+				message="Are you sure you want to delete the selected menus?"
+				header="Confirm Delete" severity="alert" widgetVar="confirm">
+				<p:commandButton value="No" type="button" onclick="confirm.hide()" />
+				<p:commandButton value="Yes" update="menuTable"
+					oncomplete="confirm.hide()" />
+			</p:confirmDialog>
 
-		<p:dataTable id="menuTable" var="item"
-			value="#{menuManager.menuModel}" dynamic="true" lazy="true"
-			selectionMode="multiple" selection="#{menuManager.selectedMenus}"
-			rowKey="#{item.key.id}" paginator="true" rows="10"
-			rowsPerPageTemplate="10,20,50,100"
-			paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-			filteredValue="#{menuManager.filteredMenus}">
-			<p:column resizable="true" sortBy="#{item.name}"
-				filterBy="#{item.name}">
-				<f:facet name="header">
-					<h:outputText value="Name" />
-				</f:facet>
-				<h:outputLink value="/admin/addMenu.jsf?menu_name=#{item.name}">#{item.name}</h:outputLink>
-			</p:column>
-			<p:column resizable="true" sortBy="#{item.itemCount}"
-				filterBy="#{item.itemCount}">
-				<f:facet name="header">
-					<h:outputText value="Sub Menus" />
-				</f:facet>
-				<h:outputLink
-					value="/admin/menuItemManager.jsf?menu_name=#{item.name}">#{item.itemCount} Items</h:outputLink>
-			</p:column>
-			<p:column resizable="true">
-				<f:facet name="header">
-					<h:outputText value="Published?" />
-				</f:facet>
-				<h:selectBooleanCheckbox value="#{item.published}"
-					valueChangeListener="#{menuManager.changePublishedState}" />
-			</p:column>
-			<p:column resizable="true" sortBy="#{item.title}"
-				filterBy="#{item.title}">
-				<f:facet name="header">
-					<h:outputText value="Title" />
-				</f:facet>
-				<h:outputText value="#{item.title}" />
-			</p:column>
-			<p:column resizable="true" sortBy="#{item.url}"
-				filterBy="#{item.url}">
-				<f:facet name="header">
-					<h:outputText value="Url" />
-				</f:facet>
-				<h:outputText value="#{item.url}" />
-			</p:column>
-			<p:column resizable="true" sortBy="#{item.ordering}"
-				filterBy="#{item.ordering}">
-				<f:facet name="header">
-					<h:outputText value="Order" />
-				</f:facet>
-				<h:outputText value="#{item.ordering}" />
-			</p:column>
-		</p:dataTable>
+			<p:dataTable id="menuTable" var="item"
+				value="#{menuManager.menuModel}" dynamic="true" lazy="true"
+				selectionMode="multiple" selection="#{menuManager.selectedMenus}"
+				rowKey="#{item.key.id}" paginator="true" rows="10"
+				rowsPerPageTemplate="10,20,50,100"
+				paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+				filteredValue="#{menuManager.filteredMenus}">
+				<p:column resizable="true" sortBy="#{item.name}"
+					filterBy="#{item.name}">
+					<f:facet name="header">
+						<h:outputText value="Name" />
+					</f:facet>
+					<h:outputLink value="/admin/addMenu.jsf?menu_name=#{item.name}">#{item.name}</h:outputLink>
+				</p:column>
+				<p:column resizable="true" sortBy="#{item.itemCount}"
+					filterBy="#{item.itemCount}">
+					<f:facet name="header">
+						<h:outputText value="Sub Menus" />
+					</f:facet>
+					<h:outputLink
+						value="/admin/menuItemManager.jsf?menu_name=#{item.name}">#{item.itemCount} Items</h:outputLink>
+				</p:column>
+				<p:column resizable="true">
+					<f:facet name="header">
+						<h:outputText value="Published?" />
+					</f:facet>
+					<h:selectBooleanCheckbox value="#{item.published}"
+						valueChangeListener="#{menuManager.changePublishedState}" />
+				</p:column>
+				<p:column resizable="true" sortBy="#{item.title}"
+					filterBy="#{item.title}">
+					<f:facet name="header">
+						<h:outputText value="Title" />
+					</f:facet>
+					<h:outputText value="#{item.title}" />
+				</p:column>
+				<p:column resizable="true" sortBy="#{item.url}"
+					filterBy="#{item.url}">
+					<f:facet name="header">
+						<h:outputText value="Url" />
+					</f:facet>
+					<h:outputText value="#{item.url}" />
+				</p:column>
+				<p:column resizable="true" sortBy="#{item.ordering}"
+					filterBy="#{item.ordering}">
+					<f:facet name="header">
+						<h:outputText value="Order" />
+					</f:facet>
+					<h:outputText value="#{item.ordering}" />
+				</p:column>
+			</p:dataTable>
+		</h:form>
 	</ui:define>
 
 </ui:composition>

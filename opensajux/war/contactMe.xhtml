@@ -30,6 +30,12 @@
 							<h:outputText value="Google+" />
 						</h:outputLink></li>
 				</c:if>
+				<c:if test="${!empty siteInfoManager.siteDetails.linkedinUsername}">
+					<li><h:outputLink
+							value="http://in.linkedin.com/in/#{siteInfoManager.siteDetails.linkedinUsername}">
+							<h:outputText value="LinkedIn" />
+						</h:outputLink></li>
+				</c:if>
 				<c:forEach items="#{siteLinkBean.links}" var="siteLink">
 					<li><h:outputLink value="#{siteLink.url.value}">
 							<h:outputText value="#{siteLink.title.value}" />

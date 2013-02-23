@@ -10,6 +10,7 @@ import javax.jdo.PersistenceManager;
 import javax.jdo.PersistenceManagerFactory;
 import javax.jdo.Query;
 
+import com.google.appengine.api.datastore.Text;
 import com.opensajux.common.Chosen;
 import com.opensajux.dto.SiteDetails;
 import com.opensajux.entity.SiteInfo;
@@ -33,7 +34,7 @@ public class SiteInfoManager {
 			siteDetails = new SiteDetails();
 			if (list != null && list.size() > 0) {
 				SiteInfo siteInfo = list.get(0);
-				siteDetails.setAboutMe(siteInfo.getAboutMe());
+				siteDetails.setAboutMe(siteInfo.getAboutMe().getValue());
 				siteDetails.setTitle(siteInfo.getTitle());
 				siteDetails.setSubTitle(siteInfo.getSubTitle());
 				siteDetails.setGoogleUserId(siteInfo.getGoogleUserId());
@@ -48,6 +49,11 @@ public class SiteInfoManager {
 				siteDetails.setFacebookAppId(siteInfo.getFacebookAppId());
 				siteDetails.setFacebookAppSecret(siteInfo.getFacebookAppSecret());
 				siteDetails.setFacebookAccessToken(siteInfo.getFacebookAccessToken());
+				siteDetails.setLinkedinUsername(siteInfo.getLinkedinUsername());
+				siteDetails.setLinkedinApiKey(siteInfo.getLinkedinApiKey());
+				siteDetails.setLinkedinSecretKey(siteInfo.getLinkedinSecretKey());
+				siteDetails.setLinkedinUserSecret(siteInfo.getLinkedinUserSecret());
+				siteDetails.setLinkedinUserToken(siteInfo.getLinkedinUserToken());
 			}
 			pm.close();
 
@@ -61,7 +67,7 @@ public class SiteInfoManager {
 		Query query = pm.newQuery(SiteInfo.class);
 		List<SiteInfo> list = (List<SiteInfo>) query.execute();
 		SiteInfo siteInfo = list.get(0);
-		siteInfo.setAboutMe(siteDetails.getAboutMe());
+		siteInfo.setAboutMe(new Text(siteDetails.getAboutMe()));
 		siteInfo.setTitle(siteDetails.getTitle());
 		siteInfo.setSubTitle(siteDetails.getSubTitle());
 		siteInfo.setGoogleUserId(siteDetails.getGoogleUserId());
@@ -76,6 +82,11 @@ public class SiteInfoManager {
 		siteInfo.setFacebookAppId(siteDetails.getFacebookAppId());
 		siteInfo.setFacebookAppSecret(siteDetails.getFacebookAppSecret());
 		siteInfo.setFacebookAccessToken(siteDetails.getFacebookAccessToken());
+		siteInfo.setLinkedinUsername(siteDetails.getLinkedinUsername());
+		siteInfo.setLinkedinApiKey(siteDetails.getLinkedinApiKey());
+		siteInfo.setLinkedinSecretKey(siteDetails.getLinkedinSecretKey());
+		siteInfo.setLinkedinUserSecret(siteDetails.getLinkedinUserSecret());
+		siteInfo.setLinkedinUserToken(siteDetails.getLinkedinUserToken());
 		pm.makePersistent(siteInfo);
 		pm.close();
 		return "/admin/index.jsf";

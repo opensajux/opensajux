@@ -5,6 +5,7 @@ package com.opensajux.service;
 
 import java.io.Serializable;
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -35,6 +36,7 @@ public class NewsService implements Serializable {
 	public void saveNews(News news) {
 		PersistenceManager pm = pmf.getPersistenceManager();
 		try {
+			news.setUpdatedDate(new Date());
 			pm.makePersistent(news);
 			if (LOGGER.isLoggable(Level.INFO))
 				LOGGER.info("Saving news item: " + news.getTitle());
@@ -67,10 +69,12 @@ public class NewsService implements Serializable {
 	public List<News> getNews(PaginationParameters params) {
 		PersistenceManager pm = pmf.getPersistenceManager();
 		Query query = pm.newQuery(News.class);
-		if (params.getSortField() != null)
-			query.setOrdering(params.getSortField() + " " + params.getSortOrder());
-		if (params != null)
+		
+		if (params != null) {
 			query.setRange(params.getFirst(), params.getFirst() + params.getPageSize());
+			if (params.getSortField() != null)
+				query.setOrdering(params.getSortField() + " " + params.getSortOrder());
+		}
 
 		Object object = query.execute();
 		List<News> news = (List<News>) object;
