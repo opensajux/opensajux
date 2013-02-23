@@ -2,6 +2,7 @@ package com.opensajux.entity;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 import javax.jdo.annotations.IdGeneratorStrategy;
 import javax.jdo.annotations.PersistenceCapable;
@@ -10,7 +11,7 @@ import javax.jdo.annotations.PrimaryKey;
 
 import com.google.appengine.api.datastore.Email;
 import com.google.appengine.api.datastore.Key;
-import com.google.appengine.api.datastore.PhoneNumber;
+import com.google.appengine.api.datastore.Text;
 
 @PersistenceCapable
 public class Portfolio implements Serializable {
@@ -21,7 +22,16 @@ public class Portfolio implements Serializable {
 	protected Key key;
 
 	@Persistent
-	private String fullName;
+	private String id;
+
+	@Persistent
+	private String firstName;
+
+	@Persistent
+	private String middleName;
+
+	@Persistent
+	private String lastName;
 
 	@Persistent
 	private Date dob;
@@ -30,31 +40,110 @@ public class Portfolio implements Serializable {
 	private Email email;
 
 	@Persistent
-	private String address;
+	private Text address;
 
 	@Persistent
-	private PhoneNumber phone;
+	private Date updatedDate;
 
 	@Persistent
-	private String coverLetter;
+	private Text headline;
+
+	@Persistent
+	private Text summary;
+
+	@Persistent
+	private String industry;
+
+	@Persistent
+	private String interests;
+
+	@Persistent
+	private String location;
+
+	@Persistent(mappedBy = "portfolio")
+	private List<Position> positions;
+
+	@Persistent(mappedBy = "portfolio")
+	private List<Education> educations;
 
 	public Key getKey() {
 		return key;
 	}
 
 	/**
-	 * @param fullName
-	 *            the fullName to set
+	 * @param key
+	 *            the key to set
 	 */
-	public void setFullName(String fullName) {
-		this.fullName = fullName;
+	public void setKey(Key key) {
+		this.key = key;
+	}
+
+	/**
+	 * @return the id
+	 */
+	public String getId() {
+		return id;
+	}
+
+	/**
+	 * @param id
+	 *            the id to set
+	 */
+	public void setId(String id) {
+		this.id = id;
+	}
+
+	/**
+	 * @return the firstName
+	 */
+	public String getFirstName() {
+		return firstName;
+	}
+
+	/**
+	 * @param firstName
+	 *            the firstName to set
+	 */
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+
+	/**
+	 * @return the middleName
+	 */
+	public String getMiddleName() {
+		return middleName;
+	}
+
+	/**
+	 * @param middleName
+	 *            the middleName to set
+	 */
+	public void setMiddleName(String middleName) {
+		this.middleName = middleName;
+	}
+
+	/**
+	 * @return the lastName
+	 */
+	public String getLastName() {
+		return lastName;
+	}
+
+	/**
+	 * @param lastName
+	 *            the lastName to set
+	 */
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
 	}
 
 	/**
 	 * @return the fullName
 	 */
 	public String getFullName() {
-		return fullName;
+		return (firstName != null ? firstName : "") + " " + (middleName != null ? middleName : "") + " "
+				+ (lastName != null ? lastName : "");
 	}
 
 	/**
@@ -91,45 +180,135 @@ public class Portfolio implements Serializable {
 	 * @param address
 	 *            the address to set
 	 */
-	public void setAddress(String address) {
+	public void setAddress(Text address) {
 		this.address = address;
 	}
 
 	/**
 	 * @return the address
 	 */
-	public String getAddress() {
+	public Text getAddress() {
 		return address;
 	}
 
 	/**
-	 * @param phone
-	 *            the phone to set
+	 * @return the updatedDate
 	 */
-	public void setPhone(PhoneNumber phone) {
-		this.phone = phone;
+	public Date getUpdatedDate() {
+		return updatedDate;
 	}
 
 	/**
-	 * @return the phone
+	 * @param updatedDate
+	 *            the updatedDate to set
 	 */
-	public PhoneNumber getPhone() {
-		return phone;
+	public void setUpdatedDate(Date updatedDate) {
+		this.updatedDate = updatedDate;
 	}
 
 	/**
-	 * @param coverLetter
-	 *            the coverLetter to set
+	 * @return the headline
 	 */
-	public void setCoverLetter(String coverLetter) {
-		this.coverLetter = coverLetter;
+	public Text getHeadline() {
+		return headline;
 	}
 
 	/**
-	 * @return the coverLetter
+	 * @param headline
+	 *            the headline to set
 	 */
-	public String getCoverLetter() {
-		return coverLetter;
+	public void setHeadline(Text headline) {
+		this.headline = headline;
+	}
+
+	/**
+	 * @return the summary
+	 */
+	public Text getSummary() {
+		return summary;
+	}
+
+	/**
+	 * @param summary
+	 *            the summary to set
+	 */
+	public void setSummary(Text summary) {
+		this.summary = summary;
+	}
+
+	/**
+	 * @return the industry
+	 */
+	public String getIndustry() {
+		return industry;
+	}
+
+	/**
+	 * @param industry
+	 *            the industry to set
+	 */
+	public void setIndustry(String industry) {
+		this.industry = industry;
+	}
+
+	/**
+	 * @return the interests
+	 */
+	public String getInterests() {
+		return interests;
+	}
+
+	/**
+	 * @param interests
+	 *            the interests to set
+	 */
+	public void setInterests(String interests) {
+		this.interests = interests;
+	}
+
+	/**
+	 * @return the location
+	 */
+	public String getLocation() {
+		return location;
+	}
+
+	/**
+	 * @param location
+	 *            the location to set
+	 */
+	public void setLocation(String location) {
+		this.location = location;
+	}
+
+	/**
+	 * @return the positions
+	 */
+	public List<Position> getPositions() {
+		return positions;
+	}
+
+	/**
+	 * @param positions
+	 *            the positions to set
+	 */
+	public void setPositions(List<Position> positions) {
+		this.positions = positions;
+	}
+
+	/**
+	 * @return the educations
+	 */
+	public List<Education> getEducations() {
+		return educations;
+	}
+
+	/**
+	 * @param educations
+	 *            the educations to set
+	 */
+	public void setEducations(List<Education> educations) {
+		this.educations = educations;
 	}
 
 }
