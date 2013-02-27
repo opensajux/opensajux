@@ -66,7 +66,11 @@ public class SiteInfoManager {
 		PersistenceManager pm = pmf.getPersistenceManager();
 		Query query = pm.newQuery(SiteInfo.class);
 		List<SiteInfo> list = (List<SiteInfo>) query.execute();
-		SiteInfo siteInfo = list.get(0);
+		SiteInfo siteInfo = null;
+		if (list.size() > 0)
+			siteInfo = list.get(0);
+		else
+			siteInfo = new SiteInfo();
 		siteInfo.setAboutMe(new Text(siteDetails.getAboutMe()));
 		siteInfo.setTitle(siteDetails.getTitle());
 		siteInfo.setSubTitle(siteDetails.getSubTitle());

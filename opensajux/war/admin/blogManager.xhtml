@@ -12,86 +12,90 @@
 		<h2>Blog Manager</h2>
 	</ui:define>
 	<ui:define name="content">
-		<p:commandButton value="Add" type="button" onclick="dlg.show()" />
-		<p:commandButton value="Remove" type="button"
-			onclick="confirmRemove.show()" />
+		<h:form id="form">
+			<p:commandButton value="Add" type="button" onclick="dlg.show()" />
+			<p:commandButton value="Remove" type="button"
+				onclick="confirmRemove.show()" />
 
-		<p:dataTable id="blogTable" var="item" value="#{blogBean.blogs}"
-			lazy="true" selection="#{blogBean.selectedBlogs}" paginator="true"
-			rows="10" rowsPerPageTemplate="10,20,50,100"
-			paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-			filteredValue="#{blogBean.filteredBlogs}"
-			emptyMessage="There are no blogs available. Please add new blogs.">
-			<p:column selectionMode="multiple" />
-			<p:column resizable="true" sortBy="#{item.name.value}"
-				filterBy="#{item.name.value}">
-				<f:facet name="header">
-					<h:outputText value="Name" />
-				</f:facet>
-				<h:outputText value="#{item.name.value}" />
-			</p:column>
-			<p:column resizable="true" sortBy="#{item.url.value}"
-				filterBy="#{item.url.value}">
-				<f:facet name="header">
-					<h:outputText value="Url" />
-				</f:facet>
-				<h:outputText value="#{item.url.value}" />
-			</p:column>
-			<p:column resizable="true" sortBy="#{item.publishDate}"
-				filterBy="#{item.publishDate}">
-				<f:facet name="header">
-					<h:outputText value="Published on" />
-				</f:facet>
-				<h:outputText value="#{item.publishDate}">
-					<f:convertDateTime type="date" pattern="dd MMMM yyyy" />
-				</h:outputText>
-			</p:column>
-			<p:column resizable="true" sortBy="#{item.updatedDate}"
-				filterBy="#{item.updatedDate}">
-				<f:facet name="header">
-					<h:outputText value="Updated on" />
-				</f:facet>
-				<h:outputText value="#{item.updatedDate}">
-					<f:convertDateTime type="date" pattern="dd MMMM yyyy" />
-				</h:outputText>
-			</p:column>
-			<p:column resizable="true" sortBy="#{item.source}"
-				filterBy="#{item.source}">
-				<f:facet name="header">
-					<h:outputText value="Source" />
-				</f:facet>
-				<h:outputText value="#{item.source}" />
-			</p:column>
-		</p:dataTable>
+			<p:dataTable id="blogTable" var="item" value="#{blogBean.blogs}"
+				lazy="true" selection="#{blogBean.selectedBlogs}" paginator="true"
+				rows="10" rowsPerPageTemplate="10,20,50,100"
+				paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+				filteredValue="#{blogBean.filteredBlogs}"
+				emptyMessage="There are no blogs available. Please add new blogs.">
+				<p:column selectionMode="multiple" />
+				<p:column resizable="true" sortBy="#{item.name.value}"
+					filterBy="#{item.name.value}">
+					<f:facet name="header">
+						<h:outputText value="Name" />
+					</f:facet>
+					<h:outputText value="#{item.name.value}" />
+				</p:column>
+				<p:column resizable="true" sortBy="#{item.url.value}"
+					filterBy="#{item.url.value}">
+					<f:facet name="header">
+						<h:outputText value="Url" />
+					</f:facet>
+					<h:outputText value="#{item.url.value}" />
+				</p:column>
+				<p:column resizable="true" sortBy="#{item.publishDate}"
+					filterBy="#{item.publishDate}">
+					<f:facet name="header">
+						<h:outputText value="Published on" />
+					</f:facet>
+					<h:outputText value="#{item.publishDate}">
+						<f:convertDateTime type="date" pattern="dd MMMM yyyy" />
+					</h:outputText>
+				</p:column>
+				<p:column resizable="true" sortBy="#{item.updatedDate}"
+					filterBy="#{item.updatedDate}">
+					<f:facet name="header">
+						<h:outputText value="Updated on" />
+					</f:facet>
+					<h:outputText value="#{item.updatedDate}">
+						<f:convertDateTime type="date" pattern="dd MMMM yyyy" />
+					</h:outputText>
+				</p:column>
+				<p:column resizable="true" sortBy="#{item.source}"
+					filterBy="#{item.source}">
+					<f:facet name="header">
+						<h:outputText value="Source" />
+					</f:facet>
+					<h:outputText value="#{item.source}" />
+				</p:column>
+			</p:dataTable>
 
-		<p:dialog header="Add Blog" widgetVar="dlg" modal="true">
-			<p:panelGrid columns="3">
-				<h:outputLabel for="blogUrl" value="Blog Url:" />
-				<h:inputText id="blogUrl" required="true"
-					requiredMessage="Blog Url is mandatory" value="#{blogBean.blogUrl}"
-					size="67" />
-				<p:message for="blogUrl" />
+			<p:confirmDialog
+				message="Are you sure you want to delete the selected blogs and all of their posts?"
+				header="Confirm Delete" severity="alert" widgetVar="confirmRemove">
+				<p:commandButton value="Yes" update="blogTable"
+					action="#{blogBean.removeBlogs}" onsuccess="confirmRemove.hide()" />
+				<p:commandButton value="No" type="button"
+					onclick="confirmRemove.hide()" />
+			</p:confirmDialog>
+		</h:form>
+		<h:form id="editForm">
+			<p:dialog header="Add Blog" widgetVar="dlg" modal="true">
+				<p:panelGrid columns="3">
+					<h:outputLabel for="blogUrl" value="Blog Url:" />
+					<h:inputText id="blogUrl" required="true"
+						requiredMessage="Blog Url is mandatory"
+						value="#{blogBean.blogUrl}" size="67" />
+					<p:message for="blogUrl" />
 
-				<h:outputLabel for="blogSource" value="Blog Source:" />
-				<p:selectOneMenu id="blogSource" required="true"
-					requiredMessage="Blog Source is mandatory">
-					<f:selectItem itemLabel="Select One" itemValue="" />
-					<f:selectItem itemLabel="Blogger" itemValue="blogger" />
-				</p:selectOneMenu>
-				<p:message for="blogSource" />
+					<h:outputLabel for="blogSource" value="Blog Source:" />
+					<p:selectOneMenu id="blogSource" required="true"
+						requiredMessage="Blog Source is mandatory">
+						<f:selectItem itemLabel="Select One" itemValue="" />
+						<f:selectItem itemLabel="Blogger" itemValue="blogger" />
+					</p:selectOneMenu>
+					<p:message for="blogSource" />
 
-				<p:commandButton id="add" value="Add" action="#{blogBean.saveBlog}"
-					onsuccess="dlg.hide()" update="blogTable" />
-			</p:panelGrid>
-		</p:dialog>
-		<p:confirmDialog
-			message="Are you sure you want to delete the selected blogs and all of their posts?"
-			header="Confirm Delete" severity="alert" widgetVar="confirmRemove">
-			<p:commandButton value="Yes" update="blogTable"
-				action="#{blogBean.removeBlogs}" onsuccess="confirmRemove.hide()" />
-			<p:commandButton value="No" type="button"
-				onclick="confirmRemove.hide()" />
-		</p:confirmDialog>
+					<p:commandButton id="add" value="Add" action="#{blogBean.saveBlog}"
+						onsuccess="dlg.hide()" update=":form:blogTable" />
+				</p:panelGrid>
+			</p:dialog>
+		</h:form>
 	</ui:define>
 
 </ui:composition>
