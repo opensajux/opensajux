@@ -1,22 +1,15 @@
 package com.opensajux.entity;
 
-import java.io.Serializable;
+import java.util.List;
 
-import javax.jdo.annotations.IdGeneratorStrategy;
+import javax.jdo.annotations.Element;
 import javax.jdo.annotations.NotPersistent;
 import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
-import javax.jdo.annotations.PrimaryKey;
-
-import com.google.appengine.api.datastore.Key;
 
 @PersistenceCapable
-public class Menu implements Serializable {
+public class Menu extends BaseEntity {
 	private static final long serialVersionUID = -1666759814261626215L;
-
-	@PrimaryKey
-	@Persistent(valueStrategy = IdGeneratorStrategy.IDENTITY)
-	protected Key key;
 
 	@Persistent
 	private String name;
@@ -33,12 +26,12 @@ public class Menu implements Serializable {
 	@Persistent
 	private boolean published;
 
+	@Persistent(mappedBy = "menu")
+	@Element(dependent = "true")
+	private List<MenuItem> menuItems;
+
 	@NotPersistent
 	private int itemCount;
-
-	public Key getKey() {
-		return key;
-	}
 
 	/**
 	 * @param name
@@ -125,5 +118,20 @@ public class Menu implements Serializable {
 	 */
 	public boolean getPublished() {
 		return published;
+	}
+
+	/**
+	 * @return the menuItems
+	 */
+	public List<MenuItem> getMenuItems() {
+		return menuItems;
+	}
+
+	/**
+	 * @param menuItems
+	 *            the menuItems to set
+	 */
+	public void setMenuItems(List<MenuItem> menuItems) {
+		this.menuItems = menuItems;
 	}
 }

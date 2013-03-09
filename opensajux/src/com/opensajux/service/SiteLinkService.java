@@ -35,7 +35,7 @@ public class SiteLinkService implements Serializable {
 		try {
 			// check if link by the same url exists
 			Query query = pm.newQuery(SiteLink.class);
-			query.setFilter("url == s1");
+			query.setFilter("content == s1");
 			query.declareParameters("String s1");
 			List<SiteLink> list = (List<SiteLink>) query.execute(url);
 			if (list != null && list.size() > 0)
@@ -43,7 +43,7 @@ public class SiteLinkService implements Serializable {
 
 			SiteLink siteLink = new SiteLink();
 			siteLink.setTitle(new Text(title));
-			siteLink.setUrl(new Text(url));
+			siteLink.setContent(new Text(url));
 			pm.makePersistent(siteLink);
 		} finally {
 			pm.close();

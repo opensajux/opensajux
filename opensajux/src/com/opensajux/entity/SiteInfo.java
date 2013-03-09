@@ -1,22 +1,13 @@
 package com.opensajux.entity;
 
-import java.io.Serializable;
-
-import javax.jdo.annotations.IdGeneratorStrategy;
 import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
-import javax.jdo.annotations.PrimaryKey;
 
-import com.google.appengine.api.datastore.Key;
 import com.google.appengine.api.datastore.Text;
 
 @PersistenceCapable
-public class SiteInfo implements Serializable {
+public class SiteInfo extends BaseEntity {
 	private static final long serialVersionUID = -8213497624092274696L;
-
-	@PrimaryKey
-	@Persistent(valueStrategy = IdGeneratorStrategy.IDENTITY)
-	protected Key key;
 
 	@Persistent
 	private Text aboutMe;
@@ -84,18 +75,6 @@ public class SiteInfo implements Serializable {
 
 	public void setAboutMe(Text aboutMe) {
 		this.aboutMe = aboutMe;
-	}
-
-	public Key getKey() {
-		return key;
-	}
-
-	/**
-	 * @param key
-	 *            the key to set
-	 */
-	public void setKey(Key key) {
-		this.key = key;
 	}
 
 	public String getTitle() {

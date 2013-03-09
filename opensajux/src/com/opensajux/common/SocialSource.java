@@ -8,5 +8,5 @@ package com.opensajux.common;
  * 
  */
 public enum SocialSource {
-	BLOGGER, FACEBOOK, GOOGLE_PLUS, TWITTER, WORDPRESS
+	BLOGGER, FACEBOOK, GOOGLE_PLUS, LOCAL, TWITTER, WORDPRESS
 }

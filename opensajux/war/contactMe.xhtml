@@ -37,7 +37,7 @@
 						</h:outputLink></li>
 				</c:if>
 				<c:forEach items="#{siteLinkBean.links}" var="siteLink">
-					<li><h:outputLink value="#{siteLink.url.value}">
+					<li><h:outputLink value="#{siteLink.content.value}">
 							<h:outputText value="#{siteLink.title.value}" />
 						</h:outputLink></li>
 				</c:forEach>

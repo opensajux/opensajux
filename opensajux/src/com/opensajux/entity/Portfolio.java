@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
+import javax.jdo.annotations.Element;
 import javax.jdo.annotations.IdGeneratorStrategy;
 import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
@@ -61,9 +62,11 @@ public class Portfolio implements Serializable {
 	private String location;
 
 	@Persistent(mappedBy = "portfolio")
+	@Element(dependent = "true")
 	private List<Position> positions;
 
 	@Persistent(mappedBy = "portfolio")
+	@Element(dependent = "true")
 	private List<Education> educations;
 
 	public Key getKey() {

@@ -14,7 +14,6 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.jdo.PersistenceManager;
 import javax.jdo.PersistenceManagerFactory;
-import javax.jdo.Query;
 
 import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortOrder;
@@ -100,14 +99,9 @@ public class MenuItemManager implements Serializable {
 					List<Menu> m = (List<Menu>) pm.newQuery(
 							"select from " + Menu.class.getName() + " where name == n parameters String n").execute(
 							menuName);
-					Long count = (Long) pm
-							.newQuery(
-									"select count(key) from "
-											+ MenuItem.class.getName()
-											+ " where menuKey == menu_key parameters com.google.appengine.api.datastore.Key menu_key")
-							.execute(m.get(0).getKey());
+					int count = m.get(0).getMenuItems().size();
 					pm.close();
-					return count.intValue();
+					return count;
 				}
 
 				@Override
@@ -117,11 +111,7 @@ public class MenuItemManager implements Serializable {
 					List<Menu> m = (List<Menu>) pm.newQuery(
 							"select from " + Menu.class.getName() + " where name == n parameters String n").execute(
 							menuName);
-					Query q = pm.newQuery("select from " + MenuItem.class.getName() + " where menuKey == menu_key");
-					q.setOrdering("ordering");
-					q.declareParameters("com.google.appengine.api.datastore.Key menu_key");
-					q.setRange(first, pageSize);
-					List<MenuItem> list = new ArrayList<MenuItem>((List<MenuItem>) q.execute(m.get(0).getKey()));
+					List<MenuItem> list = new ArrayList<MenuItem>(m.get(0).getMenuItems());
 					pm.close();
 					return list;
 				}
@@ -143,9 +133,11 @@ public class MenuItemManager implements Serializable {
 		PersistenceManager pm = pmf.getPersistenceManager();
 		List<Menu> m = (List<Menu>) pm.newQuery(
 				"select from " + Menu.class.getName() + " where name == n parameters String n").execute(menuName);
-		menuItem.setMenuKey(m.get(0).getKey());
+		menuItem.setMenu(m.get(0));
 		menuItem.setPublished(true);
 		pm.makePersistent(menuItem);
+		m.get(0).getMenuItems().add(menuItem);
+		pm.makePersistent(m.get(0));
 		pm.close();
 		menuItem = null;
 		return "/admin/menuItemManager.jsf?menu_name=" + menuName;
@@ -159,8 +151,11 @@ public class MenuItemManager implements Serializable {
 					"select from " + MenuItem.class.getName()
 							+ " where key == id parameters com.google.appengine.api.datastore.Key id").execute(
 					m.getKey());
-			if (!t.isEmpty())
+			if (!t.isEmpty()) {
+				t.get(0).getMenu().getMenuItems().remove(t.get(0));
+				pm.makePersistent(t.get(0).getMenu());
 				pm.deletePersistent(t.get(0));
+			}
 		}
 		pm.close();
 	}

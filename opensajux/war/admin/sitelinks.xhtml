@@ -32,12 +32,12 @@
 					</f:facet>
 					<h:outputText value="#{item.title.value}" />
 				</p:column>
-				<p:column resizable="true" sortBy="#{item.url.value}"
-					filterBy="#{item.url.value}">
+				<p:column resizable="true" sortBy="#{item.content.value}"
+					filterBy="#{item.content.value}">
 					<f:facet name="header">
 						<h:outputText value="Url" />
 					</f:facet>
-					<h:outputText value="#{item.url.value}" />
+					<h:outputText value="#{item.content.value}" />
 				</p:column>
 			</p:dataTable>
 
