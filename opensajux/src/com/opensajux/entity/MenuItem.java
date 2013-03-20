@@ -1,9 +1,11 @@
 package com.opensajux.entity;
 
+import javax.jdo.annotations.Inheritance;
 import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
 
 @PersistenceCapable
+@Inheritance(customStrategy = "complete-table")
 public class MenuItem extends BaseEntity {
 	private static final long serialVersionUID = -4543555094784373996L;
 

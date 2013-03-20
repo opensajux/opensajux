@@ -3,11 +3,13 @@ package com.opensajux.entity;
 import java.util.List;
 
 import javax.jdo.annotations.Element;
+import javax.jdo.annotations.Inheritance;
 import javax.jdo.annotations.NotPersistent;
 import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
 
 @PersistenceCapable
+@Inheritance(customStrategy = "complete-table")
 public class Menu extends BaseEntity {
 	private static final long serialVersionUID = -1666759814261626215L;
 
@@ -24,7 +26,7 @@ public class Menu extends BaseEntity {
 	private int ordering;
 
 	@Persistent
-	private boolean published;
+	private boolean isPublished;
 
 	@Persistent(mappedBy = "menu")
 	@Element(dependent = "true")
@@ -106,18 +108,18 @@ public class Menu extends BaseEntity {
 	}
 
 	/**
-	 * @param published
-	 *            the published to set
+	 * @param isPublished
+	 *            the isPublished to set
 	 */
-	public void setPublished(boolean published) {
-		this.published = published;
+	public void setPublished(boolean isPublished) {
+		this.isPublished = isPublished;
 	}
 
 	/**
-	 * @return the published
+	 * @return the isPublished
 	 */
-	public boolean getPublished() {
-		return published;
+	public boolean isPublished() {
+		return isPublished;
 	}
 
 	/**
