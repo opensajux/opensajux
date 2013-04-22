@@ -4,7 +4,6 @@ import java.util.List;
 
 import javax.jdo.annotations.Element;
 import javax.jdo.annotations.Inheritance;
-import javax.jdo.annotations.NotPersistent;
 import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
 
@@ -31,9 +30,6 @@ public class Menu extends BaseEntity {
 	@Persistent(mappedBy = "menu")
 	@Element(dependent = "true")
 	private List<MenuItem> menuItems;
-
-	@NotPersistent
-	private int itemCount;
 
 	/**
 	 * @param name
@@ -97,14 +93,6 @@ public class Menu extends BaseEntity {
 
 	public int getItemCount() {
 		return getMenuItems() != null ? getMenuItems().size() : 0;
-	}
-
-	/**
-	 * @param itemCount
-	 *            the itemCount to set
-	 */
-	public void setItemCount(int itemCount) {
-		this.itemCount = itemCount;
 	}
 
 	/**
