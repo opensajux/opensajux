@@ -96,7 +96,7 @@ public class Menu extends BaseEntity {
 	}
 
 	public int getItemCount() {
-		return itemCount;
+		return getMenuItems() != null ? getMenuItems().size() : 0;
 	}
 
 	/**
