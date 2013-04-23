@@ -74,8 +74,9 @@
 				<br />
 				<h:outputText value="#{pos.startDate}">
 					<f:convertDateTime type="date" pattern="MMMM yyyy" />
-				</h:outputText> - <h:outputText value="#{pos.endDate}">
+				</h:outputText> - <h:outputText value="#{pos.endDate}" rendered="#{!pos.current}">
 					<f:convertDateTime type="date" pattern="MMMM yyyy" />
+				</h:outputText><h:outputText value="Present" rendered="#{pos.current}">
 				</h:outputText>
 				<h:panelGroup rendered="#{!empty pos.summary.value}">
 					<br />
