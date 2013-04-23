@@ -42,7 +42,8 @@ public class MenuBean implements Serializable {
 		List<MenuItem> items = null;
 		if (m != null) {
 			items = m.getMenuItems();
-			items = new ArrayList<MenuItem>(items);
+			if (items != null)
+				items = new ArrayList<MenuItem>(items);
 		}
 		return items;
 	}
@@ -119,8 +120,10 @@ public class MenuBean implements Serializable {
 	}
 
 	public Menu getMenu() {
-		if (menu == null)
+		if (menu == null) {
 			menu = new Menu();
+			menu.setPublished(true);
+		}
 		return menu;
 	}
 
@@ -141,22 +144,6 @@ public class MenuBean implements Serializable {
 		menuService.saveMenu(menu);
 		menu = null;
 	}
-
-	/**
-	 * @param menuName
-	 *            the menuName to set
-	 */
-	// @SuppressWarnings("unchecked")
-	// public void setMenuName(String menuName) {
-	// this.menuName = menuName;
-	// PersistenceManager pm = pmf.getPersistenceManager();
-	// List<Menu> m = (List<Menu>) pm.newQuery(
-	// "select from " + Menu.class.getName() +
-	// " where name == n parameters String n").execute(menuName);
-	// if (m.size() > 0)
-	// menu = m.get(0);
-	// pm.close();
-	// }
 
 	/**
 	 * @return the menuName

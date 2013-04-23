@@ -120,6 +120,9 @@
 					<h:outputLabel for="order" value="Order:" />
 					<p:spinner id="order" min="0" value="#{menuBean.menu.ordering}" />
 					<p:message for="order" />
+					<h:outputLabel for="isPublished" value="Published:" />
+					<p:selectBooleanCheckbox id="isPublished"
+						value="#{menuBean.menu.published}" />
 
 					<div style="float: right">
 						<p:commandButton id="save" value="Save"

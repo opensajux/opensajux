@@ -3,28 +3,25 @@ package com.opensajux.view;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Logger;
 
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
-import javax.jdo.PersistenceManager;
-import javax.jdo.PersistenceManagerFactory;
-import javax.jdo.Query;
 
 import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortOrder;
 
+import com.opensajux.common.PaginationParameters;
 import com.opensajux.entity.BlogPost;
+import com.opensajux.service.BlogService;
 
 @RequestScoped
 @Named
 public class BlogPostBean implements Serializable {
 	private static final long serialVersionUID = 5073749853189883398L;
 
-	private static Logger LOGGER = Logger.getLogger(BlogPostBean.class.getName());
 	@Inject
-	private transient PersistenceManagerFactory pmf;
+	private BlogService blogService;
 	private LazyDataModel<BlogPost> blogPostModel;
 
 	public BlogPostBean() {
@@ -33,25 +30,19 @@ public class BlogPostBean implements Serializable {
 
 			@Override
 			public int getRowCount() {
-				PersistenceManager pm = pmf.getPersistenceManager();
-				Long count = (Long) pm.newQuery("select count(key) from " + BlogPost.class.getName()).execute();
-				pm.close();
-				return count.intValue();
+				return blogService.getBlogPostCount().intValue();
 			}
 
 			@Override
 			public List<BlogPost> load(int first, int pageSize, String sortField, SortOrder sortOrder,
 					Map<String, String> filters) {
-				setPageSize(pageSize);
-				PersistenceManager pm = pmf.getPersistenceManager();
-				Query query = pm.newQuery(BlogPost.class);
-				query.setRange(first, first + pageSize);
-				query.setOrdering("publishDate desc");
+				PaginationParameters param = new PaginationParameters();
+				param.setFirst(first);
+				param.setPageSize(pageSize);
+				param.setSortField(sortField == null ? "updatedDate" : sortField);
+				param.setSortOrder(sortOrder == null ? "desc" : sortOrder == SortOrder.ASCENDING ? "asc" : "desc");
 
-				List<BlogPost> blogs = (List<BlogPost>) query.execute();
-
-				pm.close();
-				return blogs;
+				return blogService.getBlogPosts(param);
 			}
 		};
 		blogPostModel.setPageSize(5);

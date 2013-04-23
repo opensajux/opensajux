@@ -1,7 +1,6 @@
 package com.opensajux.view;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -98,17 +97,8 @@ public class MenuItemBean implements Serializable {
 	}
 
 	public void saveMenuItem() {
-		Menu m = menuService.getMenuByName(menuName);
-		menuItem.setMenu(m);
 		menuItem.setPublished(true);
-		menuItemService.saveMenuItem(menuItem);
-		if (m.getMenuItems() != null)
-			m.getMenuItems().add(menuItem);
-		else {
-			m.setMenuItems(new ArrayList<MenuItem>());
-			m.getMenuItems().add(menuItem);
-		}
-		menuService.saveMenu(m);
+		menuItemService.saveMenuItem(menuItem, menuName);
 		menuItem = null;
 	}
 

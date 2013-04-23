@@ -1,6 +1,7 @@
 package com.opensajux.service;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.logging.Level;
@@ -15,6 +16,7 @@ import javax.jdo.Query;
 import com.google.appengine.api.datastore.Key;
 import com.google.appengine.api.datastore.KeyFactory;
 import com.opensajux.common.PaginationParameters;
+import com.opensajux.entity.Menu;
 import com.opensajux.entity.MenuItem;
 
 /**
@@ -28,43 +30,52 @@ public class MenuItemService implements Serializable {
 
 	@Inject
 	private transient PersistenceManagerFactory pmf;
+	@Inject
+	private MenuService menuService;
 
-	public void saveMenuItem(MenuItem menuItem) {
-		PersistenceManager pm = pmf.getPersistenceManager();
-		try {
-			pm.makePersistent(menuItem);
-			if (LOGGER.isLoggable(Level.INFO))
-				LOGGER.info("Saving menu item: " + menuItem.getTitle());
-		} finally {
-			pm.close();
+	public void saveMenuItem(MenuItem menuItem, String menuName) {
+		PersistenceManager pm = pmf.getPersistenceManagerProxy();
+		Query query = pm.newQuery("select from " + Menu.class.getName() + " where name == n && isPublished == true");
+		query.declareParameters("String n");
+		List<Menu> m = (List<Menu>) query.execute(menuName);
+		Menu menu = m.get(0);
+		menuItem.setMenu(menu);
+		pm.makePersistent(menuItem);
+		if (menu.getMenuItems() != null)
+			menu.getMenuItems().add(menuItem);
+		else {
+			menu.setMenuItems(new ArrayList<MenuItem>());
+			menu.getMenuItems().add(menuItem);
 		}
+		pm.makePersistent(menu);
+		if (LOGGER.isLoggable(Level.INFO))
+			LOGGER.info("Saving menu item: " + menuItem.getTitle());
 	}
 
 	public void removeMenuItem(String id) {
 		MenuItem menuItem = getById(id);
-		PersistenceManager pm = pmf.getPersistenceManager();
+		PersistenceManager pm = pmf.getPersistenceManagerProxy();
 		pm.deletePersistent(menuItem);
-		pm.close();
 	}
 
 	public void removeMenuItem(Collection<MenuItem> coll) {
-		PersistenceManager pm = pmf.getPersistenceManager();
+		PersistenceManager pm = pmf.getPersistenceManagerProxy();
 		pm.deletePersistentAll(coll);
-		pm.close();
 	}
 
 	public void removeMenuItem(MenuItem[] selectedMenuItems) {
-		PersistenceManager pm = pmf.getPersistenceManager();
+		PersistenceManager pm = pmf.getPersistenceManagerProxy();
 		pm.makePersistentAll(selectedMenuItems);
 		pm.deletePersistentAll(selectedMenuItems);
-		pm.close();
 	}
 
 	@SuppressWarnings("unchecked")
 	public List<MenuItem> getMenuItems(PaginationParameters params, String menuName) {
-		PersistenceManager pm = pmf.getPersistenceManager();
+		Menu menu = menuService.getMenuByName(menuName);
+		PersistenceManager pm = pmf.getPersistenceManagerProxy();
 		Query query = pm.newQuery(MenuItem.class);
-		//query.setFilter("menu.name =='" + menuName + "'");
+		query.setFilter("menu == m");
+		query.declareParameters(Menu.class.getName() + " m");
 
 		if (params != null) {
 			query.setRange(params.getFirst(), params.getFirst() + params.getPageSize());
@@ -72,25 +83,22 @@ public class MenuItemService implements Serializable {
 				query.setOrdering(params.getSortField() + " " + params.getSortOrder());
 		}
 
-		Object object = query.execute();
+		Object object = query.execute(menu);
 		List<MenuItem> menuItems = (List<MenuItem>) object;
 		menuItems = menuItems.subList(0, menuItems.size());
-		pm.close();
 		return menuItems;
 	}
 
 	public Long getCount() {
-		PersistenceManager pm = pmf.getPersistenceManager();
+		PersistenceManager pm = pmf.getPersistenceManagerProxy();
 		Long count = (Long) pm.newQuery("select count(key) from " + MenuItem.class.getName()).execute();
-		pm.close();
 		return count;
 	}
 
 	public MenuItem getById(String id) {
-		PersistenceManager pm = pmf.getPersistenceManager();
+		PersistenceManager pm = pmf.getPersistenceManagerProxy();
 		Key k = KeyFactory.createKey(MenuItem.class.getSimpleName(), Long.valueOf(id));
 		MenuItem menuItem = pm.getObjectById(MenuItem.class, k);
-		pm.close();
 		return menuItem;
 	}
 }
