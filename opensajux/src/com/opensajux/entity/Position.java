@@ -1,23 +1,17 @@
 package com.opensajux.entity;
 
-import java.io.Serializable;
 import java.util.Date;
 
-import javax.jdo.annotations.IdGeneratorStrategy;
+import javax.jdo.annotations.Inheritance;
 import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
-import javax.jdo.annotations.PrimaryKey;
 
-import com.google.appengine.api.datastore.Key;
 import com.google.appengine.api.datastore.Text;
 
 @PersistenceCapable
-public class Position implements Serializable {
+@Inheritance(customStrategy = "complete-table")
+public class Position extends BaseEntity {
 	private static final long serialVersionUID = 4223672734085352125L;
-
-	@PrimaryKey
-	@Persistent(valueStrategy = IdGeneratorStrategy.IDENTITY)
-	protected Key key;
 
 	@Persistent
 	private String id;
@@ -42,18 +36,6 @@ public class Position implements Serializable {
 
 	@Persistent
 	private Portfolio portfolio;
-
-	public Key getKey() {
-		return key;
-	}
-
-	/**
-	 * @param key
-	 *            the key to set
-	 */
-	public void setKey(Key key) {
-		this.key = key;
-	}
 
 	/**
 	 * @return the id

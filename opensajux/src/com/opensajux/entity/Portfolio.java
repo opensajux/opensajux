@@ -1,26 +1,20 @@
 package com.opensajux.entity;
 
-import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
 import javax.jdo.annotations.Element;
-import javax.jdo.annotations.IdGeneratorStrategy;
+import javax.jdo.annotations.Inheritance;
 import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
-import javax.jdo.annotations.PrimaryKey;
 
 import com.google.appengine.api.datastore.Email;
-import com.google.appengine.api.datastore.Key;
 import com.google.appengine.api.datastore.Text;
 
 @PersistenceCapable
-public class Portfolio implements Serializable {
+@Inheritance(customStrategy = "complete-table")
+public class Portfolio extends BaseEntity {
 	private static final long serialVersionUID = 3367768351189122600L;
-
-	@PrimaryKey
-	@Persistent(valueStrategy = IdGeneratorStrategy.IDENTITY)
-	protected Key key;
 
 	@Persistent
 	private String id;
@@ -68,18 +62,6 @@ public class Portfolio implements Serializable {
 	@Persistent(mappedBy = "portfolio")
 	@Element(dependent = "true")
 	private List<Education> educations;
-
-	public Key getKey() {
-		return key;
-	}
-
-	/**
-	 * @param key
-	 *            the key to set
-	 */
-	public void setKey(Key key) {
-		this.key = key;
-	}
 
 	/**
 	 * @return the id
