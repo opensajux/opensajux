@@ -39,7 +39,7 @@ public class BlogPostBean implements Serializable {
 				PaginationParameters param = new PaginationParameters();
 				param.setFirst(first);
 				param.setPageSize(pageSize);
-				param.setSortField(sortField == null ? "updatedDate" : sortField);
+				param.setSortField(sortField == null ? "publishDate" : sortField);
 				param.setSortOrder(sortOrder == null ? "desc" : sortOrder == SortOrder.ASCENDING ? "asc" : "desc");
 
 				return blogService.getBlogPosts(param);

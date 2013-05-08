@@ -35,10 +35,7 @@ public class MenuItemService implements Serializable {
 
 	public void saveMenuItem(MenuItem menuItem, String menuName) {
 		PersistenceManager pm = pmf.getPersistenceManagerProxy();
-		Query query = pm.newQuery("select from " + Menu.class.getName() + " where name == n && isPublished == true");
-		query.declareParameters("String n");
-		List<Menu> m = (List<Menu>) query.execute(menuName);
-		Menu menu = m.get(0);
+		Menu menu = menuService.getMenuByName(menuName);
 		menuItem.setMenu(menu);
 		pm.makePersistent(menuItem);
 		if (menu.getMenuItems() != null)
@@ -65,7 +62,6 @@ public class MenuItemService implements Serializable {
 
 	public void removeMenuItem(MenuItem[] selectedMenuItems) {
 		PersistenceManager pm = pmf.getPersistenceManagerProxy();
-		pm.makePersistentAll(selectedMenuItems);
 		pm.deletePersistentAll(selectedMenuItems);
 	}
 

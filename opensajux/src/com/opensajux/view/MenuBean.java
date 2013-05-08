@@ -20,6 +20,7 @@ import org.primefaces.model.SortOrder;
 import com.opensajux.common.PaginationParameters;
 import com.opensajux.entity.Menu;
 import com.opensajux.entity.MenuItem;
+import com.opensajux.service.MenuItemService;
 import com.opensajux.service.MenuService;
 
 @Named
@@ -29,6 +30,8 @@ public class MenuBean implements Serializable {
 
 	@Inject
 	private MenuService menuService;
+	@Inject
+	private MenuItemService menuItemService;
 	private LazyDataModel<Menu> menuModel;
 	private Menu[] selectedMenus;
 	private List<Menu> filteredMenus;
@@ -37,15 +40,13 @@ public class MenuBean implements Serializable {
 	private String menuTitle;
 
 	public List<MenuItem> getMainMenus() {
-		Menu m = menuService.getMenuByName("menu_main");
+		PaginationParameters param = new PaginationParameters();
+		param.setFirst(0);
+		param.setPageSize(200);
+		param.setSortField("ordering");
+		param.setSortOrder("asc");
 
-		List<MenuItem> items = null;
-		if (m != null) {
-			items = m.getMenuItems();
-			if (items != null)
-				items = new ArrayList<MenuItem>(items);
-		}
-		return items;
+		return menuItemService.getMenuItems(param, "menu_main");
 	}
 
 	/**

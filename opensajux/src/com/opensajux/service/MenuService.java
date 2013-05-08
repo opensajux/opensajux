@@ -49,7 +49,6 @@ public class MenuService implements Serializable {
 
 	public void removeMenu(Menu[] selectedMenus) {
 		PersistenceManager pm = pmf.getPersistenceManagerProxy();
-		pm.makePersistentAll(selectedMenus);
 		pm.deletePersistentAll(selectedMenus);
 	}
 

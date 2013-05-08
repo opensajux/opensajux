@@ -54,7 +54,6 @@ public class NewsService implements Serializable {
 
 	public void removeNews(News[] selectedNews) {
 		PersistenceManager pm = pmf.getPersistenceManagerProxy();
-		pm.makePersistentAll(selectedNews);
 		pm.deletePersistentAll(selectedNews);
 	}
 
