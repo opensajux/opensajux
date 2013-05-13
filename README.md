@@ -1,5 +1,13 @@
-## opensajux
+## OpenSajux
 OpenSajux is a Personal Content Management System hosted on Google AppEngine. OpenSajux manages all your data from Twitter, Facebook, Google+, Blogger, GitHub and others and displays them the way you want them to be viewed.
+
+## Supported Data Sources
++ Google+
++ Facebook
++ Twitter
++ Blogger
++ LinkedIn
++ GitHub
 
 ## Technologies
 + Google AppEngine 1.7.4
