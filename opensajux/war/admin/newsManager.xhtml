@@ -31,13 +31,13 @@
 				<p:ajax event="rowEditCancel" listener="#{newsBean.onCancel}" />
 
 				<p:column selectionMode="multiple" />
-				<p:column resizable="true" sortBy="#{item.title}"
-					filterBy="#{item.title}">
+				<p:column resizable="true" sortBy="#{item.title.value}"
+					filterBy="#{item.title.value}">
 					<f:facet name="header">
 						<h:outputText value="Title" />
 					</f:facet>
 					<p:commandLink oncomplete="dlg.show();"
-						update=":editForm:editDialog" value="#{item.title}">
+						update=":editForm:editDialog" value="#{item.title.value}">
 						<f:setPropertyActionListener value="#{item}"
 							target="#{newsBean.selected}" />
 					</p:commandLink>
