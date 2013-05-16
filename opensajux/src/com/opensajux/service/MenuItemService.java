@@ -67,21 +67,24 @@ public class MenuItemService implements Serializable {
 
 	@SuppressWarnings("unchecked")
 	public List<MenuItem> getMenuItems(PaginationParameters params, String menuName) {
+		List<MenuItem> menuItems = null;
 		Menu menu = menuService.getMenuByName(menuName);
-		PersistenceManager pm = pmf.getPersistenceManagerProxy();
-		Query query = pm.newQuery(MenuItem.class);
-		query.setFilter("menu == m");
-		query.declareParameters(Menu.class.getName() + " m");
+		if (menu != null) {
+			PersistenceManager pm = pmf.getPersistenceManagerProxy();
+			Query query = pm.newQuery(MenuItem.class);
+			query.setFilter("menu == m");
+			query.declareParameters(Menu.class.getName() + " m");
 
-		if (params != null) {
-			query.setRange(params.getFirst(), params.getFirst() + params.getPageSize());
-			if (params.getSortField() != null)
-				query.setOrdering(params.getSortField() + " " + params.getSortOrder());
+			if (params != null) {
+				query.setRange(params.getFirst(), params.getFirst() + params.getPageSize());
+				if (params.getSortField() != null)
+					query.setOrdering(params.getSortField() + " " + params.getSortOrder());
+			}
+
+			Object object = query.execute(menu);
+			menuItems = (List<MenuItem>) object;
+			menuItems = menuItems.subList(0, menuItems.size());
 		}
-
-		Object object = query.execute(menu);
-		List<MenuItem> menuItems = (List<MenuItem>) object;
-		menuItems = menuItems.subList(0, menuItems.size());
 		return menuItems;
 	}
 

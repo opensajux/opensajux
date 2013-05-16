@@ -2,6 +2,7 @@ package com.opensajux.entity;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 import javax.jdo.annotations.Element;
 import javax.jdo.annotations.Inheritance;
@@ -57,11 +58,11 @@ public class Portfolio extends BaseEntity {
 
 	@Persistent(mappedBy = "portfolio")
 	@Element(dependent = "true")
-	private List<Position> positions;
+	private Set<Position> positions;
 
 	@Persistent(mappedBy = "portfolio")
 	@Element(dependent = "true")
-	private List<Education> educations;
+	private Set<Education> educations;
 
 	/**
 	 * @return the id
@@ -269,7 +270,7 @@ public class Portfolio extends BaseEntity {
 	/**
 	 * @return the positions
 	 */
-	public List<Position> getPositions() {
+	public Set<Position> getPositions() {
 		return positions;
 	}
 
@@ -277,14 +278,14 @@ public class Portfolio extends BaseEntity {
 	 * @param positions
 	 *            the positions to set
 	 */
-	public void setPositions(List<Position> positions) {
+	public void setPositions(Set<Position> positions) {
 		this.positions = positions;
 	}
 
 	/**
 	 * @return the educations
 	 */
-	public List<Education> getEducations() {
+	public Set<Education> getEducations() {
 		return educations;
 	}
 
@@ -292,7 +293,7 @@ public class Portfolio extends BaseEntity {
 	 * @param educations
 	 *            the educations to set
 	 */
-	public void setEducations(List<Education> educations) {
+	public void setEducations(Set<Education> educations) {
 		this.educations = educations;
 	}
 

@@ -38,7 +38,11 @@
 					<f:facet name="header">
 						<h:outputText value="Title" />
 					</f:facet>
-					<h:outputLink value="#{item.url}">#{item.title}</h:outputLink>
+					<p:commandLink oncomplete="dlg.show();"
+						update=":editForm:editDialog" value="#{item.title}">
+						<f:setPropertyActionListener value="#{item}"
+							target="#{menuItemBean.selected}" />
+					</p:commandLink>
 				</p:column>
 				<p:column resizable="true">
 					<f:facet name="header">
@@ -99,6 +103,9 @@
 					<p:spinner id="order" min="0"
 						value="#{menuItemBean.menuItem.ordering}" />
 					<p:message for="order" />
+					<h:outputLabel for="isPublished" value="Published:" />
+					<p:selectBooleanCheckbox id="isPublished"
+						value="#{menuItemBean.menuItem.published}" />
 
 					<div style="float: right">
 						<p:commandButton id="save" value="Save"

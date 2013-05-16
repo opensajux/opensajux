@@ -45,8 +45,10 @@ public class MenuItemBean implements Serializable {
 	}
 
 	public MenuItem getMenuItem() {
-		if (menuItem == null)
+		if (menuItem == null) {
 			menuItem = new MenuItem();
+			menuItem.setPublished(true);
+		}
 		return menuItem;
 	}
 
@@ -97,7 +99,6 @@ public class MenuItemBean implements Serializable {
 	}
 
 	public void saveMenuItem() {
-		menuItem.setPublished(true);
 		menuItemService.saveMenuItem(menuItem, menuName);
 		menuItem = null;
 	}
@@ -136,4 +137,19 @@ public class MenuItemBean implements Serializable {
 		this.menuItemTitle = menuItemTitle;
 	}
 
+	/**
+	 * @return the selected
+	 */
+	public MenuItem getSelected() {
+		return getMenuItem();
+	}
+
+	/**
+	 * @param selected
+	 *            the selected to set
+	 */
+	public void setSelected(MenuItem selected) {
+		this.menuItem = selected;
+		setMenuItemTitle(selected.getTitle());
+	}
 }

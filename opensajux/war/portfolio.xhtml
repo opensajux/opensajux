@@ -67,7 +67,7 @@
 			</table>
 		</div>
 		<div style="width: 100%; text-align: justify; margin: 6px;">
-			<ui:repeat var="pos" value="#{portfolioBean.portfolio.positions}">
+			<ui:repeat var="pos" value="#{portfolioBean.positions}">
 				<h:outputText value="#{pos.title}" style="font-weight:bold" />
 				<br />
 				<h:outputText value="#{pos.companyName}" />
@@ -100,7 +100,7 @@
 			</table>
 		</div>
 		<div style="width: 100%; text-align: justify; margin: 6px;">
-			<ui:repeat var="edu" value="#{portfolioBean.portfolio.educations}">
+			<ui:repeat var="edu" value="#{portfolioBean.educations}">
 				<h:outputText value="#{edu.degree}" style="font-weight:bold" />
 				<h:panelGroup rendered="#{!empty edu.fieldOfStudy}">
 					<br />
