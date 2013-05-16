@@ -10,7 +10,7 @@ OpenSajux is a Personal Content Management System hosted on Google AppEngine. Op
 + GitHub
 
 ## Technologies
-+ Google AppEngine 1.7.4
++ Google AppEngine 1.7.5
 + Java Server Faces 2.0
 + PrimeFaces 3.4.2
 + Context and Dependency Injection 1.0 using Weld
