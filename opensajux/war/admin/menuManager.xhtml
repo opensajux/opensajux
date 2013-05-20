@@ -8,36 +8,38 @@
 	xmlns:m="http://java.sun.com/jsf/composite/menu">
 
 <ui:composition template="/templates/admin/masterLayout.xhtml">
-	<ui:define name="title">Sajux - Administration Panel</ui:define>
+	<ui:define name="title">#{siteInfoManager.siteDetails.title} - Administration Panel</ui:define>
 	<ui:define name="contentTitle">
 		<h2>Menu Manager</h2>
 	</ui:define>
 	<ui:define name="content">
-		<h:form>
-			<p:commandButton value="Add" action="/admin/addMenu.jsf" ajax="false" />
+		<h:form id="form">
+			<p:commandButton value="Add" oncomplete="dlg.show()"
+				action="#{menuBean.add}" update=":editForm:editDialog" />
 			<p:commandButton value="Remove" type="button"
-				onclick="confirm.show()" />
-			<p:confirmDialog
-				message="Are you sure you want to delete the selected menus?"
-				header="Confirm Delete" severity="alert" widgetVar="confirm">
-				<p:commandButton value="No" type="button" onclick="confirm.hide()" />
-				<p:commandButton value="Yes" update="menuTable"
-					oncomplete="confirm.hide()" />
-			</p:confirmDialog>
+				onclick="confirmRemove.show()" />
 
-			<p:dataTable id="menuTable" var="item"
-				value="#{menuManager.menuModel}" dynamic="true" lazy="true"
-				selectionMode="multiple" selection="#{menuManager.selectedMenus}"
+			<p:dataTable id="menuTable" var="item" value="#{menuBean.menuModel}"
+				lazy="true" selection="#{menuBean.selectedMenus}" editable="true"
 				rowKey="#{item.key.id}" paginator="true" rows="10"
 				rowsPerPageTemplate="10,20,50,100"
 				paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-				filteredValue="#{menuManager.filteredMenus}">
+				filteredValue="#{menuBean.filteredMenus}">
+
+				<p:ajax event="rowEdit" listener="#{menuBean.onRowEdit}" />
+				<p:ajax event="rowEditCancel" listener="#{menuBean.onCancel}" />
+
+				<p:column selectionMode="multiple" />
 				<p:column resizable="true" sortBy="#{item.name}"
 					filterBy="#{item.name}">
 					<f:facet name="header">
 						<h:outputText value="Name" />
 					</f:facet>
-					<h:outputLink value="/admin/addMenu.jsf?menu_name=#{item.name}">#{item.name}</h:outputLink>
+					<p:commandLink oncomplete="dlg.show();"
+						update=":editForm:editDialog" value="#{item.name}">
+						<f:setPropertyActionListener value="#{item}"
+							target="#{menuBean.selected}" />
+					</p:commandLink>
 				</p:column>
 				<p:column resizable="true" sortBy="#{item.itemCount}"
 					filterBy="#{item.itemCount}">
@@ -51,8 +53,15 @@
 					<f:facet name="header">
 						<h:outputText value="Published?" />
 					</f:facet>
-					<h:selectBooleanCheckbox value="#{item.published}"
-						valueChangeListener="#{menuManager.changePublishedState}" />
+					<p:cellEditor>
+						<f:facet name="output">
+							<h:selectBooleanCheckbox value="#{item.published}"
+								disabled="true" />
+						</f:facet>
+						<f:facet name="input">
+							<h:selectBooleanCheckbox value="#{item.published}" />
+						</f:facet>
+					</p:cellEditor>
 				</p:column>
 				<p:column resizable="true" sortBy="#{item.title}"
 					filterBy="#{item.title}">
@@ -75,7 +84,56 @@
 					</f:facet>
 					<h:outputText value="#{item.ordering}" />
 				</p:column>
+				<p:column>
+					<p:rowEditor />
+				</p:column>
 			</p:dataTable>
+			<p:confirmDialog
+				message="Are you sure you want to delete the selected menus?"
+				header="Confirm Delete" severity="alert" widgetVar="confirmRemove">
+				<p:commandButton value="No" type="button"
+					onclick="confirmRemove.hide()" />
+				<p:commandButton value="Yes" update="menuTable"
+					action="#{menuBean.removeMenus}" oncomplete="confirmRemove.hide()" />
+			</p:confirmDialog>
+		</h:form>
+		<h:form id="editForm">
+			<p:dialog id="editDialog"
+				header="#{empty menuBean.menuTitle? 'Add Menu' : 'Edit Menu'}"
+				widgetVar="dlg" modal="true">
+				<h:panelGrid columns="3">
+					<h:outputLabel for="name" value="Menu Name:" />
+					<h:inputText id="name" required="true"
+						requiredMessage="Menu Name is manadatory"
+						value="#{menuBean.menu.name}"
+						validator="#{menuBean.validateMenuName}" />
+					<p:message for="name" />
+					<h:outputLabel for="title" value="Title:" />
+					<h:inputText id="title" required="true"
+						requiredMessage="Title is manadatory"
+						value="#{menuBean.menu.title}" />
+					<p:message for="title" />
+					<h:outputLabel for="url" value="Url:" />
+					<h:inputText id="url" required="true"
+						requiredMessage="Url is manadatory" value="#{menuBean.menu.url}" />
+					<p:message for="url" />
+					<h:outputLabel for="order" value="Order:" />
+					<p:spinner id="order" min="0" value="#{menuBean.menu.ordering}" />
+					<p:message for="order" />
+					<h:outputLabel for="isPublished" value="Published:" />
+					<p:selectBooleanCheckbox id="isPublished"
+						value="#{menuBean.menu.published}" />
+
+					<div style="float: right">
+						<p:commandButton id="save" value="Save"
+							action="#{menuBean.saveMenu}"
+							oncomplete="if(!args.validationFailed) dlg.hide()"
+							update=":form:menuTable, :growl" />
+						<p:commandButton id="cancel" value="Cancel" type="button"
+							onclick="dlg.hide()" />
+					</div>
+				</h:panelGrid>
+			</p:dialog>
 		</h:form>
 	</ui:define>
 

@@ -34,7 +34,7 @@ public class PlusService implements Serializable {
 	private BloggerClient client;
 
 	public void saveBlog(String url) {
-		PersistenceManager pm = pmf.getPersistenceManager();
+		PersistenceManager pm = pmf.getPersistenceManagerProxy();
 		try {
 			// check if blog by the same url exists
 			Query query = pm.newQuery(MyBlog.class);
@@ -55,18 +55,15 @@ public class PlusService implements Serializable {
 			pm.makePersistent(b);
 		} catch (IOException e) {
 			e.printStackTrace();
-		} finally {
-			pm.close();
 		}
 	}
 
 	public void removeBlog(String id) {
-		PersistenceManager pm = pmf.getPersistenceManager();
+		PersistenceManager pm = pmf.getPersistenceManagerProxy();
 		Query query = pm.newQuery(MyBlog.class);
 		query.setFilter("id == id1");
 		query.declareParameters("String id1");
 		List<MyBlog> list = (List<MyBlog>) query.execute(id);
 		pm.deletePersistent(list.get(0));
-		pm.close();
 	}
 }

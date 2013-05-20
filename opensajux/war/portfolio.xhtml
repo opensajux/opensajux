@@ -67,15 +67,16 @@
 			</table>
 		</div>
 		<div style="width: 100%; text-align: justify; margin: 6px;">
-			<ui:repeat var="pos" value="#{portfolioBean.portfolio.positions}">
+			<ui:repeat var="pos" value="#{portfolioBean.positions}">
 				<h:outputText value="#{pos.title}" style="font-weight:bold" />
 				<br />
 				<h:outputText value="#{pos.companyName}" />
 				<br />
 				<h:outputText value="#{pos.startDate}">
 					<f:convertDateTime type="date" pattern="MMMM yyyy" />
-				</h:outputText> - <h:outputText value="#{pos.endDate}">
+				</h:outputText> - <h:outputText value="#{pos.endDate}" rendered="#{!pos.current}">
 					<f:convertDateTime type="date" pattern="MMMM yyyy" />
+				</h:outputText><h:outputText value="Present" rendered="#{pos.current}">
 				</h:outputText>
 				<h:panelGroup rendered="#{!empty pos.summary.value}">
 					<br />
@@ -99,7 +100,7 @@
 			</table>
 		</div>
 		<div style="width: 100%; text-align: justify; margin: 6px;">
-			<ui:repeat var="edu" value="#{portfolioBean.portfolio.educations}">
+			<ui:repeat var="edu" value="#{portfolioBean.educations}">
 				<h:outputText value="#{edu.degree}" style="font-weight:bold" />
 				<h:panelGroup rendered="#{!empty edu.fieldOfStudy}">
 					<br />

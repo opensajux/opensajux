@@ -1,25 +1,20 @@
 package com.opensajux.entity;
 
-import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
+import java.util.Set;
 
-import javax.jdo.annotations.IdGeneratorStrategy;
+import javax.jdo.annotations.Element;
+import javax.jdo.annotations.Inheritance;
 import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
-import javax.jdo.annotations.PrimaryKey;
 
 import com.google.appengine.api.datastore.Email;
-import com.google.appengine.api.datastore.Key;
 import com.google.appengine.api.datastore.Text;
 
 @PersistenceCapable
-public class Portfolio implements Serializable {
+@Inheritance(customStrategy = "complete-table")
+public class Portfolio extends BaseEntity {
 	private static final long serialVersionUID = 3367768351189122600L;
-
-	@PrimaryKey
-	@Persistent(valueStrategy = IdGeneratorStrategy.IDENTITY)
-	protected Key key;
 
 	@Persistent
 	private String id;
@@ -61,22 +56,12 @@ public class Portfolio implements Serializable {
 	private String location;
 
 	@Persistent(mappedBy = "portfolio")
-	private List<Position> positions;
+	@Element(dependent = "true")
+	private Set<Position> positions;
 
 	@Persistent(mappedBy = "portfolio")
-	private List<Education> educations;
-
-	public Key getKey() {
-		return key;
-	}
-
-	/**
-	 * @param key
-	 *            the key to set
-	 */
-	public void setKey(Key key) {
-		this.key = key;
-	}
+	@Element(dependent = "true")
+	private Set<Education> educations;
 
 	/**
 	 * @return the id
@@ -284,7 +269,7 @@ public class Portfolio implements Serializable {
 	/**
 	 * @return the positions
 	 */
-	public List<Position> getPositions() {
+	public Set<Position> getPositions() {
 		return positions;
 	}
 
@@ -292,14 +277,14 @@ public class Portfolio implements Serializable {
 	 * @param positions
 	 *            the positions to set
 	 */
-	public void setPositions(List<Position> positions) {
+	public void setPositions(Set<Position> positions) {
 		this.positions = positions;
 	}
 
 	/**
 	 * @return the educations
 	 */
-	public List<Education> getEducations() {
+	public Set<Education> getEducations() {
 		return educations;
 	}
 
@@ -307,7 +292,7 @@ public class Portfolio implements Serializable {
 	 * @param educations
 	 *            the educations to set
 	 */
-	public void setEducations(List<Education> educations) {
+	public void setEducations(Set<Education> educations) {
 		this.educations = educations;
 	}
 

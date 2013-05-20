@@ -1,21 +1,13 @@
 package com.opensajux.entity;
 
-import java.io.Serializable;
-
-import javax.jdo.annotations.IdGeneratorStrategy;
+import javax.jdo.annotations.Inheritance;
 import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
-import javax.jdo.annotations.PrimaryKey;
-
-import com.google.appengine.api.datastore.Key;
 
 @PersistenceCapable
-public class MenuItem implements Serializable {
+@Inheritance(customStrategy = "complete-table")
+public class MenuItem extends BaseEntity {
 	private static final long serialVersionUID = -4543555094784373996L;
-
-	@PrimaryKey
-	@Persistent(valueStrategy = IdGeneratorStrategy.IDENTITY)
-	protected Key key;
 
 	@Persistent
 	private String title;
@@ -27,14 +19,10 @@ public class MenuItem implements Serializable {
 	private int ordering;
 
 	@Persistent
-	private boolean published;
+	private boolean isPublished;
 
 	@Persistent
-	private Key menuKey;
-
-	public Key getKey() {
-		return key;
-	}
+	private Menu menu;
 
 	public void setTitle(String title) {
 		this.title = title;
@@ -68,18 +56,18 @@ public class MenuItem implements Serializable {
 	}
 
 	/**
-	 * @param menuKey
-	 *            the menuKey to set
+	 * @param menu
+	 *            the menu to set
 	 */
-	public void setMenuKey(Key menuKey) {
-		this.menuKey = menuKey;
+	public void setMenu(Menu menu) {
+		this.menu = menu;
 	}
 
 	/**
-	 * @return the menuKey
+	 * @return the menu
 	 */
-	public Key getMenuKey() {
-		return menuKey;
+	public Menu getMenu() {
+		return menu;
 	}
 
 	/**
@@ -87,14 +75,14 @@ public class MenuItem implements Serializable {
 	 *            the published to set
 	 */
 	public void setPublished(boolean published) {
-		this.published = published;
+		this.isPublished = published;
 	}
 
 	/**
 	 * @return the published
 	 */
 	public boolean isPublished() {
-		return published;
+		return isPublished;
 	}
 
 }

@@ -140,7 +140,7 @@ public class NewsBean implements Serializable {
 			news.setPublishDate(new Date());
 			news.setUpdatedDate(news.getPublishDate());
 		}
-		news.setTitle(newsTitle);
+		news.setTitle(new Text(newsTitle));
 		news.setContent(new Text(newsContent));
 		newsService.saveNews(news);
 	}
@@ -177,7 +177,7 @@ public class NewsBean implements Serializable {
 	 */
 	public void setSelected(News selected) {
 		this.selected = selected;
-		newsTitle = selected.getTitle();
+		newsTitle = selected.getTitle().getValue();
 		newsContent = selected.getContent().getValue();
 	}
 

@@ -34,42 +34,34 @@ public class NewsService implements Serializable {
 	private transient PersistenceManagerFactory pmf;
 
 	public void saveNews(News news) {
-		PersistenceManager pm = pmf.getPersistenceManager();
-		try {
-			news.setUpdatedDate(new Date());
-			pm.makePersistent(news);
-			if (LOGGER.isLoggable(Level.INFO))
-				LOGGER.info("Saving news item: " + news.getTitle());
-		} finally {
-			pm.close();
-		}
+		PersistenceManager pm = pmf.getPersistenceManagerProxy();
+		news.setUpdatedDate(new Date());
+		pm.makePersistent(news);
+		if (LOGGER.isLoggable(Level.INFO))
+			LOGGER.info("Saving news item: " + news.getTitle());
 	}
 
 	public void removeNews(String id) {
 		News news = getById(id);
-		PersistenceManager pm = pmf.getPersistenceManager();
+		PersistenceManager pm = pmf.getPersistenceManagerProxy();
 		pm.deletePersistent(news);
-		pm.close();
 	}
 
 	public void removeNews(Collection<News> coll) {
-		PersistenceManager pm = pmf.getPersistenceManager();
+		PersistenceManager pm = pmf.getPersistenceManagerProxy();
 		pm.deletePersistentAll(coll);
-		pm.close();
 	}
 
 	public void removeNews(News[] selectedNews) {
-		PersistenceManager pm = pmf.getPersistenceManager();
-		pm.makePersistentAll(selectedNews);
+		PersistenceManager pm = pmf.getPersistenceManagerProxy();
 		pm.deletePersistentAll(selectedNews);
-		pm.close();
 	}
 
 	@SuppressWarnings("unchecked")
 	public List<News> getNews(PaginationParameters params) {
-		PersistenceManager pm = pmf.getPersistenceManager();
+		PersistenceManager pm = pmf.getPersistenceManagerProxy();
 		Query query = pm.newQuery(News.class);
-		
+
 		if (params != null) {
 			query.setRange(params.getFirst(), params.getFirst() + params.getPageSize());
 			if (params.getSortField() != null)
@@ -79,22 +71,19 @@ public class NewsService implements Serializable {
 		Object object = query.execute();
 		List<News> news = (List<News>) object;
 		news = news.subList(0, news.size());
-		pm.close();
 		return news;
 	}
 
 	public Long getCount() {
-		PersistenceManager pm = pmf.getPersistenceManager();
+		PersistenceManager pm = pmf.getPersistenceManagerProxy();
 		Long count = (Long) pm.newQuery("select count(key) from " + News.class.getName()).execute();
-		pm.close();
 		return count;
 	}
 
 	public News getById(String id) {
-		PersistenceManager pm = pmf.getPersistenceManager();
+		PersistenceManager pm = pmf.getPersistenceManagerProxy();
 		Key k = KeyFactory.createKey(News.class.getSimpleName(), Long.valueOf(id));
 		News news = pm.getObjectById(News.class, k);
-		pm.close();
 		return news;
 	}
 }

@@ -12,59 +12,112 @@
 
 	<ui:define name="content">
 		<f:metadata>
-			<f:viewParam name="menu_name" value="#{menuItemManager.menuName}" />
+			<f:viewParam name="menu_name" value="#{menuItemBean.menuName}" />
 		</f:metadata>
 		<h:outputText value="Menu: " />
 		<h:outputLink>#{param['menu_name']}</h:outputLink>
 
 		<br />
 		<br />
-		<h:outputLink
-			value="/admin/addMenuItem.jsf?menu_name=#{param['menu_name']}">Add </h:outputLink>
-		<p:commandLink value="Remove" onclick="confirm.show()" />
-		<p:confirmDialog
-			message="Are you sure you want to delete the selected menu items?"
-			header="Confirm Delete" severity="alert" widgetVar="confirm">
-			<p:commandButton value="No" type="button" onclick="confirm.hide()" />
-			<p:commandButton value="Yes" update="menuTable"
-				oncomplete="confirm.hide()" />
-		</p:confirmDialog>
+		<h:form id="form">
+			<p:commandButton value="Add" oncomplete="dlg.show()"
+				action="#{menuItemBean.add}" update=":editForm:editDialog" />
+			<p:commandButton value="Remove" type="button"
+				onclick="confirmRemove.show()" />
 
-		<p:dataTable id="menuTable" var="item"
-			value="#{menuItemManager.menuItemModel}" dynamic="true" lazy="true"
-			selectionMode="multiple" rowKey="#{item.key.id}"
-			selection="#{menuItemManager.selectedMenuItems}" paginator="true"
-			rows="10" rowsPerPageTemplate="10,20,50,100"
-			paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}">
-			<p:column resizable="true" sortBy="#{item.title}"
-				filterBy="#{item.title}">
-				<f:facet name="header">
-					<h:outputText value="Title" />
-				</f:facet>
-				<h:outputLink value="#{item.url}">#{item.title}</h:outputLink>
-			</p:column>
-			<p:column resizable="true">
-				<f:facet name="header">
-					<h:outputText value="Published?" />
-				</f:facet>
-				<h:selectBooleanCheckbox value="#{item.published}"
-					valueChangeListener="#{menuItemManager.changePublishedState}" />
-			</p:column>
-			<p:column resizable="true" sortBy="#{item.url}"
-				filterBy="#{item.url}">
-				<f:facet name="header">
-					<h:outputText value="Url" />
-				</f:facet>
-				<h:outputText value="#{item.url}" />
-			</p:column>
-			<p:column resizable="true" sortBy="#{item.ordering}"
-				filterBy="#{item.ordering}">
-				<f:facet name="header">
-					<h:outputText value="Order" />
-				</f:facet>
-				<h:outputText value="#{item.ordering}" />
-			</p:column>
-		</p:dataTable>
+			<p:dataTable id="menuItemTable" var="item"
+				value="#{menuItemBean.menuItemModel}" lazy="true"
+				rowKey="#{item.key.id}" editable="true"
+				selection="#{menuItemBean.selectedMenuItems}" paginator="true"
+				rows="10" rowsPerPageTemplate="10,20,50,100"
+				paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}">
+
+				<p:column selectionMode="multiple" />
+				<p:column resizable="true" sortBy="#{item.title}"
+					filterBy="#{item.title}">
+					<f:facet name="header">
+						<h:outputText value="Title" />
+					</f:facet>
+					<p:commandLink oncomplete="dlg.show();"
+						update=":editForm:editDialog" value="#{item.title}">
+						<f:setPropertyActionListener value="#{item}"
+							target="#{menuItemBean.selected}" />
+					</p:commandLink>
+				</p:column>
+				<p:column resizable="true">
+					<f:facet name="header">
+						<h:outputText value="Published?" />
+					</f:facet>
+					<h:selectBooleanCheckbox value="#{item.published}"
+						valueChangeListener="#{menuItemBean.changePublishedState}" />
+				</p:column>
+				<p:column resizable="true" sortBy="#{item.url}"
+					filterBy="#{item.url}">
+					<f:facet name="header">
+						<h:outputText value="Url" />
+					</f:facet>
+					<h:outputText value="#{item.url}" />
+				</p:column>
+				<p:column resizable="true" sortBy="#{item.ordering}"
+					filterBy="#{item.ordering}">
+					<f:facet name="header">
+						<h:outputText value="Order" />
+					</f:facet>
+					<h:outputText value="#{item.ordering}" />
+				</p:column>
+				<p:column resizable="true" sortBy="#{item.menu.name}"
+					filterBy="#{item.menu.name}">
+					<f:facet name="header">
+						<h:outputText value="Menu" />
+					</f:facet>
+					<h:outputText value="#{item.menu.name}" />
+				</p:column>
+			</p:dataTable>
+
+			<p:confirmDialog
+				message="Are you sure you want to delete the selected menu items?"
+				header="Confirm Delete" severity="alert" widgetVar="confirmRemove">
+				<p:commandButton value="No" type="button"
+					onclick="confirmRemove.hide()" />
+				<p:commandButton value="Yes" update="menuItemTable"
+					action="#{menuItemBean.removeMenuItems}"
+					oncomplete="confirmRemove.hide()" />
+			</p:confirmDialog>
+		</h:form>
+		<h:form id="editForm">
+			<p:dialog id="editDialog"
+				header="#{empty menuItemBean.menuItemTitle? 'Add MenuItem' : 'Edit MenuItem'}"
+				widgetVar="dlg" modal="true">
+				<h:panelGrid columns="3">
+					<h:outputLabel for="title" value="Title:" />
+					<h:inputText id="title" required="true"
+						requiredMessage="Title is manadatory"
+						value="#{menuItemBean.menuItem.title}" />
+					<p:message for="title" />
+					<h:outputLabel for="url" value="Url:" />
+					<h:inputText id="url" required="true"
+						requiredMessage="Url is manadatory"
+						value="#{menuItemBean.menuItem.url}" />
+					<p:message for="url" />
+					<h:outputLabel for="order" value="Order:" />
+					<p:spinner id="order" min="0"
+						value="#{menuItemBean.menuItem.ordering}" />
+					<p:message for="order" />
+					<h:outputLabel for="isPublished" value="Published:" />
+					<p:selectBooleanCheckbox id="isPublished"
+						value="#{menuItemBean.menuItem.published}" />
+
+					<div style="float: right">
+						<p:commandButton id="save" value="Save"
+							action="#{menuItemBean.saveMenuItem}"
+							oncomplete="if(!args.validationFailed) dlg.hide()"
+							update=":form:menuItemTable, :growl" />
+						<p:commandButton id="cancel" value="Cancel" type="button"
+							onclick="dlg.hide()" />
+					</div>
+				</h:panelGrid>
+			</p:dialog>
+		</h:form>
 	</ui:define>
 </ui:composition>
 

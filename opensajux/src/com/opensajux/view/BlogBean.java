@@ -7,13 +7,11 @@ import java.util.Map;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
-import javax.jdo.PersistenceManager;
-import javax.jdo.PersistenceManagerFactory;
-import javax.jdo.Query;
 
 import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortOrder;
 
+import com.opensajux.common.PaginationParameters;
 import com.opensajux.entity.MyBlog;
 import com.opensajux.service.BlogService;
 
@@ -22,8 +20,6 @@ import com.opensajux.service.BlogService;
 public class BlogBean implements Serializable {
 	private static final long serialVersionUID = 5073749853189883398L;
 
-	@Inject
-	private PersistenceManagerFactory pmf;
 	@Inject
 	private BlogService blogService;
 
@@ -42,24 +38,19 @@ public class BlogBean implements Serializable {
 
 				@Override
 				public int getRowCount() {
-					PersistenceManager pm = pmf.getPersistenceManager();
-					Long count = (Long) pm.newQuery("select count(key) from " + MyBlog.class.getName()).execute();
-					pm.close();
-					return count.intValue();
+					return blogService.getCount().intValue();
 				}
 
 				@Override
 				public List<MyBlog> load(int first, int pageSize, String sortField, SortOrder sortOrder,
 						Map<String, String> filters) {
-					setPageSize(pageSize);
-					PersistenceManager pm = pmf.getPersistenceManager();
-					Query query = pm.newQuery(MyBlog.class);
-					query.setRange(first, first + pageSize);
-					query.setOrdering("publishDate desc");
+					PaginationParameters param = new PaginationParameters();
+					param.setFirst(first);
+					param.setPageSize(pageSize);
+					param.setSortField(sortField == null ? "updatedDate" : sortField);
+					param.setSortOrder(sortOrder == null ? "desc" : sortOrder == SortOrder.ASCENDING ? "asc" : "desc");
 
-					List<MyBlog> blogs = (List<MyBlog>) query.execute();
-					pm.close();
-					return blogs;
+					return blogService.getBlogs(param);
 				}
 
 				@Override
@@ -69,12 +60,7 @@ public class BlogBean implements Serializable {
 
 				@Override
 				public MyBlog getRowData(String rowKey) {
-					PersistenceManager pm = pmf.getPersistenceManager();
-					Query query = pm.newQuery("select from " + MyBlog.class.getName() + " where id == rowId");
-					query.declareParameters("String rowId");
-					MyBlog b = (MyBlog) ((List<MyBlog>) query.execute(rowKey)).get(0);
-					pm.close();
-					return b;
+					return blogService.getById(rowKey);
 				}
 
 			};

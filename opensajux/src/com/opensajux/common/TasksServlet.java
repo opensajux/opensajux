@@ -8,7 +8,9 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -301,7 +303,11 @@ public class TasksServlet extends HttpServlet {
 				pm.makePersistent(portfolio);
 
 				if (me.getPositions() != null && me.getPositions().size() > 0) {
-					List<com.opensajux.entity.Position> positions = new ArrayList<com.opensajux.entity.Position>();
+					Set<com.opensajux.entity.Position> positions = null;
+					if (portfolio.getPositions() != null && portfolio.getPositions().size() > 0)
+						positions = portfolio.getPositions();
+					else
+						positions = new HashSet<com.opensajux.entity.Position>();
 					for (Position pos : me.getPositions()) {
 						boolean exists = false;
 						com.opensajux.entity.Position localPos = null;
@@ -332,7 +338,7 @@ public class TasksServlet extends HttpServlet {
 							localPos.setStartDate(cal.getTime());
 						}
 						if (pos.getSummary() != null)
-							localPos.setSummary(new Text(pos.getSummary().replaceAll("\n",	"<br />")));
+							localPos.setSummary(new Text(pos.getSummary().replaceAll("\n", "<br />")));
 						if (pos.getTitle() != null)
 							localPos.setTitle(pos.getTitle());
 						positions.add(localPos);
@@ -343,7 +349,11 @@ public class TasksServlet extends HttpServlet {
 				}
 
 				if (me.getEducations() != null && me.getEducations().size() > 0) {
-					List<com.opensajux.entity.Education> educations = new ArrayList<com.opensajux.entity.Education>();
+					Set<com.opensajux.entity.Education> educations = null;
+					if (portfolio.getEducations() != null && portfolio.getEducations().size() > 0)
+						educations = portfolio.getEducations();
+					else
+						educations = new HashSet<com.opensajux.entity.Education>();
 					for (Education edu : me.getEducations()) {
 						boolean exists = false;
 						com.opensajux.entity.Education localEdu = null;

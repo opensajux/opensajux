@@ -1,22 +1,16 @@
 package com.opensajux.entity;
 
-import java.io.Serializable;
+import java.util.List;
 
-import javax.jdo.annotations.IdGeneratorStrategy;
-import javax.jdo.annotations.NotPersistent;
+import javax.jdo.annotations.Element;
+import javax.jdo.annotations.Inheritance;
 import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
-import javax.jdo.annotations.PrimaryKey;
-
-import com.google.appengine.api.datastore.Key;
 
 @PersistenceCapable
-public class Menu implements Serializable {
+@Inheritance(customStrategy = "complete-table")
+public class Menu extends BaseEntity {
 	private static final long serialVersionUID = -1666759814261626215L;
-
-	@PrimaryKey
-	@Persistent(valueStrategy = IdGeneratorStrategy.IDENTITY)
-	protected Key key;
 
 	@Persistent
 	private String name;
@@ -31,14 +25,11 @@ public class Menu implements Serializable {
 	private int ordering;
 
 	@Persistent
-	private boolean published;
+	private boolean isPublished;
 
-	@NotPersistent
-	private int itemCount;
-
-	public Key getKey() {
-		return key;
-	}
+	@Persistent(mappedBy = "menu")
+	@Element(dependent = "true")
+	private List<MenuItem> menuItems;
 
 	/**
 	 * @param name
@@ -101,29 +92,36 @@ public class Menu implements Serializable {
 	}
 
 	public int getItemCount() {
-		return itemCount;
+		return getMenuItems() != null ? getMenuItems().size() : 0;
 	}
 
 	/**
-	 * @param itemCount
-	 *            the itemCount to set
+	 * @param isPublished
+	 *            the isPublished to set
 	 */
-	public void setItemCount(int itemCount) {
-		this.itemCount = itemCount;
+	public void setPublished(boolean isPublished) {
+		this.isPublished = isPublished;
 	}
 
 	/**
-	 * @param published
-	 *            the published to set
+	 * @return the isPublished
 	 */
-	public void setPublished(boolean published) {
-		this.published = published;
+	public boolean isPublished() {
+		return isPublished;
 	}
 
 	/**
-	 * @return the published
+	 * @return the menuItems
 	 */
-	public boolean getPublished() {
-		return published;
+	public List<MenuItem> getMenuItems() {
+		return menuItems;
+	}
+
+	/**
+	 * @param menuItems
+	 *            the menuItems to set
+	 */
+	public void setMenuItems(List<MenuItem> menuItems) {
+		this.menuItems = menuItems;
 	}
 }

@@ -7,14 +7,13 @@ import java.util.Map;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
-import javax.jdo.PersistenceManager;
-import javax.jdo.PersistenceManagerFactory;
-import javax.jdo.Query;
 
 import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortOrder;
 
+import com.opensajux.common.PaginationParameters;
 import com.opensajux.entity.TalkStream;
+import com.opensajux.service.TalkStreamService;
 
 @RequestScoped
 @Named
@@ -22,7 +21,7 @@ public class TalkStreamBean implements Serializable {
 	private static final long serialVersionUID = 8879513787369863264L;
 
 	@Inject
-	private transient PersistenceManagerFactory pmf;
+	private TalkStreamService talkStreamService;
 	private LazyDataModel<TalkStream> streamModel;
 
 	public TalkStreamBean() {
@@ -35,22 +34,19 @@ public class TalkStreamBean implements Serializable {
 
 				@Override
 				public int getRowCount() {
-					PersistenceManager pm = pmf.getPersistenceManager();
-					Long count = (Long) pm.newQuery("select count(key) from " + TalkStream.class.getName()).execute();
-					pm.close();
-					return count.intValue();
+					return talkStreamService.getCount().intValue();
 				}
 
 				@Override
 				public List<TalkStream> load(int first, int pageSize, String sortField, SortOrder sortOrder,
 						Map<String, String> filters) {
-					PersistenceManager pm = pmf.getPersistenceManager();
-					Query query = pm.newQuery(TalkStream.class);
-					query.setRange(first, first + pageSize);
-					query.setOrdering("updatedDate desc");
-					List<TalkStream> stream = (List<TalkStream>) query.execute();
-					pm.close();
-					return stream;
+					PaginationParameters param = new PaginationParameters();
+					param.setFirst(first);
+					param.setPageSize(pageSize);
+					param.setSortField(sortField == null ? "updatedDate" : sortField);
+					param.setSortOrder(sortOrder == null ? "desc" : sortOrder == SortOrder.ASCENDING ? "asc" : "desc");
+
+					return talkStreamService.getTalkStreams(param);
 				}
 			};
 			streamModel.setPageSize(5);

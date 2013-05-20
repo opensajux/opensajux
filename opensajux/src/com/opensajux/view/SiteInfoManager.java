@@ -1,39 +1,31 @@
 package com.opensajux.view;
 
-import java.util.List;
-
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.inject.Produces;
 import javax.inject.Inject;
 import javax.inject.Named;
-import javax.jdo.PersistenceManager;
-import javax.jdo.PersistenceManagerFactory;
-import javax.jdo.Query;
 
 import com.google.appengine.api.datastore.Text;
 import com.opensajux.common.Chosen;
 import com.opensajux.dto.SiteDetails;
 import com.opensajux.entity.SiteInfo;
+import com.opensajux.service.ApplicationService;
 
 @Named
 @ApplicationScoped
 public class SiteInfoManager {
 	@Inject
-	private transient PersistenceManagerFactory pmf;
+	private ApplicationService applicationService;
 
 	private SiteDetails siteDetails;
 
 	@Produces
 	@Chosen
-	@SuppressWarnings("unchecked")
 	public SiteDetails getSiteDetails() {
 		if (siteDetails == null) {
-			PersistenceManager pm = pmf.getPersistenceManager();
-			Query query = pm.newQuery("select from " + SiteInfo.class.getName());
-			List<SiteInfo> list = (List<SiteInfo>) query.execute();
-			siteDetails = new SiteDetails();
-			if (list != null && list.size() > 0) {
-				SiteInfo siteInfo = list.get(0);
+			SiteInfo siteInfo = applicationService.getSiteInfo();
+			if (siteInfo != null) {
+				siteDetails = new SiteDetails();
 				siteDetails.setAboutMe(siteInfo.getAboutMe().getValue());
 				siteDetails.setTitle(siteInfo.getTitle());
 				siteDetails.setSubTitle(siteInfo.getSubTitle());
@@ -55,18 +47,14 @@ public class SiteInfoManager {
 				siteDetails.setLinkedinUserSecret(siteInfo.getLinkedinUserSecret());
 				siteDetails.setLinkedinUserToken(siteInfo.getLinkedinUserToken());
 			}
-			pm.close();
-
 		}
 		return siteDetails;
 	}
 
-	@SuppressWarnings("unchecked")
 	public String saveSiteInfo() {
-		PersistenceManager pm = pmf.getPersistenceManager();
-		Query query = pm.newQuery(SiteInfo.class);
-		List<SiteInfo> list = (List<SiteInfo>) query.execute();
-		SiteInfo siteInfo = list.get(0);
+		SiteInfo siteInfo = applicationService.getSiteInfo();
+		if (siteInfo == null)
+			siteInfo = new SiteInfo();
 		siteInfo.setAboutMe(new Text(siteDetails.getAboutMe()));
 		siteInfo.setTitle(siteDetails.getTitle());
 		siteInfo.setSubTitle(siteDetails.getSubTitle());
@@ -87,8 +75,7 @@ public class SiteInfoManager {
 		siteInfo.setLinkedinSecretKey(siteDetails.getLinkedinSecretKey());
 		siteInfo.setLinkedinUserSecret(siteDetails.getLinkedinUserSecret());
 		siteInfo.setLinkedinUserToken(siteDetails.getLinkedinUserToken());
-		pm.makePersistent(siteInfo);
-		pm.close();
+		applicationService.saveSiteInfo(siteInfo);
 		return "/admin/index.jsf";
 	}
 }
