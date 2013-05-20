@@ -10,4 +10,9 @@
 		<description>Repopulate the blog cache once every day</description>
 		<schedule>every day 02:00</schedule>
 	</cron>
+	<cron>
+		<url>/tasks/portfolio</url>
+		<description>Repopulate the portfolio cache once every day</description>
+		<schedule>every day 02:30</schedule>
+	</cron>
 </cronentries>
