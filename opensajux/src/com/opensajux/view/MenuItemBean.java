@@ -11,11 +11,11 @@ import javax.inject.Named;
 import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortOrder;
 
-import com.opensajux.common.PaginationParameters;
 import com.opensajux.entity.Menu;
 import com.opensajux.entity.MenuItem;
 import com.opensajux.service.MenuItemService;
 import com.opensajux.service.MenuService;
+import com.opensajux.service.PaginationParameters;
 
 @Named
 @SessionScoped

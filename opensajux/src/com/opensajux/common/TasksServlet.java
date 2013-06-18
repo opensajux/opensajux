@@ -5,7 +5,6 @@ package com.opensajux.common;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashSet;
@@ -32,6 +31,7 @@ import com.google.api.services.blogger.model.Post;
 import com.google.api.services.blogger.model.PostList;
 import com.google.api.services.plus.model.Activity;
 import com.google.appengine.api.datastore.Text;
+import com.opensajux.common.util.HTMLUtil;
 import com.opensajux.dao.PMF;
 import com.opensajux.dto.FacebookStatusMessage;
 import com.opensajux.dto.SiteDetails;
@@ -101,6 +101,7 @@ public class TasksServlet extends HttpServlet {
 							if (b.getId().equals(p.getId().toString())) {
 								b.setTitle(new Text(p.getTitle()));
 								b.setContent(new Text(p.getContent()));
+								b.setSummary(new Text(HTMLUtil.getLeadingHtml(p.getContent(), 400)));
 								b.setPublishDate(new Date(p.getPublished().getValue()));
 								b.setUpdatedDate(new Date()); // set to today
 								b.setSourceUrl(new Text(p.getUrl()));
@@ -117,7 +118,7 @@ public class TasksServlet extends HttpServlet {
 							b.setPublishDate(new Date(p.getPublished().getValue()));
 							b.setUpdatedDate(new Date()); // set to today
 							b.setSourceUrl(new Text(p.getUrl()));
-							b.setSource(SocialSource.BLOGGER);
+							b.setSource(com.opensajux.entity.SocialSource.BLOGGER);
 							b.setBlogKey(mb.getKey());
 							pm.makePersistent(b);
 						}
@@ -150,7 +151,7 @@ public class TasksServlet extends HttpServlet {
 							}
 							talk.setPublishDate(new Date(act.getPublished().getValue()));
 							talk.setUpdatedDate(new Date(act.getUpdated().getValue()));
-							talk.setSource(SocialSource.GOOGLE_PLUS);
+							talk.setSource(com.opensajux.entity.SocialSource.GOOGLE_PLUS);
 							talk.setSourceUrl(new Text(act.getUrl()));
 							pm.makePersistent(talk);
 						}
@@ -166,7 +167,7 @@ public class TasksServlet extends HttpServlet {
 						}
 						talk.setPublishDate(new Date(act.getPublished().getValue()));
 						talk.setUpdatedDate(new Date(act.getUpdated().getValue()));
-						talk.setSource(SocialSource.GOOGLE_PLUS);
+						talk.setSource(com.opensajux.entity.SocialSource.GOOGLE_PLUS);
 						talk.setSourceUrl(new Text(act.getUrl()));
 						try {
 							pm.makePersistent(talk);
@@ -194,7 +195,7 @@ public class TasksServlet extends HttpServlet {
 							talk.setTitle(new Text(s.getText()));
 							talk.setPublishDate(s.getCreatedAt());
 							talk.setUpdatedDate(s.getCreatedAt());
-							talk.setSource(SocialSource.TWITTER);
+							talk.setSource(com.opensajux.entity.SocialSource.TWITTER);
 							talk.setSourceUrl(new Text("https://twitter.com/" + siteDetails.getTwitterUsername()
 									+ "/status/" + s.getId()));
 							pm.makePersistent(talk);
@@ -206,7 +207,7 @@ public class TasksServlet extends HttpServlet {
 						talk.setTitle(new Text(s.getText()));
 						talk.setPublishDate(s.getCreatedAt());
 						talk.setUpdatedDate(s.getCreatedAt());
-						talk.setSource(SocialSource.TWITTER);
+						talk.setSource(com.opensajux.entity.SocialSource.TWITTER);
 						talk.setSourceUrl(new Text("https://twitter.com/" + siteDetails.getTwitterUsername()
 								+ "/status/" + s.getId()));
 						pm.makePersistent(talk);
@@ -229,7 +230,7 @@ public class TasksServlet extends HttpServlet {
 								found = true;
 								talk.setTitle(new Text(sm.getMessage()));
 								talk.setPublishDate(sm.getUpdatedTime());
-								talk.setSource(SocialSource.FACEBOOK);
+								talk.setSource(com.opensajux.entity.SocialSource.FACEBOOK);
 								talk.setSourceUrl(new Text("https://www.facebook.com/"
 										+ siteDetails.getFacebookUsername() + "/posts/" + sm.getUpdatedTime().getTime()));
 								pm.makePersistent(talk);
@@ -240,7 +241,7 @@ public class TasksServlet extends HttpServlet {
 							talk.setId(sm.getId());
 							talk.setTitle(new Text(sm.getMessage()));
 							talk.setPublishDate(sm.getUpdatedTime());
-							talk.setSource(SocialSource.FACEBOOK);
+							talk.setSource(com.opensajux.entity.SocialSource.FACEBOOK);
 							talk.setSourceUrl(new Text("https://www.facebook.com/" + siteDetails.getFacebookUsername()
 									+ "/posts/" + sm.getUpdatedTime().getTime()));
 							pm.makePersistent(talk);

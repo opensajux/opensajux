@@ -13,10 +13,10 @@ import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortOrder;
 
 import com.google.appengine.api.datastore.Text;
-import com.opensajux.common.PaginationParameters;
 import com.opensajux.entity.News;
 import com.opensajux.jsf.context.ViewScoped;
 import com.opensajux.service.NewsService;
+import com.opensajux.service.PaginationParameters;
 
 @ViewScoped
 @Named

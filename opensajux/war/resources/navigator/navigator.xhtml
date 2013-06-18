@@ -1,0 +1,30 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:composite="http://java.sun.com/jsf/composite"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<head />
+<body>
+	<composite:interface>
+		<composite:attribute name="source" required="true" />
+		<composite:attribute name="styleClass" required="false" />
+	</composite:interface>
+	<composite:implementation>
+		<h:outputStylesheet name="navigator.css" />
+		<h:form id="navigatorForm">
+			<ul
+				class="${cc.attrs.styleClass == null ? 'menu-h' : cc.attrs.styleClass}">
+				<ui:fragment rendered="#{!empty cc.attrs.source}">
+					<ui:repeat value="#{cc.attrs.source}" var="navItem">
+						<li><h:outputLink
+								value="#{request.contextPath}/#{navItem.friendlyUrl}" >
+								<span> #{navItem.name} </span>
+							</h:outputLink></li>
+					</ui:repeat>
+				</ui:fragment>
+			</ul>
+		</h:form>
+	</composite:implementation>
+</body>
+</html>

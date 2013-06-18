@@ -1,6 +1,8 @@
 package com.opensajux.view;
 
+import java.io.IOException;
 import java.io.Serializable;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Map;
 
@@ -11,9 +13,11 @@ import javax.inject.Named;
 import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortOrder;
 
-import com.opensajux.common.PaginationParameters;
+import com.google.api.services.blogger.model.Blog;
 import com.opensajux.entity.MyBlog;
+import com.opensajux.integration.BloggerClient;
 import com.opensajux.service.BlogService;
+import com.opensajux.service.PaginationParameters;
 
 @RequestScoped
 @Named
@@ -22,6 +26,8 @@ public class BlogBean implements Serializable {
 
 	@Inject
 	private BlogService blogService;
+	@Inject
+	private BloggerClient client;
 
 	private LazyDataModel<MyBlog> blogModel;
 	private MyBlog[] selectedBlogs;
@@ -115,7 +121,17 @@ public class BlogBean implements Serializable {
 	}
 
 	public void saveBlog() {
-		blogService.saveBlog(blogUrl);
+		try {
+			Blog blog = client.getBlog(blogUrl);
+			Calendar publishedDate = Calendar.getInstance();
+			publishedDate.setTimeInMillis(blog.getPublished().getValue());
+			Calendar updatedDate = Calendar.getInstance();
+			updatedDate.setTimeInMillis(blog.getUpdated().getValue());
+			blogService.saveBlog(blog.getUrl(), blog.getId().toString(), blog.getName(), publishedDate.getTime(),
+					updatedDate.getTime());
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	public void removeBlogs() {

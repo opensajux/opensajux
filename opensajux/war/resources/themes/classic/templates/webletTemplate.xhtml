@@ -1,0 +1,76 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:c="http://java.sun.com/jsf/core"
+	xmlns:os="http://java.sun.com/jsf/composite/navigator">
+
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<meta name="keywords" content="sajid" />
+	<meta name="description"
+		content="Personal site of Sheikh Mohammad Sajid" />
+	<meta name="author" content="Sheikh Mohammad Sajid" />
+	<meta name="copyright" content="2010-2013" />
+	<meta name="contact" content="smsajid" />
+
+	<link href="/resources/themes/classic/css/main.css" rel="stylesheet"
+		type="text/css" />
+	<title><ui:insert name="title">#{siteInfoManager.siteDetails.title}</ui:insert></title>
+</h:head>
+
+<h:body>
+	<div>
+		<ui:include src="toolbar.xhtml"></ui:include>
+		<div id="topBar">
+			<ui:insert name="topBar">
+				<h:outputLink id="siteTitle" value="/">
+					<h:outputText value="#{siteInfoManager.siteDetails.title}" />
+				</h:outputLink>
+				<br />
+				<div id="subTitle">
+					<h:outputText value="#{siteInfoManager.siteDetails.subTitle}" />
+				</div>
+			</ui:insert>
+		</div>
+		<p:outputPanel id="menubar" layout="block">
+			<ui:insert name="navigationbar">
+				<os:navigator styleClass="menu" source="#{pageBean.topPages}" />
+			</ui:insert>
+		</p:outputPanel>
+		<div id="content_container">
+			<h:form id="contentForm">
+				<div id="content" class="center_content">
+					<ui:insert name="content">
+						<p:panel binding="#{layoutBean.layout}"></p:panel>
+					</ui:insert>
+				</div>
+			</h:form>
+		</div>
+		<div id="footer">
+			<ui:insert name="footer">
+				<div align="center">
+					&copy; 2010-2013 | <a href="#{request.contextPath}/privacy.jsf">Privacy
+						Policy</a> | <a href="#{request.contextPath}/attribution.jsf">Attributions</a>
+					| <a href="#{request.contextPath}/version.jsf">Version 0.6.0</a>
+				</div>
+			</ui:insert>
+		</div>
+	</div>
+	<script type="text/javascript" src="/_ah/channel/jsapi" />
+
+	<h:outputScript type="text/javascript">
+	var _gaq = _gaq || [];
+	_gaq.push(['_setAccount', '#{siteInfoManager.siteDetails.googleAnalyticsId}']);
+	_gaq.push(['_trackPageview']);
+
+	(function() {
+		var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+		ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+		var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+	})();
+	</h:outputScript>
+</h:body>
+</html>

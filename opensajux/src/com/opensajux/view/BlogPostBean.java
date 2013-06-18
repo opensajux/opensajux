@@ -11,9 +11,9 @@ import javax.inject.Named;
 import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortOrder;
 
-import com.opensajux.common.PaginationParameters;
 import com.opensajux.entity.BlogPost;
 import com.opensajux.service.BlogService;
+import com.opensajux.service.PaginationParameters;
 
 @RequestScoped
 @Named

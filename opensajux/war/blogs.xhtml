@@ -32,9 +32,9 @@
 						<h:outputText value="#{post.title.value}" />
 					</h:outputLink>
 				</h2>
-				<h:outputText value="#{post.content.value}" escape="false" />
+				<h:outputText value="#{post.summary.value}" escape="false" />
 				<div style="width: 100%; text-align: right;">
-					<h:outputLink value="#{post.sourceUrl.value}">view &raquo;</h:outputLink>
+					<h:outputLink value="#{post.sourceUrl.value}" target="opensajux:blog">view full blog &raquo;</h:outputLink>
 				</div>
 			</div>
 		</p:dataList>

@@ -13,7 +13,7 @@
 				<tr>
 					<td
 						style="border-top: 1px solid #66cc33; border-right: 1px solid #66cc33;"><h:outputLink
-							value="#headline">Headline</h:outputLink></td>
+							value="#{request.contextPath}/portfolio.jsf#headline">Headline</h:outputLink></td>
 					<td style="border-bottom: 1px solid #66cc33; width: 90%"></td>
 				</tr>
 			</table>
@@ -29,7 +29,7 @@
 				<tr>
 					<td
 						style="border-top: 1px solid #66cc33; border-right: 1px solid #66cc33;"><h:outputLink
-							value="#indistry">Industry</h:outputLink></td>
+							value="#{request.contextPath}/portfolio.jsf#industry">Industry</h:outputLink></td>
 					<td style="border-bottom: 1px solid #66cc33; width: 90%"></td>
 				</tr>
 			</table>
@@ -45,7 +45,7 @@
 				<tr>
 					<td
 						style="border-top: 1px solid #66cc33; border-right: 1px solid #66cc33;"><h:outputLink
-							value="#summary">Summary</h:outputLink></td>
+							value="#{request.contextPath}/portfolio.jsf#summary">Summary</h:outputLink></td>
 					<td style="border-bottom: 1px solid #66cc33; width: 90%"></td>
 				</tr>
 			</table>
@@ -61,7 +61,7 @@
 				<tr>
 					<td
 						style="border-top: 1px solid #66cc33; border-right: 1px solid #66cc33;"><h:outputLink
-							value="#experience">Experience</h:outputLink></td>
+							value="#{request.contextPath}/portfolio.jsf#experience">Experience</h:outputLink></td>
 					<td style="border-bottom: 1px solid #66cc33; width: 90%"></td>
 				</tr>
 			</table>
@@ -76,7 +76,8 @@
 					<f:convertDateTime type="date" pattern="MMMM yyyy" />
 				</h:outputText> - <h:outputText value="#{pos.endDate}" rendered="#{!pos.current}">
 					<f:convertDateTime type="date" pattern="MMMM yyyy" />
-				</h:outputText><h:outputText value="Present" rendered="#{pos.current}">
+				</h:outputText>
+				<h:outputText value="Present" rendered="#{pos.current}">
 				</h:outputText>
 				<h:panelGroup rendered="#{!empty pos.summary.value}">
 					<br />
@@ -94,7 +95,7 @@
 				<tr>
 					<td
 						style="border-top: 1px solid #66cc33; border-right: 1px solid #66cc33;"><h:outputLink
-							value="#education">Education</h:outputLink></td>
+							value="#{request.contextPath}/portfolio.jsf#education">Education</h:outputLink></td>
 					<td style="border-bottom: 1px solid #66cc33; width: 90%"></td>
 				</tr>
 			</table>

@@ -1,0 +1,52 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:c="http://java.sun.com/jsf/core"
+	xmlns:os="http://java.sun.com/jsf/composite/navigator">
+<h:form id="toolbarForm">
+	<p:toolbar>
+		<p:toolbarGroup align="left">
+			<p:menuButton value="Add">
+				<p:menuitem value="Page" actionListener="#{pageBean.addPage}"
+					update=":menubar" />
+				<p:menuitem id="addWeblet" value="Weblet"
+					onclick="addWebletDlg.show()" />
+			</p:menuButton>
+			<p:spacer width="5" />
+			<p:menuButton value="Manage">
+				<p:menuitem value="Page"></p:menuitem>
+				<p:menuitem value="Page Layout"></p:menuitem>
+			</p:menuButton>
+		</p:toolbarGroup>
+		<p:toolbarGroup align="right">
+
+		</p:toolbarGroup>
+	</p:toolbar>
+</h:form>
+<p:dialog header="Add Weblet" dynamic="true" position="center"
+	widgetVar="addWebletDlg" appendToBody="true">
+	<p:tabView orientation="left">
+		<p:tab title="Social">
+			<p:dataGrid var="weblet" value="#{webletDisplayBean.weblets}"
+				columns="3" rows="12" paginator="true">
+				<p:column>
+					<p:panel header="#{weblet.displayName}">
+						<h:panelGrid columns="1">
+							<h:outputText value="#{weblet.displayName}" />
+						</h:panelGrid>
+						<p:draggable handle="div.ui-panel-titlebar" helper="clone"
+							revert="true" stack="true" zindex="1000"
+							dashboard=":contentForm:dashboard1" />
+					</p:panel>
+				</p:column>
+			</p:dataGrid>
+		</p:tab>
+		<p:tab title="Wiki">
+			<p:dataGrid></p:dataGrid>
+		</p:tab>
+	</p:tabView>
+</p:dialog>
+</html>
